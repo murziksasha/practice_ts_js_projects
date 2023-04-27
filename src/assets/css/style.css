@@ -33,6 +33,14 @@ textarea:focus {
   padding: 0 !important;
 }
 
+.show {
+  display: block;
+}
+.hide {
+  display: none;
+}
+
+
 .form {
   /*margin-top: 2rem;*/
   padding: 2rem 5rem;

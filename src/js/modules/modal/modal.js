@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.modal = void 0;
-function modal(modalSelector, btnSelector, timer = false) {
+export function modal(modalSelector, btnSelector, timer = false) {
     const modalPop = document.querySelector(modalSelector);
     const btnModal = document.querySelector(btnSelector);
     let modalTimerId;
@@ -48,5 +45,4 @@ function modal(modalSelector, btnSelector, timer = false) {
         showModalByScroll();
     }
 }
-exports.modal = modal;
 //# sourceMappingURL=modal.js.map
