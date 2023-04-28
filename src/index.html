@@ -800,7 +800,7 @@
 
     <!-- Modals -->
     <!-- Request a call -->
-    <div class="popup">
+    <div class="popup" data-modal>
         <div class="popup_dialog">
             <div class="popup_content text-center">
                 <button type="button" class="popup_close"><strong data-close>&times;</strong></button>
@@ -818,7 +818,7 @@
     </div>
 
     <!-- Request an engineer -->
-    <div class="popup_engineer hide">
+    <div class="popup_engineer hide" data-modal>
         <div class="popup_dialog">
             <div class="popup_content text-center">
                 <button type="button" class="popup_close"><strong data-close>&times;</strong></button>
@@ -836,31 +836,31 @@
     </div>
 
     <!-- Calculator -->
-   <div class="popup_calc">
+   <div class="popup_calc" data-modal>
         <div class="popup_dialog">
             <div class="popup_calc_content text-center">
-                <button type="button" class="popup_calc_close"><strong>&times;</strong></button>
+                <button type="button" class="popup_calc_close"><strong data-close>&times;</strong></button>
                  <h2>Калькулятор</h2>
                 <h3>Выберите форму балкона <br>и укажите размеры</h3>
                 <div class="balcon_icons">
                     <span class="balcon_icons_img do_image_more">
-                      <img src="assets/img/modal_calc/balkon/ba_01.png" alt="Тип1"></span>
+                      <img data-current="0" src="assets/img/modal_calc/balkon/ba_01.png" alt="Тип1"></span>
                     <span class="balcon_icons_img">
-                      <img src="assets/img/modal_calc/balkon/ba_02.png" alt="Тип2"></span>
+                      <img data-current="1" src="assets/img/modal_calc/balkon/ba_02.png" alt="Тип2"></span>
                     <span class="balcon_icons_img">
-                      <img src="assets/img/modal_calc/balkon/ba_03.png" alt="Тип3"></span>
+                      <img data-current="2" src="assets/img/modal_calc/balkon/ba_03.png" alt="Тип3"></span>
                     <span class="balcon_icons_img"> 
-                      <img src="assets/img/modal_calc/balkon/ba_04.png" alt="Тип4"></span>
+                      <img data-current="3" src="assets/img/modal_calc/balkon/ba_04.png" alt="Тип4"></span>
                   </div>
                    <div class="big_img text-center">
-                     <img src="assets/img/modal_calc/balkon/type1.png" alt="Тип1">
-                     <img src="assets/img/modal_calc/balkon/type2.png" alt="Тип2">
+                     <img  src="assets/img/modal_calc/balkon/type1.png" alt="Тип1">
+                     <img  src="assets/img/modal_calc/balkon/type2.png" alt="Тип2">
                      <img src="assets/img/modal_calc/balkon/type3.png" alt="Тип3">
                      <img src="assets/img/modal_calc/balkon/type4.png" alt="Тип4">
                    </div>
                 <input class="form-control" id="width" type="text" placeholder="Ширина" required>
                 <label for="width">мм</label>
-                <div class="multiplication"><strong>&times;</strong></div>
+                <div class="multiplication"><strong data-close>&times;</strong></div>
                 <input class="form-control" id="height" type="text" placeholder="Высота" required>
                 <label for="height">мм</label>
                 <button class="button popup_calc_button">Далее</button>
@@ -868,10 +868,10 @@
         </div>
     </div> 
 
-   <div class="popup_calc_profile">
+   <div class="popup_calc_profile" data-modal>
         <div class="popup_dialog">
             <div class="popup_calc_profile_content text-center">
-                <button type="button" class="popup_calc_profile_close"><strong>&times;</strong></button>
+                <button type="button" class="popup_calc_profile_close"><strong data-close>&times;</strong></button>
                  <h2>Калькулятор</h2>
                  <h3>Выберите тип остекления <br>и его профиль</h3>
                  <select class="form-control" name="view" id="view_type">
@@ -899,10 +899,10 @@
         </div>
     </div> 
 
-    <div class="popup_calc_end">
+    <div class="popup_calc_end" data-modal>
         <div class="popup_dialog">
             <div class="popup_content text-center">
-                <button type="button" class="popup_calc_end_close"><strong>&times;</strong></button>
+                <button type="button" class="popup_calc_end_close"><strong data-close>&times;</strong></button>
                 <div class="popup_form">
                     <form class="form" action="#">
                       <h2>Спасибо за обращение! <br>Оставьте свои данные</h2>

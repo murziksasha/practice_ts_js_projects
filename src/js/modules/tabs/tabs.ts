@@ -1,5 +1,5 @@
 
-export function tabs(tabParent: string, tabItem: string, tabBody: string, activeClass: string): void {
+export function tabs(tabParent: string, tabItem: string, tabBody: string, activeClass: string, showClass: string = 'show'): void {
 
   
 const tabParentItem = document.querySelector(tabParent);
@@ -8,6 +8,9 @@ const tabContents = document.querySelectorAll(tabBody);
 
 
 if(tabParentItem){
+  
+  tabBodyShow(); //изначальное скрытие табов.
+
   tabParentItem.addEventListener('click', e => {
     const target = e.target as HTMLDivElement;
     if(target && target.dataset.current){
@@ -25,10 +28,10 @@ if(tabParentItem){
   function tabBodyShow(tabNum = 0){
     tabContents.forEach(item => {
       item.classList.add('hide');
-      item.classList.remove('show');
+      item.classList.remove(showClass);
     })
     tabContents[tabNum].classList.remove('hide');
-    tabContents[tabNum].classList.add('show');
+    tabContents[tabNum].classList.add(showClass);
   }
 
 }

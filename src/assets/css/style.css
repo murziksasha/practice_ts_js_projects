@@ -33,6 +33,9 @@ textarea:focus {
   padding: 0 !important;
 }
 
+.flex {
+  display: flex;
+}
 .show {
   display: block;
 }
@@ -935,8 +938,13 @@ textarea:focus {
   margin-bottom: 1rem;
 }
 
+
+.popup_calc_content .balcon_icons:hover {
+  cursor: pointer;
+}
+
 .popup_calc_content .big_img img {
-  display: none;
+  margin: 0 auto;
   margin-bottom: 3rem;
   width: 30rem;
 }
@@ -948,7 +956,6 @@ textarea:focus {
 .do_image_more img{
     width: 110px;
     height: 70px;
-    cursor: pointer;
   }
 
 .popup_calc_close {
