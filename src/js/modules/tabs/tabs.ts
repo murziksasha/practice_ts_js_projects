@@ -9,7 +9,6 @@ const tabContents = document.querySelectorAll(tabBody);
 
 if(tabParentItem){
   tabParentItem.addEventListener('click', e => {
-    console.log(tabBody);
     const target = e.target as HTMLDivElement;
     if(target && target.dataset.current){
       tabsItem.forEach((item, i) => {

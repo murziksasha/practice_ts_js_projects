@@ -1,6 +1,12 @@
-export function forms(classModal) {
+export function forms(classModal, PhoneInputDataAtt) {
     const formsAll = document.querySelectorAll('form');
     const inputs = document.querySelectorAll('input');
+    const phoneInputs = document.querySelectorAll(PhoneInputDataAtt);
+    phoneInputs.forEach((item) => {
+        item.addEventListener('input', () => {
+            item.value = item.value.replace(/\D/g, '');
+        });
+    });
     const message = {
         loading: '../../../assets/img/spinner.svg',
         success: 'Thank you, we\'ll call you soon...',
@@ -12,12 +18,13 @@ export function forms(classModal) {
     const postData = async (url, data) => {
         const res = await fetch(url, {
             method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
+            // headers: { //когда json то необходимо!
+            //   'Content-type': 'application/json'
+            // },
             body: data
         });
-        return res.json();
+        // return res.json();
+        return await res.text();
     };
     function bindPostData(form) {
         form.addEventListener('submit', (e) => {
@@ -31,7 +38,7 @@ export function forms(classModal) {
             form.insertAdjacentElement('beforeend', statusMessage);
             const formData = new FormData(form);
             // const json = JSON.stringify(Object.fromEntries(formData.entries()));
-            postData('http://localhost:3000/requests', formData) //json когда надо отправлять JSON
+            postData('assets/server.php', formData) //json когда надо отправлять JSON
                 .then(data => {
                 console.log(data);
                 showThanksModal(form, message.success);
@@ -42,6 +49,7 @@ export function forms(classModal) {
             })
                 .finally(() => {
                 form.reset();
+                statusMessage.remove();
             });
         });
     }
@@ -49,7 +57,7 @@ export function forms(classModal) {
         const thanksModal = document.createElement('div');
         thanksModal.classList.add(classModal);
         thanksModal.textContent = message;
-        itemForm.insertAdjacentElement('afterend', thanksModal);
+        itemForm.insertAdjacentElement('beforeend', thanksModal);
         setTimeout(() => {
             if (thanksModal) {
                 thanksModal.remove();

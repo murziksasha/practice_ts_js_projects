@@ -4,7 +4,6 @@ export function tabs(tabParent, tabItem, tabBody, activeClass) {
     const tabContents = document.querySelectorAll(tabBody);
     if (tabParentItem) {
         tabParentItem.addEventListener('click', e => {
-            console.log(tabBody);
             const target = e.target;
             if (target && target.dataset.current) {
                 tabsItem.forEach((item, i) => {

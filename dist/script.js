@@ -17516,17 +17516,21 @@ function forms(classModal) {
             _context.next = 2;
             return regeneratorRuntime.awrap(fetch(url, {
               method: 'POST',
-              headers: {
-                'Content-type': 'application/json'
-              },
+              // headers: { //когда json то необходимо!
+              //   'Content-type': 'application/json'
+              // },
               body: data
             }));
 
           case 2:
             res = _context.sent;
-            return _context.abrupt("return", res.json());
+            _context.next = 5;
+            return regeneratorRuntime.awrap(res.text());
 
-          case 4:
+          case 5:
+            return _context.abrupt("return", _context.sent);
+
+          case 6:
           case "end":
             return _context.stop();
         }
@@ -17543,7 +17547,7 @@ function forms(classModal) {
       form.insertAdjacentElement('beforeend', statusMessage);
       var formData = new FormData(form); // const json = JSON.stringify(Object.fromEntries(formData.entries()));
 
-      postData('http://localhost:3000/requests', formData) //json когда надо отправлять JSON
+      postData('assets/server.php', formData) //json когда надо отправлять JSON
       .then(function (data) {
         console.log(data);
         showThanksModal(form, message.success);
@@ -17552,6 +17556,7 @@ function forms(classModal) {
         showThanksModal(form, message.failure);
       }).finally(function () {
         form.reset();
+        statusMessage.remove();
       });
     });
   }
@@ -17560,7 +17565,7 @@ function forms(classModal) {
     var thanksModal = document.createElement('div');
     thanksModal.classList.add(classModal);
     thanksModal.textContent = message;
-    itemForm.insertAdjacentElement('afterend', thanksModal);
+    itemForm.insertAdjacentElement('beforeend', thanksModal);
     setTimeout(function () {
       if (thanksModal) {
         thanksModal.remove();
@@ -17660,7 +17665,6 @@ function tabs(tabParent, tabItem, tabBody, activeClass) {
 
   if (tabParentItem) {
     tabParentItem.addEventListener('click', function (e) {
-      console.log(tabBody);
       var target = e.target;
 
       if (target && target.dataset.current) {

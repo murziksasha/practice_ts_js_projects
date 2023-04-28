@@ -1,8 +1,16 @@
 
-export function forms(classModal: string): void {
+export function forms(classModal: string, PhoneInputDataAtt: string): void {
 
   const formsAll = document.querySelectorAll('form');
   const inputs = document.querySelectorAll('input');
+  const phoneInputs: NodeListOf<HTMLInputElement> = document.querySelectorAll(PhoneInputDataAtt);
+
+
+  phoneInputs.forEach((item) => {
+    item.addEventListener('input', () =>{
+      item.value = item.value.replace(/\D/g, '');
+    });
+  })
 
   interface Message {
     loading: string;
@@ -22,12 +30,13 @@ export function forms(classModal: string): void {
   const postData = async (url: string, data: any) => {
     const res: any = await fetch(url, {
       method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
+        // headers: { //когда json то необходимо!
+        //   'Content-type': 'application/json'
+        // },
         body: data
     });
-    return res.json();
+    // return res.json();
+    return await res.text();
   };
 
   function bindPostData(form: HTMLFormElement) {
@@ -46,7 +55,7 @@ export function forms(classModal: string): void {
       // const json = JSON.stringify(Object.fromEntries(formData.entries()));
 
 
-      postData('http://localhost:3000/requests', formData) //json когда надо отправлять JSON
+      postData('assets/server.php', formData) //json когда надо отправлять JSON
       .then(data =>{
         console.log(data);
         showThanksModal(form, message.success);
@@ -57,6 +66,7 @@ export function forms(classModal: string): void {
       })
       .finally(()=>{
         form.reset();
+        statusMessage.remove();
       })
 
     });
@@ -65,12 +75,10 @@ export function forms(classModal: string): void {
 
   function showThanksModal(itemForm: HTMLFormElement, message: string) {
 
-
-
     const thanksModal = document.createElement('div');
     thanksModal.classList.add(classModal);
     thanksModal.textContent = message;
-    itemForm.insertAdjacentElement('afterend', thanksModal);
+    itemForm.insertAdjacentElement('beforeend', thanksModal);
 
     setTimeout(() => {
       if(thanksModal){

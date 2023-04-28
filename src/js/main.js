@@ -8,7 +8,7 @@ window.addEventListener('DOMContentLoaded', () => {
     modal('div.popup', '.feedback_block.text-center a.phone_link');
     tabs('.glazing_slider', '.glazing_block', '.glazing_content', 'active');
     tabs('.decoration_slider', '.no_click', '.decoration_content > div > div', 'after_click');
-    forms('status');
+    forms('status', 'input[name="user_phone"]');
     // calculator();
 });
 //# sourceMappingURL=main.js.map
