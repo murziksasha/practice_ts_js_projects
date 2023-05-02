@@ -1,5 +1,5 @@
 import { checkNumInputs } from '../checkNumInputs/checkNumInputs';
-export function forms(classModal, PhoneInputDataAtt) {
+export function forms(state, classModal, PhoneInputDataAtt) {
     const formsAll = document.querySelectorAll('form');
     checkNumInputs(PhoneInputDataAtt);
     const message = {
@@ -33,6 +33,11 @@ export function forms(classModal, PhoneInputDataAtt) {
             form.insertAdjacentElement('beforeend', statusMessage);
             const formData = new FormData(form);
             // const json = JSON.stringify(Object.fromEntries(formData.entries()));
+            if (form.getAttribute('data-calc') === 'end') {
+                for (let key in state) {
+                    formData.append(key, state[key]);
+                }
+            }
             postData('assets/server.php', formData) //json когда надо отправлять JSON
                 .then(data => {
                 console.log(data);

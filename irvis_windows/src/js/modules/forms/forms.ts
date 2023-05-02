@@ -1,7 +1,10 @@
 import { checkNumInputs } from '../checkNumInputs/checkNumInputs';
 
+interface ModalState{
+  [key: string]: string;
+}
 
-export function forms(classModal: string, PhoneInputDataAtt: string): void {
+export function forms(state: ModalState, classModal: string, PhoneInputDataAtt: string): void {
 
   const formsAll = document.querySelectorAll('form');
 
@@ -50,6 +53,11 @@ export function forms(classModal: string, PhoneInputDataAtt: string): void {
       
       const formData = new FormData(form);
       // const json = JSON.stringify(Object.fromEntries(formData.entries()));
+      if(form.getAttribute('data-calc') === 'end'){
+        for(let key in state){
+          formData.append(key, state[key]);
+        }
+      }
 
 
       postData('assets/server.php', formData) //json когда надо отправлять JSON

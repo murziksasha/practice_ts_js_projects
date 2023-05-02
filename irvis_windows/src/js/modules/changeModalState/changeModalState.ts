@@ -20,19 +20,30 @@ export function changeModalState(state: any) {
       item.addEventListener(event, () => {
         switch(item.nodeName) {
           case 'SPAN' :
-            console.log('span');
+            state[prop] = i;
             break;
           case 'INPUT' :
             if(item.getAttribute('type') === 'checkbox'){
-              console.log('checkbox');
+              i === 0 ? state[prop] = 'холодное' : state[prop] = 'теплое';
+              elem.forEach((box, j) => {
+                if(box instanceof HTMLInputElement){
+                  box.checked = false;
+                  if(i == j) {
+                    box.checked = true;
+                  }
+                }
+              })
             } else {
-              console.log('input common');
+              (item instanceof HTMLInputElement) ? 
+              state[prop] = item.value : null;
             }
             break;
           case 'SELECT' :
-            console.log('select');
+            (item instanceof HTMLSelectElement) ? 
+            state[prop] = item.value : null;
             break;
         }
+        console.log(state);
       })
     });
   }
@@ -42,7 +53,6 @@ export function changeModalState(state: any) {
   bindActionToElems('input', windowWidth, 'width');
   bindActionToElems('change', windowType, 'type');
   bindActionToElems('change', windowProfile, 'profile');
-
 
 
 
