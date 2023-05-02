@@ -4,6 +4,7 @@ import { tabs } from './modules/tabs/tabs';
 import { forms } from './modules/forms/forms';
 import { changeModalState } from './modules/changeModalState/changeModalState';
 import { timer } from './modules/timer/timer';
+import { images } from './modules/images.js/images';
 
 
 
@@ -35,6 +36,8 @@ window.addEventListener('DOMContentLoaded', () => {
   forms(modalState, 'status', 'input[name="user_phone"]');
   
   timer(deadline, '#timer');
+
+  images();
   
   
   

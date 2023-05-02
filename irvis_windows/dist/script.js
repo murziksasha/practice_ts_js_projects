@@ -19250,6 +19250,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_forms_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/forms/forms */ "./src/js/modules/forms/forms.js");
 /* harmony import */ var _modules_changeModalState_changeModalState__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/changeModalState/changeModalState */ "./src/js/modules/changeModalState/changeModalState.js");
 /* harmony import */ var _modules_timer_timer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/timer/timer */ "./src/js/modules/timer/timer.js");
+/* harmony import */ var _modules_images_js_images__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/images.js/images */ "./src/js/modules/images.js/images.js");
+
 
 
 
@@ -19273,6 +19275,7 @@ window.addEventListener('DOMContentLoaded', function () {
   Object(_modules_tabs_tabs__WEBPACK_IMPORTED_MODULE_2__["tabs"])('.balcon_icons', '.balcon_icons_img', '.big_img > img', 'do_image_more', 'flex');
   Object(_modules_forms_forms__WEBPACK_IMPORTED_MODULE_3__["forms"])(modalState, 'status', 'input[name="user_phone"]');
   Object(_modules_timer_timer__WEBPACK_IMPORTED_MODULE_5__["timer"])(deadline, '#timer');
+  Object(_modules_images_js_images__WEBPACK_IMPORTED_MODULE_6__["images"])();
 });
 
 /***/ }),
@@ -19488,6 +19491,61 @@ function forms(state, classModal, PhoneInputDataAtt) {
 
 /***/ }),
 
+/***/ "./src/js/modules/images.js/images.js":
+/*!********************************************!*\
+  !*** ./src/js/modules/images.js/images.js ***!
+  \********************************************/
+/*! exports provided: images */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "images", function() { return images; });
+function images() {
+  var imgPopup = document.createElement('div');
+  var workSection = document.querySelector('.works');
+  var bigImage = document.createElement('img');
+  imgPopup.classList.add('popup');
+  workSection.appendChild(imgPopup);
+  bigImage.style.cssText = "\n    width: 700px;\n    height: 500px;\n  ";
+  imgPopup.style.cssText = "\n    justify-content: center;\n    align-items: center;\n    display: none;\n    ";
+  imgPopup.appendChild(bigImage);
+  workSection.addEventListener('click', function (e) {
+    e.preventDefault();
+    var target = e.target;
+
+    if (target && target.classList.contains('preview')) {
+      imgPopup.style.display = 'flex';
+
+      if (target.parentElement && target.parentNode) {
+        var path = target.parentNode.getAttribute('href');
+
+        if (path) {
+          bigImage.setAttribute('src', path);
+          document.body.style.overflow = 'hidden';
+        }
+      }
+    }
+
+    if (target && target.matches('div.popup')) {
+      //то что пользователь кликнул на подложку
+      imgPopup.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function (e) {
+      var target = e.code;
+
+      if (target === 'Escape') {
+        imgPopup.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    });
+  });
+}
+
+/***/ }),
+
 /***/ "./src/js/modules/modal/modal.js":
 /*!***************************************!*\
   !*** ./src/js/modules/modal/modal.js ***!
@@ -19509,6 +19567,8 @@ function modal(modalSelector, btnSelector) {
   var btnsModal = document.querySelectorAll(btnSelector);
   var windows = document.querySelectorAll('[data-modal]');
   var modalTimerId;
+  var scroll = calcScroll(); // функция выщитает прокрутку убираем скачки сайта при вызове модального окошка
+
   btnsModal.forEach(function (btn, i) {
     btn.addEventListener('click', function (e) {
       if (e.target) {
@@ -19541,6 +19601,7 @@ function modal(modalSelector, btnSelector) {
     itemModal.classList.remove('hide');
     itemModal.classList.add(showClass);
     document.body.style.overflow = 'hidden';
+    document.body.style.marginRight = "".concat(scroll, "px");
     document.addEventListener('keydown', function (e) {
       var target = e.code;
 
@@ -19556,6 +19617,21 @@ function modal(modalSelector, btnSelector) {
     itemModal.classList.remove(showClass);
     itemModal.classList.add('hide');
     document.body.style.overflow = '';
+    document.body.style.marginRight = "0px";
+  } // Функция позволяющая убрать дергание окна сайта при появлении модального окна
+
+
+  function calcScroll() {
+    var div = document.createElement('div');
+    div.style.width = '50px';
+    div.style.height = '50px';
+    div.style.overflowY = 'scroll';
+    div.style.visibility = 'hidden';
+    document.body.appendChild(div); //от полной ширины окна отнимаем главный контент и пэддинги (без прокрутки!) = равно будет сама прокрутка
+
+    var scrollWidth = div.offsetWidth - div.clientWidth;
+    div.remove();
+    return scrollWidth;
   }
 
   if (timer) {

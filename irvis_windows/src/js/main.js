@@ -4,6 +4,7 @@ import { tabs } from './modules/tabs/tabs';
 import { forms } from './modules/forms/forms';
 import { changeModalState } from './modules/changeModalState/changeModalState';
 import { timer } from './modules/timer/timer';
+import { images } from './modules/images.js/images';
 window.addEventListener('DOMContentLoaded', () => {
     let deadline = '20-05-2023';
     let modalState = {};
@@ -21,5 +22,6 @@ window.addEventListener('DOMContentLoaded', () => {
     tabs('.balcon_icons', '.balcon_icons_img', '.big_img > img', 'do_image_more', 'flex');
     forms(modalState, 'status', 'input[name="user_phone"]');
     timer(deadline, '#timer');
+    images();
 });
 //# sourceMappingURL=main.js.map
