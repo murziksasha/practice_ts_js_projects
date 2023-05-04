@@ -4,7 +4,6 @@ export function modal(modalSelector, btnSelector, timer = false, showClass = 'sh
     const windows = document.querySelectorAll('[data-modal]');
     const scroll = calcScroll(); // функция выщитает прокрутку убираем скачки сайта при вызове модального окошка
     const gift = document.querySelector('img.fixed-gift.wow.pulse.infinite'); //изо подарочка на странице
-    const giftModal = document.querySelector('.popup-gift');
     const consultModal = document.querySelector('.popup-consultation');
     btnsModal.forEach((btn, i) => {
         btn.addEventListener('click', e => {
@@ -14,7 +13,10 @@ export function modal(modalSelector, btnSelector, timer = false, showClass = 'sh
                 target.remove();
             }
             if (target) {
-                windows.forEach(item => closeModal(item)); //при каждом клике скрываем ВСЕ модальные ОКНА!
+                windows.forEach(item => {
+                    closeModal(item);
+                    item.classList.add('animate__animated', 'animate__fadeIn');
+                }); //при каждом клике скрываем ВСЕ модальные ОКНА!
                 showModal(modalsPop[0]);
             }
         });
@@ -62,8 +64,8 @@ export function modal(modalSelector, btnSelector, timer = false, showClass = 'sh
         return scrollWidth;
     }
     if (timer) {
-        window.addEventListener('scroll', showModalByScroll);
         function showModalByScroll() {
+            window.addEventListener('scroll', showModalByScroll);
             if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1) {
                 if (gift) {
                     gift.remove();
@@ -83,11 +85,10 @@ export function modal(modalSelector, btnSelector, timer = false, showClass = 'sh
                 }
             });
             if (!param) {
-                console.log(param);
                 showModal(selector);
             }
         }, time);
     }
-    showModalByTime(consultModal, 3000);
+    showModalByTime(consultModal, 60000);
 }
 //# sourceMappingURL=modal.js.map

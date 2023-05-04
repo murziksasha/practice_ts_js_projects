@@ -8,8 +8,6 @@ export function modal(modalSelector: string, btnSelector: string, timer: boolean
   const windows: NodeListOf<HTMLDivElement> = document.querySelectorAll('[data-modal]');
   const scroll = calcScroll(); // функция выщитает прокрутку убираем скачки сайта при вызове модального окошка
   const gift = document.querySelector('img.fixed-gift.wow.pulse.infinite') as HTMLImageElement; //изо подарочка на странице
-
-  const giftModal = document.querySelector('.popup-gift') as HTMLDivElement;
   const consultModal = document.querySelector('.popup-consultation') as HTMLDivElement;
 
 
@@ -21,7 +19,10 @@ export function modal(modalSelector: string, btnSelector: string, timer: boolean
         target.remove()
       }
       if(target){
-        windows.forEach(item => closeModal(item)); //при каждом клике скрываем ВСЕ модальные ОКНА!
+        windows.forEach(item => {
+          closeModal(item)
+          item.classList.add('animate__animated', 'animate__fadeIn')
+        }); //при каждом клике скрываем ВСЕ модальные ОКНА!
         showModal(modalsPop[0]);
       }
     });
@@ -85,20 +86,20 @@ export function modal(modalSelector: string, btnSelector: string, timer: boolean
 
   if(timer){
 
-    window.addEventListener('scroll', showModalByScroll);
-  
+    
     function showModalByScroll() {
-      if(window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1){
-        if(gift) {
-          gift.remove();
+      window.addEventListener('scroll', showModalByScroll);
+        if(window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1){
+          if(gift) {
+            gift.remove();
+          }
+          showModal(modalsPop[0]);
+          window.removeEventListener('scroll', showModalByScroll);
         }
-        showModal(modalsPop[0]);
-        window.removeEventListener('scroll', showModalByScroll);
-      }
     }
 
   showModalByScroll();
-}
+  }
 
 
   function showModalByTime(selector: HTMLDivElement, time: number) {
@@ -111,12 +112,13 @@ export function modal(modalSelector: string, btnSelector: string, timer: boolean
 
         }); 
         if(!param){
-          console.log(param);
           showModal(selector);
         }
     }, time)
   }
 
-  showModalByTime(consultModal, 3000);
+  showModalByTime(consultModal, 60000);
+
+
 
 }

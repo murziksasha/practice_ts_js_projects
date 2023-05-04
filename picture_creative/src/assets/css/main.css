@@ -27,6 +27,10 @@
   font-weight: normal;
   font-style: normal;
 }
+:root {
+  --animate-duration: 800ms;
+  --animate-delay: 0.9s;
+}
 * {
   box-sizing: border-box;
   outline: none;
