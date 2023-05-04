@@ -59,6 +59,18 @@ h3,
 h4 {
   font-family: 'Circe Extra Bold', sans-serif;
 }
+
+.flex {
+  display: flex;
+}
+.show {
+  display: block;
+}
+.hide {
+  display: none;
+}
+
+
 .p15 {
   font-size: 1.5;
 }
@@ -1080,7 +1092,7 @@ h4 {
   padding: 4rem 6rem 5rem 6rem;
 }
 .popup-gift {
-  z-index: 20;
+  z-index: 5;
   position: fixed;
   display: none;
   top: 0;
