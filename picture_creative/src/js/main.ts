@@ -1,6 +1,6 @@
-
 import { modal } from "./modules/modal/modal";
 import { slider } from "./modules/slider/slider";
+import { forms } from "./modules/forms/forms";
 
 window.addEventListener('DOMContentLoaded', () => {
 
@@ -10,6 +10,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   slider('.main-slider-item', 'vertical');
   slider('.feedback-slider-item', 'horizontal', '.main-prev-btn', '.main-next-btn');
+
+  forms();
 
 
 

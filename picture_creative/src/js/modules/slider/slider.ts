@@ -1,5 +1,6 @@
 
 
+
 export function slider(slides: string, direction: string, prev?: string, next?: string) {
   let slideIndex: number = 1;  //текущий слайд, который показывается пользователю
   let paused: undefined | number;   //втом. показ слайдов
