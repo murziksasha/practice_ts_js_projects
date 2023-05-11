@@ -4,6 +4,8 @@ import { forms } from "./modules/forms/forms";
 import { mask } from "./modules/mask/mask";
 import { checkTextInputs } from "./modules/checkTextInputs/checkTextInputs";
 import { checkMailInputs } from "./modules/checkTextInputs/checkTextInputs";
+import { showMoreStyles } from "./modules/showMoreStyles/showMoreStyles";
+import { calc } from "./modules/calc/calc";
 
 window.addEventListener('DOMContentLoaded', () => {
 
@@ -21,6 +23,10 @@ window.addEventListener('DOMContentLoaded', () => {
   checkTextInputs('[name="name"]');
   checkTextInputs('[name="message"]');
   checkMailInputs('[name="email"]');
+
+  showMoreStyles('button.button-styles', '#styles div.row');
+
+  calc('#size', '#material', '#options', 'input.promocode', 'div.calc-price');
 
 
 

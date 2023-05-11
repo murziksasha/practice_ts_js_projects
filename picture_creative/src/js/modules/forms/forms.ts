@@ -1,4 +1,4 @@
-
+import { postData } from '../../services/requests/requests';
 
 export function forms(): void {
 
@@ -50,17 +50,7 @@ export function forms(): void {
     })
   });
 
-  const postData = async (url: string, data: any) => {
-    const res: any = await fetch(url, {
-      method: 'POST',
-        // headers: { //когда json то необходимо!
-        //   'Content-type': 'application/json'
-        // },
-        body: data
-    });
-    // return res.json();
-    return await res.text();
-  };
+
 
   function clearInputs() {
     upload.forEach(item => {
@@ -82,6 +72,7 @@ export function forms(): void {
       let api: string; // динамический путь куда будем отправлять данные из разных форм
       form.closest('.popup-design') || form.classList.contains('calc_form') ? api = path.designer : api = path.question;
       console.log(api);
+      
 
 
 
@@ -99,6 +90,8 @@ export function forms(): void {
         form.reset();
         form.classList.add(animShow)
         clearInputs();
+        const resultSum = document.querySelector('div.calc-price');
+        resultSum ? resultSum.textContent='Для расчета нужно выбрать размер картины и материал картины': null;
       })
 
     });
