@@ -28,8 +28,8 @@
   font-style: normal;
 }
 :root {
-  --animate-duration: 1500ms;
-  --animate-delay: 2s;
+  --animate-duration: 900ms;
+  --animate-delay: 1.9s;
 }
 * {
   box-sizing: border-box;

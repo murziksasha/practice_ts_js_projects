@@ -6,6 +6,7 @@ import { checkTextInputs } from "./modules/checkTextInputs/checkTextInputs";
 import { checkMailInputs } from "./modules/checkTextInputs/checkTextInputs";
 import { showMoreStyles } from "./modules/showMoreStyles/showMoreStyles";
 import { calc } from "./modules/calc/calc";
+import { filter } from "./modules/filter/filter";
 window.addEventListener('DOMContentLoaded', () => {
     modal('.popup-design', '.button.button-order.button-design', false, 'show');
     modal('.popup-consultation', '.button.button-order.button-consultation', false, 'show');
@@ -19,5 +20,6 @@ window.addEventListener('DOMContentLoaded', () => {
     checkMailInputs('[name="email"]');
     showMoreStyles('button.button-styles', '#styles div.row');
     calc('#size', '#material', '#options', 'input.promocode', 'div.calc-price');
+    filter('.portfolio-menu', '.btnPortfolio');
 });
 //# sourceMappingURL=main.js.map

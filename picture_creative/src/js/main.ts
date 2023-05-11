@@ -6,6 +6,7 @@ import { checkTextInputs } from "./modules/checkTextInputs/checkTextInputs";
 import { checkMailInputs } from "./modules/checkTextInputs/checkTextInputs";
 import { showMoreStyles } from "./modules/showMoreStyles/showMoreStyles";
 import { calc } from "./modules/calc/calc";
+import { filter } from "./modules/filter/filter";
 
 window.addEventListener('DOMContentLoaded', () => {
 
@@ -27,6 +28,8 @@ window.addEventListener('DOMContentLoaded', () => {
   showMoreStyles('button.button-styles', '#styles div.row');
 
   calc('#size', '#material', '#options', 'input.promocode', 'div.calc-price');
+
+  filter('.portfolio-menu', '.btnPortfolio');
 
 
 
