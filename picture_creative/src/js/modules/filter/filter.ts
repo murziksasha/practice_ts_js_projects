@@ -5,10 +5,10 @@ export function filter(parentSelector: string, allBtn: string) {
   const allIndex = document.querySelectorAll(allBtn);
   const wrapper = document.querySelector('.portfolio-wrapper');
   const markAll: NodeList = wrapper?.querySelectorAll('.all');
-  const markGirl: NodeList = wrapper?.querySelectorAll('.girl');
-  const markLovers: NodeList = wrapper?.querySelectorAll('.lovers');
-  const markChef: NodeList = wrapper?.querySelectorAll('.chef');
-  const markGuy: NodeList = wrapper?.querySelectorAll('.guy');
+  const markOne: NodeList = wrapper?.querySelectorAll('.girl');
+  const markTwo: NodeList = wrapper?.querySelectorAll('.lovers');
+  const markThree: NodeList = wrapper?.querySelectorAll('.chef');
+  const markFour: NodeList = wrapper?.querySelectorAll('.guy');
   const no = document.querySelector('.portfolio-no');
 
 
@@ -59,16 +59,16 @@ export function filter(parentSelector: string, allBtn: string) {
           setTimeout(()=>initialFunc(true), 550)
           break;
         case '1':
-          if (markLovers) typeFilter(markLovers, 1);
+          if (markOne) typeFilter(markOne, 1);
           break;
         case '2':
-          if (markChef) typeFilter(markChef, 2);
+          if (markTwo) typeFilter(markTwo, 2);
           break;
         case '3':
-          if (markGirl) typeFilter(markGirl, 3);
+          if (markThree) typeFilter(markThree, 3);
           break;
         case '4':
-          if (markGuy) typeFilter(markGuy, 4);
+          if (markFour) typeFilter(markFour, 4);
           break;
         case '5':
           typeFilter(null, 5);

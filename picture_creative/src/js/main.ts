@@ -7,6 +7,7 @@ import { checkMailInputs } from "./modules/checkTextInputs/checkTextInputs";
 import { showMoreStyles } from "./modules/showMoreStyles/showMoreStyles";
 import { calc } from "./modules/calc/calc";
 import { filter } from "./modules/filter/filter";
+import { resizePictures } from './modules/resizePictures/resizePictures';
 
 window.addEventListener('DOMContentLoaded', () => {
 
@@ -30,6 +31,8 @@ window.addEventListener('DOMContentLoaded', () => {
   calc('#size', '#material', '#options', 'input.promocode', 'div.calc-price');
 
   filter('.portfolio-menu', '.btnPortfolio');
+
+  resizePictures('.sizes-block');
 
 
 

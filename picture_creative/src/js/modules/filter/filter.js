@@ -3,10 +3,10 @@ export function filter(parentSelector, allBtn) {
     const allIndex = document.querySelectorAll(allBtn);
     const wrapper = document.querySelector('.portfolio-wrapper');
     const markAll = wrapper === null || wrapper === void 0 ? void 0 : wrapper.querySelectorAll('.all');
-    const markGirl = wrapper === null || wrapper === void 0 ? void 0 : wrapper.querySelectorAll('.girl');
-    const markLovers = wrapper === null || wrapper === void 0 ? void 0 : wrapper.querySelectorAll('.lovers');
-    const markChef = wrapper === null || wrapper === void 0 ? void 0 : wrapper.querySelectorAll('.chef');
-    const markGuy = wrapper === null || wrapper === void 0 ? void 0 : wrapper.querySelectorAll('.guy');
+    const markOne = wrapper === null || wrapper === void 0 ? void 0 : wrapper.querySelectorAll('.girl');
+    const markTwo = wrapper === null || wrapper === void 0 ? void 0 : wrapper.querySelectorAll('.lovers');
+    const markThree = wrapper === null || wrapper === void 0 ? void 0 : wrapper.querySelectorAll('.chef');
+    const markFour = wrapper === null || wrapper === void 0 ? void 0 : wrapper.querySelectorAll('.guy');
     const no = document.querySelector('.portfolio-no');
     const initialFunc = (remove = false) => {
         if (!remove) {
@@ -51,20 +51,20 @@ export function filter(parentSelector, allBtn) {
                     setTimeout(() => initialFunc(true), 550);
                     break;
                 case '1':
-                    if (markLovers)
-                        typeFilter(markLovers, 1);
+                    if (markOne)
+                        typeFilter(markOne, 1);
                     break;
                 case '2':
-                    if (markChef)
-                        typeFilter(markChef, 2);
+                    if (markTwo)
+                        typeFilter(markTwo, 2);
                     break;
                 case '3':
-                    if (markGirl)
-                        typeFilter(markGirl, 3);
+                    if (markThree)
+                        typeFilter(markThree, 3);
                     break;
                 case '4':
-                    if (markGuy)
-                        typeFilter(markGuy, 4);
+                    if (markFour)
+                        typeFilter(markFour, 4);
                     break;
                 case '5':
                     typeFilter(null, 5);
