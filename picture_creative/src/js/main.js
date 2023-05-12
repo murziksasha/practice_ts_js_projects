@@ -8,6 +8,7 @@ import { showMoreStyles } from "./modules/showMoreStyles/showMoreStyles";
 import { calc } from "./modules/calc/calc";
 import { filter } from "./modules/filter/filter";
 import { resizePictures } from './modules/resizePictures/resizePictures';
+import { accordion } from "./modules/accordion/accordion";
 window.addEventListener('DOMContentLoaded', () => {
     modal('.popup-design', '.button.button-order.button-design', false, 'show');
     modal('.popup-consultation', '.button.button-order.button-consultation', false, 'show');
@@ -23,5 +24,6 @@ window.addEventListener('DOMContentLoaded', () => {
     calc('#size', '#material', '#options', 'input.promocode', 'div.calc-price');
     filter('.portfolio-menu', '.btnPortfolio');
     resizePictures('.sizes-block');
+    accordion('div#accordion', '.accordion-block');
 });
 //# sourceMappingURL=main.js.map
