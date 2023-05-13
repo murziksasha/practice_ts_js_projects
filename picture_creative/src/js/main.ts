@@ -9,6 +9,7 @@ import { calc } from "./modules/calc/calc";
 import { filter } from "./modules/filter/filter";
 import { resizePictures } from './modules/resizePictures/resizePictures';
 import { accordion } from "./modules/accordion/accordion";
+import { burger } from "./modules/burger/burger";
 
 window.addEventListener('DOMContentLoaded', () => {
 
@@ -36,6 +37,8 @@ window.addEventListener('DOMContentLoaded', () => {
   resizePictures('.sizes-block');
 
   accordion('div#accordion', '.accordion-block');
+
+  burger('.burger-menu', '.burger');
 
 
 
