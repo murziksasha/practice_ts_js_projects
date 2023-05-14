@@ -10,6 +10,7 @@ import { filter } from "./modules/filter/filter";
 import { resizePictures } from './modules/resizePictures/resizePictures';
 import { accordion } from "./modules/accordion/accordion";
 import { burger } from "./modules/burger/burger";
+import { scrolling } from "./modules/scrolling/scrolling";
 
 window.addEventListener('DOMContentLoaded', () => {
 
@@ -39,6 +40,8 @@ window.addEventListener('DOMContentLoaded', () => {
   accordion('div#accordion', '.accordion-block');
 
   burger('.burger-menu', '.burger');
+
+  scrolling('a.pageup');
 
 
 

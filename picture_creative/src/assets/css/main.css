@@ -78,6 +78,26 @@ h4 {
   text-align: center;
 }
 
+.pageup {
+  display: none;
+  width: 26px ;
+  height: 26px;
+  position: fixed;
+  bottom: 100px;
+  right: 5%;
+  z-index: 30;
+  background-color: #fff;
+  cursor: pointer;
+  border: 1px solid white;
+  transition: .9s all;
+}
+
+.pageup:hover{
+  transform: scale(1.1);
+  background-color: #d6cccb;
+  border: 1px solid #d6cccb;
+}
+
 
 
 
