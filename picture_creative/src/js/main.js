@@ -11,6 +11,7 @@ import { resizePictures } from './modules/resizePictures/resizePictures';
 import { accordion } from "./modules/accordion/accordion";
 import { burger } from "./modules/burger/burger";
 import { scrolling } from "./modules/scrolling/scrolling";
+import { drop } from "./modules/drop/drop";
 window.addEventListener('DOMContentLoaded', () => {
     modal('.popup-design', '.button.button-order.button-design', false, 'show');
     modal('.popup-consultation', '.button.button-order.button-consultation', false, 'show');
@@ -29,5 +30,6 @@ window.addEventListener('DOMContentLoaded', () => {
     accordion('div#accordion', '.accordion-block');
     burger('.burger-menu', '.burger');
     scrolling('a.pageup');
+    drop();
 });
 //# sourceMappingURL=main.js.map

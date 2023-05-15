@@ -11,52 +11,36 @@ export function scrolling(upSelector) {
             upElem.classList.add('animate__fadeOut');
         }
     });
-    const element = document.documentElement;
-    const body = document.body;
-    const calcScroll = () => {
-        upElem.addEventListener('click', e => {
-            const target = e.target;
-            let scrollTop = Math.round(body.scrollTop || element.scrollTop);
-            if (target.hash !== '') {
-                e.preventDefault();
-                let hashElement = document.querySelector(target.hash);
-                let hashElementTop = 0;
-                while (hashElement === null || hashElement === void 0 ? void 0 : hashElement.offsetParent) {
-                    hashElementTop += hashElement.offsetTop;
-                    hashElement = hashElement.offsetParent;
+    let links = document.querySelectorAll('[href^="#"]'); // получем все локальные ссылки 
+    let speed = 0.2;
+    links.forEach(item => {
+        item.addEventListener('click', e => {
+            var _a;
+            e.preventDefault();
+            const target = e.currentTarget;
+            let widthTop = document.documentElement.scrollTop;
+            let hash = target.hash;
+            let toBlock = (_a = document.querySelector(hash)) === null || _a === void 0 ? void 0 : _a.getBoundingClientRect().top;
+            let start = null;
+            requestAnimationFrame(step);
+            function step(time) {
+                if (start === null) {
+                    start = time;
                 }
-                hashElementTop = Math.round(hashElementTop);
-                smoothScroll(scrollTop, hashElementTop, +target.hash);
+                let progress = time - start;
+                if (toBlock) { // вся операция внутри нужна на сколько пикселей продвинуть и в какую сторону
+                    let r = (toBlock < 0 ? Math.max(widthTop - progress / speed, widthTop + toBlock) : Math.min(widthTop + progress / speed, widthTop + toBlock)); // переменная отвечает за кол-во пикселей отлистываем для анимации
+                    document.documentElement.scrollTo(0, r);
+                    //реализации остановки анимации
+                    if (r !== widthTop + toBlock) {
+                        requestAnimationFrame(step);
+                    }
+                    else {
+                        location.hash = hash;
+                    }
+                }
             }
         });
-    };
-    function smoothScroll(from, to, hash) {
-        let timeInterval = 1; // через какое значение будет происходить анимация
-        let prevScrollTop; // предыдущее значение
-        let speed; // с какой скоростью будет проиходить анимация
-        //определяем в какую сторону двигаемся (сверху вниз, или снизу вверх)
-        if (to > from) { //сверху вниз
-            speed = 30;
-        }
-        else { // снизу вверх (нажатие на стлку АП для перемищение наверх)
-            speed = -30;
-        }
-        let move = setInterval(() => {
-            let scrollTop = Math.round(body.scrollTop || element.scrollTop);
-            if (prevScrollTop === scrollTop ||
-                (to > from && scrollTop >= to) ||
-                (to < from && scrollTop <= to)) {
-                clearInterval(move);
-                history.replaceState(history.state, document.title, location.href.replace(/#.*$/g, '')); // убираем все # заменяем на пустую строку.
-            }
-            else {
-                body.scrollTop += speed;
-                element.scrollTop += speed;
-                prevScrollTop = scrollTop;
-            }
-        }, timeInterval);
-    }
-    ;
-    calcScroll();
+    });
 }
 //# sourceMappingURL=scrolling.js.map

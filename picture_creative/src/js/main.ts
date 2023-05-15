@@ -11,6 +11,7 @@ import { resizePictures } from './modules/resizePictures/resizePictures';
 import { accordion } from "./modules/accordion/accordion";
 import { burger } from "./modules/burger/burger";
 import { scrolling } from "./modules/scrolling/scrolling";
+import { drop } from "./modules/drop/drop";
 
 window.addEventListener('DOMContentLoaded', () => {
 
@@ -42,6 +43,8 @@ window.addEventListener('DOMContentLoaded', () => {
   burger('.burger-menu', '.burger');
 
   scrolling('a.pageup');
+
+  drop();
 
 
 
