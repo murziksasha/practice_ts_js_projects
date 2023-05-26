@@ -2,24 +2,16 @@
 
 export function variables() {
 
-  const age = 9;
-  const isOldEnough = age >= 18;
-  const birthYear = 1985;
+  const country = 'Italy'
+  const lang = 'English';
+  const population = 45;
+  const isIsland = false;
 
-  if(isOldEnough){
-    console.log(`Vasiliy can start driving licensce 🚗`)
+  if(lang === 'English' && population < 50 && !isIsland){
+    console.log(`You should live in ${country} :)`);
   } else {
-    const yearsLeft = 18 - age;
-    console.log(`Person have ${age} years old it is too a little for driving ... 🐶
-    You need wait to ${yearsLeft}
-    `)
+    console.log(`${country} does not meet your criteria :(`)
   }
-
-  let century = birthYear <= 2000 ? 20 : 21;
-
-  console.log(`this brave person born in ${century} century`);
-
-
 
 
 

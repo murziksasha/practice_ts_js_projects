@@ -7,7 +7,7 @@ export function equality_task() {
 
   if(numNeighbours && numNeighbours !== null && numNeighbours !== ' '){
      neigbours = +numNeighbours;
-    if(neigbours){
+     if(neigbours || neigbours === 0){
       switch(neigbours){
         case 1:
           console.log('Only 1 border!');
@@ -15,13 +15,10 @@ export function equality_task() {
         case 0: 
           console.log('No borders');
           break;
-        case NaN:
-          console.log('this is not a number, input ONLY number!');
-          break;
         default: 
           console.log('multy borders in your country');
       }
-    }
+     }
   }
 
 
