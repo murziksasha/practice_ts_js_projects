@@ -3,6 +3,7 @@ import { variables } from "./modules/variables/variables.js";
 import { bmiCalc } from "./modules/bmiCalc/bmiCalc.js";
 import { equality_task } from "./modules/equality_task/equality_task.js";
 import { trophyChallenge } from "./modules/trophyChallenge/trophyChallenge.js";
+import { tipCalc } from "./modules/tipCalc/tipCalc.js";
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -16,5 +17,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // equality_task();
 
   // trophyChallenge();
+
+  // tipCalc();
 
 });

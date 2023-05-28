@@ -6,5 +6,6 @@ window.addEventListener('DOMContentLoaded', () => {
     // bmiCalc(95, 1.88, 85, 1.76);
     // equality_task();
     // trophyChallenge();
+    // tipCalc();
 });
 //# sourceMappingURL=index.js.map
