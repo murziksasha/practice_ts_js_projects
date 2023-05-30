@@ -1,3 +1,4 @@
+import { tipCalc } from "./modules/tipCalc/tipCalc.js";
 window.addEventListener('DOMContentLoaded', () => {
     'strict';
     // variables();
@@ -6,7 +7,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // equality_task();
     // trophyChallenge();
     // functionTask();
-    // tipCalc();
+    tipCalc();
+    // arrayWork();
 });
-export {};
 //# sourceMappingURL=index.js.map

@@ -20,14 +20,12 @@ export function trophyChallenge() {
             else if (averageDolphin < averageKoalas) {
                 console.log(`Data #${numOfWay}, the winner is Koalas - ${averageKoalas}, against Dolphins - ${averageDolphin}`);
             }
-            else {
-            }
-            {
-                console.log(`Data #${numOfWay} Nobody Wins, the score is too low Dlophins: ${averageDolphin}, Koalas: ${averageKoalas}`);
-            }
         }
-        checkWinner(1, oneDolphins, oneKoalas);
-        checkWinner(2, twoDolphins, twoKoalas);
+        else {
+            console.log(`Data #${numOfWay} Nobody Wins, the score is not double Dolphins: ${averageDolphin}, Koalas: ${averageKoalas}`);
+        }
     }
+    checkWinner(1, oneDolphins, oneKoalas);
+    checkWinner(2, twoDolphins, twoKoalas);
 }
 //# sourceMappingURL=trophyChallenge.js.map

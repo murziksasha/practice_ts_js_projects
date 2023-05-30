@@ -5,6 +5,7 @@ import { equality_task } from "./modules/equality_task/equality_task.js";
 import { trophyChallenge } from "./modules/trophyChallenge/trophyChallenge.js";
 import { tipCalc } from "./modules/tipCalc/tipCalc.js";
 import { functionTask } from "./modules/functionTask/functionTask.js";
+import { arrayWork } from "./modules/arrayWork/arrayWork.js";
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -21,6 +22,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // functionTask();
 
-  // tipCalc();
+  tipCalc();
+
+  // arrayWork();
 
 });

@@ -1,6 +1,7 @@
 
 
 export function trophyChallenge() {
+
   const dataOneDolphins: number[] = [44, 23, 71];
   const dataOneKoalas: number[] = [65, 54, 49];
 
@@ -23,14 +24,14 @@ export function trophyChallenge() {
 
 
   function checkWinner(numOfWay: number, averageDolphin: number, averageKoalas: number){
-    if(averageDolphin >= (averageKoalas * 2) || averageKoalas >= (averageDolphin * 2)){
-      if(averageDolphin > averageKoalas){
-        console.log(`Data #${numOfWay}, the winner is Dolphins - ${averageDolphin}, against Koalas - ${averageKoalas}`);
-      } else if (averageDolphin < averageKoalas){
-        console.log(`Data #${numOfWay}, the winner is Koalas - ${averageKoalas}, against Dolphins - ${averageDolphin}`);
-      } else {
+      if(averageDolphin >= (averageKoalas * 2) || averageKoalas >= (averageDolphin * 2)){
+        if(averageDolphin > averageKoalas){
+          console.log(`Data #${numOfWay}, the winner is Dolphins - ${averageDolphin}, against Koalas - ${averageKoalas}`);
+        } else if (averageDolphin < averageKoalas){
+          console.log(`Data #${numOfWay}, the winner is Koalas - ${averageKoalas}, against Dolphins - ${averageDolphin}`);
+        } 
     } else {
-      console.log(`Data #${numOfWay} Nobody Wins, the score is too low Dlophins: ${averageDolphin}, Koalas: ${averageKoalas}`);
+      console.log(`Data #${numOfWay} Nobody Wins, the score is not double Dolphins: ${averageDolphin}, Koalas: ${averageKoalas}`);
 
     }
     
