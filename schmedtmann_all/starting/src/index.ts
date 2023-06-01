@@ -27,6 +27,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // arrayWork();
 
-  objectWork();
+  // objectWork();
 
 });
