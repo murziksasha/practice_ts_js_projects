@@ -7,6 +7,8 @@ import { tipCalc } from "./modules/tipCalc/tipCalc.js";
 import { functionTask } from "./modules/functionTask/functionTask.js";
 import { arrayWork } from "./modules/arrayWork/arrayWork.js";
 import { objectWork } from "./modules/objectWork/objectWork.js";
+import { calcTempAmplitude } from "./modules/calcTempAmplitude/calcTempAmplitude.js";
+import { measureKelvin } from "./modules/measureKelvin/measureKelvin.js";
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -28,5 +30,12 @@ window.addEventListener('DOMContentLoaded', () => {
   // arrayWork();
 
   // objectWork();
+
+  // const temperatures1 = [3, -2, -6, -1, 'error', 9, 13, 17, 15, 14, 9, 5];
+  // const temperatures2 = [3, -2, -8, -1, 'trouble', 9, 13, 30, 15, 14, 9, 5];
+  // calcTempAmplitude(temperatures1, temperatures2);
+
+  measureKelvin();
+
 
 });
