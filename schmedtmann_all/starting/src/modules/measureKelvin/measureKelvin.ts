@@ -1,17 +1,16 @@
-interface MeasurObj{
-  type: string,
-  unit: string,
-  value: string | null
+interface MeasurObj {
+  type: string;
+  unit: string;
+  value: string | null;
 }
 
 export function measureKelvin() {
-
   // const measurements: MeasurObj = {
   //   type: 'temp',
   //   unit: 'celsius',
   //   value: prompt('Degrees celsius'),
   // };
-  
+
   // let kelvin: number = 0;
   // const logic = (value: string | null) => {
   //     if (value && value !== null && value !== ' ' && !Number.isNaN(+value)) {
@@ -22,20 +21,19 @@ export function measureKelvin() {
   //     }
   //   return kelvin;
   // };
-  
-  // console.log(logic(measurements.value));
 
+  // console.log(logic(measurements.value));
 
   // ----------- CODE challenge:
   const data1 = [17, 21, 23];
   const data2 = [12, 5, -5, 0, 4];
-  
+
   const printForecast = (arr: number[]) => {
     const resutlArr: string[] = [];
     arr.forEach((item, i) => {
-      if(i === 0){
+      if (i === 0) {
         resutlArr.push(`... ${item}°C in ${i + 1} days`);
-      } else if (i > 0 && i < arr.length - 1){
+      } else if (i > 0 && i < arr.length - 1) {
         resutlArr.push(`... ${item}°C in ${i + 1} days`);
       } else {
         resutlArr.push(`... ${item}°C in ${i + 1} days ...`);
@@ -46,8 +44,4 @@ export function measureKelvin() {
 
   printForecast(data1);
   printForecast(data2);
-
-
-
-  
 }
