@@ -1,4 +1,4 @@
-import { logicGame } from "./module/ligicGame.js";
+import { logicGame } from "./module/logicGame.js";
 
 
 window.addEventListener('DOMContentLoaded', () => {
