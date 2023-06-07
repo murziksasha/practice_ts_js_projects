@@ -13,8 +13,18 @@ export function logicGame() {
     let currentScore = 0;
     const totalCurrentScore = [0, 0];
     const initGame = () => {
+        activePlayer = 0;
+        currentScore = 0;
+        btnRollDice.disabled = false;
+        btnHold.disabled = false;
         playerOneScore.textContent = '0';
         playerTwoScore.textContent = '0';
+        curPlayerOneScore.textContent = '0';
+        curPlayerTwoScore.textContent = '0';
+        pOneSection === null || pOneSection === void 0 ? void 0 : pOneSection.classList.add('player--active');
+        pTwoSection === null || pTwoSection === void 0 ? void 0 : pTwoSection.classList.remove('player--active');
+        totalCurrentScore[0] = 0;
+        totalCurrentScore[1] = 0;
         dice.classList.add('hide');
     };
     initGame();
@@ -40,6 +50,26 @@ export function logicGame() {
                 holdGame(rndNumber, currentScore);
             }
         });
+        btnHold.addEventListener('click', () => {
+            console.log('hold');
+            totalCurrentScore[activePlayer] += currentScore;
+            const currentPlayer = document.querySelector(`#score--${activePlayer}`);
+            if (totalCurrentScore[activePlayer] < 10) {
+                currentPlayer.textContent = '' + totalCurrentScore[activePlayer];
+                changePlayerCondition();
+                activePlayer = activePlayer === 0 ? 1 : 0;
+                currentScore = 0;
+            }
+            else {
+                currentPlayer.textContent = 'WIN';
+                activePlayer = activePlayer === 0 ? 1 : 0;
+                const secondPlayer = document.querySelector(`#score--${activePlayer}`);
+                secondPlayer.textContent = 'LOSE';
+                btnRollDice.disabled = true;
+                btnHold.disabled = true;
+            }
+        });
+        btnNewGame.addEventListener('click', initGame);
     };
     startGame();
     const holdGame = (rndNum, score) => {
@@ -48,9 +78,5 @@ export function logicGame() {
             currentPlayer.textContent = '' + score;
         }
     };
-    btnHold.addEventListener('click', () => {
-        console.log('hold');
-        changePlayerCondition();
-    });
 }
 //# sourceMappingURL=logicGame.js.map

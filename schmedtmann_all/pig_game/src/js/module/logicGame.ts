@@ -18,8 +18,18 @@ export function logicGame() {
   const totalCurrentScore: number[] = [0, 0];
 
   const initGame = () => {
+    activePlayer = 0;
+    currentScore = 0;
+    btnRollDice.disabled = false;
+    btnHold.disabled = false;
     playerOneScore.textContent = '0';
     playerTwoScore.textContent = '0';
+    curPlayerOneScore.textContent = '0';
+    curPlayerTwoScore.textContent = '0';
+    pOneSection?.classList.add('player--active');
+    pTwoSection?.classList.remove('player--active');
+    totalCurrentScore[0] = 0;
+    totalCurrentScore[1] = 0;
     dice.classList.add('hide');
   };
 
@@ -35,6 +45,7 @@ export function logicGame() {
   
 
   const startGame = () => {
+
     btnRollDice.addEventListener('click', () => {
       dice.classList.remove('hide');
       let rndNumber = Math.floor((Math.random() * 6) + 1);
@@ -48,24 +59,41 @@ export function logicGame() {
         activePlayer = activePlayer === 0 ? 1 : 0;
         holdGame(rndNumber, currentScore);
       }
-
     });
+    btnHold.addEventListener('click', () => {
+      console.log('hold')
+      totalCurrentScore[activePlayer] += currentScore;
+
+      const currentPlayer = document.querySelector(`#score--${activePlayer}`) as HTMLSpanElement;
+      if(totalCurrentScore[activePlayer] < 10){
+      currentPlayer.textContent = '' + totalCurrentScore[activePlayer];
+      changePlayerCondition();
+      activePlayer = activePlayer === 0 ? 1 : 0;
+      currentScore = 0;
+      } else {
+        currentPlayer.textContent = 'WIN';
+        activePlayer = activePlayer === 0 ? 1 : 0;
+        const secondPlayer = document.querySelector(`#score--${activePlayer}`) as HTMLSpanElement;
+        secondPlayer.textContent = 'LOSE';
+        btnRollDice.disabled = true;
+        btnHold.disabled = true;
+      }
+    });
+      btnNewGame.addEventListener('click', initGame);
   }
 
   startGame();
 
   const holdGame = (rndNum: number, score: number) => {
-        const currentPlayer = document.querySelector(`#current--${activePlayer}`) as HTMLSpanElement;
-        if(currentPlayer && currentPlayer !== null){
-          currentPlayer.textContent = '' + score;
-        }
-  
+    const currentPlayer = document.querySelector(`#current--${activePlayer}`) as HTMLSpanElement;
+    if(currentPlayer && currentPlayer !== null){
+      currentPlayer.textContent = '' + score;
+    }
   }
 
-  btnHold.addEventListener('click', () => {
-    console.log('hold')
-    changePlayerCondition();
-  });
+
+
+
 
 
 
