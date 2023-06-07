@@ -27,7 +27,8 @@ export function logicGame() {
     curPlayerOneScore.textContent = '0';
     curPlayerTwoScore.textContent = '0';
     pOneSection?.classList.add('player--active');
-    pTwoSection?.classList.remove('player--active');
+    pOneSection?.classList.remove('player--winner');
+    pTwoSection?.classList.remove('player--active', 'player--winner');
     totalCurrentScore[0] = 0;
     totalCurrentScore[1] = 0;
     dice.classList.add('hide');
@@ -65,13 +66,17 @@ export function logicGame() {
       totalCurrentScore[activePlayer] += currentScore;
 
       const currentPlayer = document.querySelector(`#score--${activePlayer}`) as HTMLSpanElement;
+      const curPlayerSection = document.querySelector(`.player--${activePlayer}`);
       if(totalCurrentScore[activePlayer] < 10){
       currentPlayer.textContent = '' + totalCurrentScore[activePlayer];
       changePlayerCondition();
       activePlayer = activePlayer === 0 ? 1 : 0;
       currentScore = 0;
       } else {
+        dice.classList.add('hide');
         currentPlayer.textContent = 'WIN';
+        curPlayerSection?.classList.remove('player--active');
+        curPlayerSection?.classList.add('player--winner');
         activePlayer = activePlayer === 0 ? 1 : 0;
         const secondPlayer = document.querySelector(`#score--${activePlayer}`) as HTMLSpanElement;
         secondPlayer.textContent = 'LOSE';
