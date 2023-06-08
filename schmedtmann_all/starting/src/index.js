@@ -1,4 +1,4 @@
-import { measureKelvin } from "./modules/measureKelvin/measureKelvin.js";
+import { contextThis } from "./modules/contextThis/contextThis.js";
 window.addEventListener('DOMContentLoaded', () => {
     'strict';
     // variables();
@@ -13,6 +13,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // const temperatures1 = [3, -2, -6, -1, 'error', 9, 13, 17, 15, 14, 9, 5];
     // const temperatures2 = [3, -2, -8, -1, 'trouble', 9, 13, 30, 15, 14, 9, 5];
     // calcTempAmplitude(temperatures1, temperatures2);
-    measureKelvin();
+    // measureKelvin();
+    contextThis();
 });
 //# sourceMappingURL=index.js.map

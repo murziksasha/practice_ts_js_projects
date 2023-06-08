@@ -9,6 +9,7 @@ import { arrayWork } from "./modules/arrayWork/arrayWork.js";
 import { objectWork } from "./modules/objectWork/objectWork.js";
 import { calcTempAmplitude } from "./modules/calcTempAmplitude/calcTempAmplitude.js";
 import { measureKelvin } from "./modules/measureKelvin/measureKelvin.js";
+import { contextThis } from "./modules/contextThis/contextThis.js";
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -35,7 +36,9 @@ window.addEventListener('DOMContentLoaded', () => {
   // const temperatures2 = [3, -2, -8, -1, 'trouble', 9, 13, 30, 15, 14, 9, 5];
   // calcTempAmplitude(temperatures1, temperatures2);
 
-  measureKelvin();
+  // measureKelvin();
+
+  contextThis();
 
 
 });
