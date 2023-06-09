@@ -39,9 +39,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // measureKelvin();
 
-  // contextThis();
+  contextThis();
 
-  soccerBetApp();
+  // soccerBetApp();
 
 
 });

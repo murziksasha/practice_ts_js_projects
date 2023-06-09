@@ -2,22 +2,16 @@
 
 export function contextThis() {
 
-  const sasha = {
-    firstName: 'Sasha',
-    year: 1985,
-    calcAge: function(){
-      console.log(this);
-      console.log(2023 - this.year);
-      
-      const greet = () => {
-        console.log(`Hey from arrow method ${this.firstName}`);
-      }
-      greet();
-    },
-  }
+  const rest: Map<number | string | boolean, string | number> = new Map([
+    ['question', 'What is the best programming language in the World?'],
+    [1, 'C'],
+    [2, 'Java'],
+    [3, 'JavaScript'],
+    ['correct', 3],
+    [true, 'Correct 🥳'],
+    [false, 'INcorrect 😿']
+  ] as Iterable<readonly[number | string | boolean, string | number]>);
 
-
-  sasha.calcAge();
-
+  console.log(rest.get(false));
 
 }
