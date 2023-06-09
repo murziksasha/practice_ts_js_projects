@@ -1,17 +1,30 @@
 
 
 export function contextThis() {
+  const btn = document.createElement('button');
+  const textArea = document.createElement('textarea');
+  btn.textContent = 'button';
+  document.body.append(textArea);
+  document.body.append(btn);
 
-  const rest: Map<number | string | boolean, string | number> = new Map([
-    ['question', 'What is the best programming language in the World?'],
-    [1, 'C'],
-    [2, 'Java'],
-    [3, 'JavaScript'],
-    ['correct', 3],
-    [true, 'Correct 🥳'],
-    [false, 'INcorrect 😿']
-  ] as Iterable<readonly[number | string | boolean, string | number]>);
+  const camelCaseFunc = (str: string) => {
+    if(!str) return;
+    let rows = str.split('/n').join('');
+    let arr = rows.toLowerCase().split('_');
+    let resultArr: string[] = [];
+    for (const item of arr){
+      resultArr.push((item[0].toUpperCase() + item.slice(1).trim()));
+    }
+    let result = resultArr.join('');
+    return (result[0].toLowerCase() + result.slice(1));
+  }
 
-  console.log(rest.get(false));
+  btn.addEventListener('click', ()=>{
+    console.log(camelCaseFunc(textArea.value));
+    // console.log(camelCaseFunc("underscore_case"));
+  });
+
+
+
 
 }
