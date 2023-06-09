@@ -1,4 +1,4 @@
-import { contextThis } from "./modules/contextThis/contextThis.js";
+import { soccerBetApp } from "./modules/soccerBetApp/soccerBetApp.js";
 window.addEventListener('DOMContentLoaded', () => {
     'strict';
     // variables();
@@ -14,7 +14,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // const temperatures2 = [3, -2, -8, -1, 'trouble', 9, 13, 30, 15, 14, 9, 5];
     // calcTempAmplitude(temperatures1, temperatures2);
     // measureKelvin();
-    contextThis();
-    // soccerBetApp();
+    // contextThis();
+    soccerBetApp();
 });
 //# sourceMappingURL=index.js.map
