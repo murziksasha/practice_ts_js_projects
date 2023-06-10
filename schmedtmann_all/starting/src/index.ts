@@ -11,6 +11,8 @@ import { calcTempAmplitude } from "./modules/calcTempAmplitude/calcTempAmplitude
 import { measureKelvin } from "./modules/measureKelvin/measureKelvin.js";
 import { contextThis } from "./modules/contextThis/contextThis.js";
 import { soccerBetApp } from "./modules/soccerBetApp/soccerBetApp.js";
+import { stringCoolPractice } from "./modules/stringCoolPractice/stringCoolPractice.js";
+import { functionPractice } from "./modules/functionPractice/functionPractice.js";
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -39,9 +41,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // measureKelvin();
 
-  contextThis();
+  // contextThis();
 
   // soccerBetApp();
+
+  // stringCoolPractice();
+
+  functionPractice();
 
 
 });
