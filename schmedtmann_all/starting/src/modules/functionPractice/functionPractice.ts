@@ -1,24 +1,26 @@
 
-interface ArayOfFlight {
-  flightNum: number | string,
-  numPassengers: number,
-  price: number
-}
 
 export function functionPractice() {
-
-  const booking: Array<ArayOfFlight> = [];
-
-  const createBooking = (flightNum: number | string, numPassengers: number = 1, price: number = 199 * numPassengers) => {
-    const bookingLocalObj = {
-      flightNum,
-      numPassengers,
-      price,      
+  const btn = document.querySelector('[data-btn]') as HTMLButtonElement;
+  const poll = {
+    answers : [],
+    registerNewAnswer(){
+      const answer = prompt(`What is your favourite language?
+      0: JavaScript
+      1: Python
+      2: Rust
+      3: C++
+      `, ``);
+      return answer;
     }
-    console.log(bookingLocalObj);
-    booking.push(bookingLocalObj);
   }
-  createBooking(1503, undefined, 5);
-  console.log(booking);
-  
+
+  btn.addEventListener('click', () => {
+     console.log(poll.registerNewAnswer());
+  });
+
+
+
+
+
 }

@@ -1,15 +1,19 @@
 export function functionPractice() {
-    const booking = [];
-    const createBooking = (flightNum, numPassengers = 1, price = 199 * numPassengers) => {
-        const bookingLocalObj = {
-            flightNum,
-            numPassengers,
-            price,
-        };
-        console.log(bookingLocalObj);
-        booking.push(bookingLocalObj);
+    const btn = document.querySelector('[data-btn]');
+    const poll = {
+        answers: [],
+        registerNewAnswer() {
+            const answer = prompt(`What is your favourite language?
+      0: JavaScript
+      1: Python
+      2: Rust
+      3: C++
+      `, ``);
+            return answer;
+        }
     };
-    createBooking(1503, undefined, 5);
-    console.log(booking);
+    btn.addEventListener('click', () => {
+        console.log(poll.registerNewAnswer());
+    });
 }
 //# sourceMappingURL=functionPractice.js.map
