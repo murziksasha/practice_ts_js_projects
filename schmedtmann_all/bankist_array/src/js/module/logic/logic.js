@@ -107,5 +107,14 @@ export function logic() {
     }
     // checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
     // checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
+    function calcAverageHumanAge(array) {
+        const resultArray = array.map((ageDog) => ageDog <= 2 ? 2 * ageDog : 16 + ageDog * 4).filter((a) => a >= 18);
+        const sum = resultArray.reduce((acc, cur) => acc + cur, 0);
+        const average = sum / resultArray.length;
+        return +average.toFixed();
+    }
+    const resultantAge = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+    // const resultantAge =  calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+    console.log(resultantAge);
 }
 //# sourceMappingURL=logic.js.map

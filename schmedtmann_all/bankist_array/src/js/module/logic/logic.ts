@@ -145,5 +145,19 @@ console.log(totalWithdraws);
   // checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
   // checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
 
+  function calcAverageHumanAge(array: number[]): number {
+    const resultArray: number[] = array.map((ageDog: number): number  => ageDog <= 2 ? 2 * ageDog : 16 + ageDog * 4).filter((a: number): boolean => a >= 18);
+  
+    const sum: number = resultArray.reduce((acc: number, cur: number): number => acc + cur, 0);
+    const average: number = sum / resultArray.length;
+  
+    return +average.toFixed();
+  }
+
+  const resultantAge =  calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+  // const resultantAge =  calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+
+  console.log(resultantAge)
+
 
 }
