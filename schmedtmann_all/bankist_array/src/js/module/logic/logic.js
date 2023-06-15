@@ -1,9 +1,6 @@
 ;
 export function logic() {
     const appElement = document.querySelector('.app');
-    if (appElement !== null) {
-        appElement.style.opacity = '100';
-    }
     /////////////////////////////////////////////////
     /////////////////////////////////////////////////
     // BANKIST APP
@@ -63,7 +60,6 @@ export function logic() {
         ['EUR', 'Euro'],
         ['GBP', 'Pound sterling'],
     ]);
-    const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
     function displayMovements(arr) {
         if (containerMovements !== null) {
             containerMovements.innerHTML = '';
@@ -79,21 +75,69 @@ export function logic() {
             });
         }
     }
-    displayMovements(movements);
+    const calcDisplaySummary = (accs) => {
+        const incomes = accs.movements.filter((a) => a > 0).reduce((acc, curr) => acc + curr);
+        const outGo = accs.movements.filter((a) => a < 0).reduce((acc, curr) => acc + curr);
+        const interest = accs.movements.filter(mov => mov > 0).map(deposit => deposit * accs.interestRate / 100).filter(a => a >= 1).reduce((acc, curr) => acc + curr);
+        if (labelSumIn !== null) {
+            labelSumIn.textContent = `${incomes}💶`;
+        }
+        if (labelSumOut !== null) {
+            labelSumOut.textContent = `${Math.abs(outGo)}💶`;
+        }
+        if (labelSumInterest !== null) {
+            labelSumInterest.textContent = `${interest}💶`;
+        }
+    };
+    const calcDisplayBalance = (acc) => {
+        const totalFinance = acc.movements.reduce((acc, cur) => acc + cur);
+        if (labelBalance && labelBalance !== null) {
+            labelBalance.textContent = `${totalFinance}€`;
+        }
+    };
     const createUserNames = (accs) => {
         accs.forEach(acc => {
             acc.userName = acc.owner.toLowerCase().split(' ').map(item => item = item[0]).join('');
         });
     };
     createUserNames(accounts);
-    const deposists = movements.filter((a, b) => a > b);
-    console.log(deposists);
-    const withdrawals = movements.filter((a, b) => a < b);
-    console.log(withdrawals);
-    const totalDeposits = deposists.reduce((acc, curr) => acc + curr, 0);
-    console.log(totalDeposits);
-    const totalWithdraws = withdrawals.reduce((acc, curr) => acc + curr, 0);
-    console.log(totalWithdraws);
+    let currentAccount;
+    btnLogin === null || btnLogin === void 0 ? void 0 : btnLogin.addEventListener('click', e => {
+        e.preventDefault();
+        if (inputLoginUsername !== null) {
+            currentAccount = accounts.find(acc => acc.userName === inputLoginUsername.value);
+        }
+        if (currentAccount && inputLoginPin) {
+            if (currentAccount.pin === +inputLoginPin.value) {
+                if (appElement !== null) {
+                    appElement.style.opacity = '100';
+                }
+                //clear the input field
+                inputLoginUsername.value = inputLoginPin.value = '';
+                inputLoginPin.blur();
+                //display UI and message
+                labelWelcome ? labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}!` : null;
+                //display movements
+                displayMovements(currentAccount.movements);
+                //display balance
+                calcDisplayBalance(currentAccount);
+                //display summary
+                calcDisplaySummary(currentAccount);
+            }
+        }
+    });
+    if (appElement !== null) {
+        appElement.style.opacity = '100';
+    }
+    btnTransfer === null || btnTransfer === void 0 ? void 0 : btnTransfer.addEventListener('click', e => {
+        e.preventDefault();
+        if (inputTransferAmount && inputTransferAmount.value !== null) {
+            const amount = +inputTransferAmount.value;
+            const receiverAcc = inputTransferTo.value;
+            console.log(amount);
+            console.log(receiverAcc);
+        }
+    });
     /////////////////////////////////////////////////
     //Data 1: Julia's data [3, 5, 2, 12, 7], Kate's data [4, 1, 15, 8, 3]
     //Data 2: Julia's data [9, 16, 6, 8, 3], Kate's data [10, 5, 6, 1, 4]
@@ -115,6 +159,6 @@ export function logic() {
     }
     const resultantAge = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
     // const resultantAge =  calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
-    console.log(resultantAge);
+    // console.log(resultantAge)
 }
 //# sourceMappingURL=logic.js.map
