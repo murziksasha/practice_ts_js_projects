@@ -215,6 +215,22 @@ btnClose?.addEventListener('click', e => {
   }
 });
 
+let ifSort = true;
+btnSort?.addEventListener('click', e => {
+  e.preventDefault();
+  if(currentAccount) {
+    const sortAccount = {...currentAccount};
+    sortAccount.movements = [...currentAccount.movements];
+    if(ifSort){
+      sortAccount.movements.sort((a, b) => a - b);
+      updateUI(sortAccount);
+    } else {
+      updateUI(currentAccount);
+    }
+    ifSort = !ifSort;
+  }
+})
+
 
 /////////////////////////////////////////////////
 
@@ -242,25 +258,10 @@ btnClose?.addEventListener('click', e => {
     return +average.toFixed();
   }
 
-  const resultantAge =  calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
-  // const resultantAge =  calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+  const x = new Array(7).fill(`${Math.floor(Math.random() * 100)}`);
 
-  // console.log(resultantAge)
+  console.log(x)
 
-  const testFlat = [[1,42, 3], [4, 88, 54], 99, 75];
-  const testDeepFlat = [[1,42, [44, 55, 66]], [4, 88, 54], 99, 75];
-
-  console.log(testFlat.flat());
-  console.log(testDeepFlat.flat(2));
-
-
-  //flat
-  const accountMovements = accounts.map( acc => acc.movements);
-  console.log(accountMovements.flat().reduce((acc, cur) => acc + cur, 0));
-
-  //flatMap
-  const flatMapExample = accounts.flatMap( acc => acc.movements).reduce((acc, cur) => acc + cur, 0);
-  console.log(flatMapExample);
 
 
 }

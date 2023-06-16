@@ -166,6 +166,22 @@ export function logic() {
             }
         }
     });
+    let ifSort = true;
+    btnSort === null || btnSort === void 0 ? void 0 : btnSort.addEventListener('click', e => {
+        e.preventDefault();
+        if (currentAccount) {
+            const sortAccount = Object.assign({}, currentAccount);
+            sortAccount.movements = [...currentAccount.movements];
+            if (ifSort) {
+                sortAccount.movements.sort((a, b) => a - b);
+                updateUI(sortAccount);
+            }
+            else {
+                updateUI(currentAccount);
+            }
+            ifSort = !ifSort;
+        }
+    });
     /////////////////////////////////////////////////
     //Data 1: Julia's data [3, 5, 2, 12, 7], Kate's data [4, 1, 15, 8, 3]
     //Data 2: Julia's data [9, 16, 6, 8, 3], Kate's data [10, 5, 6, 1, 4]
@@ -185,18 +201,7 @@ export function logic() {
         const average = sum / resultArray.length;
         return +average.toFixed();
     }
-    const resultantAge = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
-    // const resultantAge =  calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
-    // console.log(resultantAge)
-    const testFlat = [[1, 42, 3], [4, 88, 54], 99, 75];
-    const testDeepFlat = [[1, 42, [44, 55, 66]], [4, 88, 54], 99, 75];
-    console.log(testFlat.flat());
-    console.log(testDeepFlat.flat(2));
-    //flat
-    const accountMovements = accounts.map(acc => acc.movements);
-    console.log(accountMovements.flat().reduce((acc, cur) => acc + cur, 0));
-    //flatMap
-    const flatMapExample = accounts.flatMap(acc => acc.movements).reduce((acc, cur) => acc + cur, 0);
-    console.log(flatMapExample);
+    const x = new Array(7).fill(`${Math.floor(Math.random() * 100)}`);
+    console.log(x);
 }
 //# sourceMappingURL=logic.js.map
