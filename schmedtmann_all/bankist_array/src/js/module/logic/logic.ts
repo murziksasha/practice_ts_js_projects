@@ -4,6 +4,7 @@ interface Account {
   interestRate: number,
   pin: number,
   userName?: string,
+  balance?: number,
 };
 
 
@@ -55,7 +56,7 @@ const labelSumOut = document.querySelector('.summary__value--out');
 const labelSumInterest = document.querySelector('.summary__value--interest');
 const labelTimer = document.querySelector('.timer');
 
-const containerApp = document.querySelector('.app');
+const containerApp = document.querySelector('.app') as HTMLDivElement;
 const containerMovements = document.querySelector('.movements');
 
 const btnLogin = document.querySelector('.login__btn');
@@ -68,9 +69,9 @@ const inputLoginUsername = document.querySelector('.login__input--user') as HTML
 const inputLoginPin = document.querySelector('.login__input--pin') as HTMLInputElement;
 const inputTransferTo = document.querySelector('.form__input--to') as HTMLInputElement;
 const inputTransferAmount = document.querySelector('.form__input--amount') as HTMLInputElement;
-const inputLoanAmount = document.querySelector('.form__input--loan-amount');
-const inputCloseUsername = document.querySelector('.form__input--user');
-const inputClosePin = document.querySelector('.form__input--pin');
+const inputLoanAmount = document.querySelector('.form__input--loan-amount') as HTMLInputElement;
+const inputCloseUsername = document.querySelector('.form__input--user') as HTMLInputElement;
+const inputClosePin = document.querySelector('.form__input--pin') as HTMLInputElement;
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -103,24 +104,24 @@ function displayMovements(arr: number[]) {
 
 
 const calcDisplaySummary = (accs: Account) => {
-  const incomes = accs.movements.filter((a) => a > 0).reduce((acc, curr) => acc + curr);
-  const outGo = accs.movements.filter((a) => a < 0).reduce((acc, curr) => acc + curr);
-  const interest = accs.movements.filter(mov => mov > 0).map(deposit => deposit * accs.interestRate / 100).filter(a => a >= 1).reduce((acc, curr) => acc + curr);
+  const incomes = accs.movements.filter((a) => a > 0)?.reduce((acc, curr) => acc + curr, 0);
+  const outGo = accs.movements.filter((a) => a < 0)?.reduce((acc, curr) => acc + curr, 0);
+  const interest = accs.movements.filter(mov => mov > 0).map(deposit => deposit * accs.interestRate / 100).filter(a => a >= 1)?.reduce((acc, curr) => acc + curr, 0);
   if (labelSumIn !== null){
-    labelSumIn.textContent = `${incomes}💶`;
+    labelSumIn.textContent = `${incomes}€`;
   }
-  if (labelSumOut !== null) {
-    labelSumOut.textContent = `${Math.abs(outGo)}💶`;
+  if (labelSumOut !== null && outGo !== null) {
+    labelSumOut.textContent = `${Math.abs(outGo)}€`;
   }
-  if(labelSumInterest !== null){
-    labelSumInterest.textContent = `${interest}💶`;
+  if(labelSumInterest !== null && interest){
+    labelSumInterest.textContent = `${interest}€`;
   }
 }
 
 const calcDisplayBalance = (acc: Account) => {
-  const totalFinance = acc.movements.reduce((acc, cur) => acc + cur);
+  acc.balance = acc.movements.reduce((acc, cur) => acc + cur);
   if(labelBalance && labelBalance !== null){
-    labelBalance.textContent = `${totalFinance}€`;
+    labelBalance.textContent = `${acc.balance}€`;
   }
 }
 
@@ -136,6 +137,17 @@ const createUserNames = (accs: Account[]) => {
 createUserNames(accounts);
 
 let currentAccount: Account | undefined;
+
+const updateUI = (arr: Account) =>{
+  //display movements
+  displayMovements(arr.movements);
+
+  //display balance
+  calcDisplayBalance(arr);
+
+  //display summary
+  calcDisplaySummary(arr);
+}
 
 btnLogin?.addEventListener('click', e => {
   e.preventDefault();
@@ -154,36 +166,54 @@ btnLogin?.addEventListener('click', e => {
       //display UI and message
       labelWelcome ? labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}!` : null;
       
-      //display movements
-      displayMovements(currentAccount.movements);
-
-      //display balance
-      calcDisplayBalance(currentAccount);
-
-      //display summary
-      calcDisplaySummary(currentAccount);
-
+      
+      
     }
+  }
+  if(currentAccount){
+    updateUI(currentAccount);
   }
 
 });
 
-if( appElement !== null) {
-  appElement.style.opacity = '100';
-}
 
 btnTransfer?.addEventListener('click', e => {
   e.preventDefault();
-  if(inputTransferAmount && inputTransferAmount.value !== null){
+  if(inputTransferAmount && inputTransferAmount.value !== null ){
     const amount = +inputTransferAmount.value;
-    const receiverAcc = inputTransferTo.value;
-    console.log(amount);
-    console.log(receiverAcc);
+    const receiverAcc = accounts.find(acc => acc.userName === inputTransferTo.value);
+    if (amount > 0 && currentAccount && currentAccount.balance !== undefined && currentAccount.balance >= amount && receiverAcc?.userName !== currentAccount.userName) {
+      currentAccount.movements.push(-amount);
+      receiverAcc?.movements.push(amount);
+      updateUI(currentAccount);
+      inputTransferTo.value = inputTransferAmount.value = '';
+    }
   }
 });
 
+btnLoan?.addEventListener('click', e => {
+  e.preventDefault();
+  const amount = inputLoanAmount ? +(inputLoanAmount.value): null;
+  if (amount && amount > 0 && currentAccount?.movements && currentAccount?.movements.some(mov => mov >= amount * 0.1)){
+    currentAccount.movements.push(amount);
+    updateUI(currentAccount);
+  }
+  inputLoanAmount.value = '';
+});
 
 
+btnClose?.addEventListener('click', e => {
+  e.preventDefault();
+  if(inputCloseUsername !== null && inputClosePin !== null){
+    if(inputCloseUsername.value === currentAccount?.userName && +inputClosePin.value === currentAccount.pin) {
+      const index = accounts.findIndex( acc => acc.userName === currentAccount?.userName);
+      accounts.splice(index, 1);
+      inputCloseUsername.value = inputClosePin.value = '';
+      if(containerApp)containerApp.style.opacity = '0';
+    }
+
+  }
+});
 
 
 /////////////////////////////////////////////////
@@ -216,6 +246,21 @@ btnTransfer?.addEventListener('click', e => {
   // const resultantAge =  calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
 
   // console.log(resultantAge)
+
+  const testFlat = [[1,42, 3], [4, 88, 54], 99, 75];
+  const testDeepFlat = [[1,42, [44, 55, 66]], [4, 88, 54], 99, 75];
+
+  console.log(testFlat.flat());
+  console.log(testDeepFlat.flat(2));
+
+
+  //flat
+  const accountMovements = accounts.map( acc => acc.movements);
+  console.log(accountMovements.flat().reduce((acc, cur) => acc + cur, 0));
+
+  //flatMap
+  const flatMapExample = accounts.flatMap( acc => acc.movements).reduce((acc, cur) => acc + cur, 0);
+  console.log(flatMapExample);
 
 
 }

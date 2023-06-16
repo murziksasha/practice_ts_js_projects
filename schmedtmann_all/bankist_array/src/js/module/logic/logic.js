@@ -76,23 +76,24 @@ export function logic() {
         }
     }
     const calcDisplaySummary = (accs) => {
-        const incomes = accs.movements.filter((a) => a > 0).reduce((acc, curr) => acc + curr);
-        const outGo = accs.movements.filter((a) => a < 0).reduce((acc, curr) => acc + curr);
-        const interest = accs.movements.filter(mov => mov > 0).map(deposit => deposit * accs.interestRate / 100).filter(a => a >= 1).reduce((acc, curr) => acc + curr);
+        var _a, _b, _c;
+        const incomes = (_a = accs.movements.filter((a) => a > 0)) === null || _a === void 0 ? void 0 : _a.reduce((acc, curr) => acc + curr, 0);
+        const outGo = (_b = accs.movements.filter((a) => a < 0)) === null || _b === void 0 ? void 0 : _b.reduce((acc, curr) => acc + curr, 0);
+        const interest = (_c = accs.movements.filter(mov => mov > 0).map(deposit => deposit * accs.interestRate / 100).filter(a => a >= 1)) === null || _c === void 0 ? void 0 : _c.reduce((acc, curr) => acc + curr, 0);
         if (labelSumIn !== null) {
-            labelSumIn.textContent = `${incomes}💶`;
+            labelSumIn.textContent = `${incomes}€`;
         }
-        if (labelSumOut !== null) {
-            labelSumOut.textContent = `${Math.abs(outGo)}💶`;
+        if (labelSumOut !== null && outGo !== null) {
+            labelSumOut.textContent = `${Math.abs(outGo)}€`;
         }
-        if (labelSumInterest !== null) {
-            labelSumInterest.textContent = `${interest}💶`;
+        if (labelSumInterest !== null && interest) {
+            labelSumInterest.textContent = `${interest}€`;
         }
     };
     const calcDisplayBalance = (acc) => {
-        const totalFinance = acc.movements.reduce((acc, cur) => acc + cur);
+        acc.balance = acc.movements.reduce((acc, cur) => acc + cur);
         if (labelBalance && labelBalance !== null) {
-            labelBalance.textContent = `${totalFinance}€`;
+            labelBalance.textContent = `${acc.balance}€`;
         }
     };
     const createUserNames = (accs) => {
@@ -102,6 +103,14 @@ export function logic() {
     };
     createUserNames(accounts);
     let currentAccount;
+    const updateUI = (arr) => {
+        //display movements
+        displayMovements(arr.movements);
+        //display balance
+        calcDisplayBalance(arr);
+        //display summary
+        calcDisplaySummary(arr);
+    };
     btnLogin === null || btnLogin === void 0 ? void 0 : btnLogin.addEventListener('click', e => {
         e.preventDefault();
         if (inputLoginUsername !== null) {
@@ -117,25 +126,44 @@ export function logic() {
                 inputLoginPin.blur();
                 //display UI and message
                 labelWelcome ? labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}!` : null;
-                //display movements
-                displayMovements(currentAccount.movements);
-                //display balance
-                calcDisplayBalance(currentAccount);
-                //display summary
-                calcDisplaySummary(currentAccount);
             }
         }
+        if (currentAccount) {
+            updateUI(currentAccount);
+        }
     });
-    if (appElement !== null) {
-        appElement.style.opacity = '100';
-    }
     btnTransfer === null || btnTransfer === void 0 ? void 0 : btnTransfer.addEventListener('click', e => {
         e.preventDefault();
         if (inputTransferAmount && inputTransferAmount.value !== null) {
             const amount = +inputTransferAmount.value;
-            const receiverAcc = inputTransferTo.value;
-            console.log(amount);
-            console.log(receiverAcc);
+            const receiverAcc = accounts.find(acc => acc.userName === inputTransferTo.value);
+            if (amount > 0 && currentAccount && currentAccount.balance !== undefined && currentAccount.balance >= amount && (receiverAcc === null || receiverAcc === void 0 ? void 0 : receiverAcc.userName) !== currentAccount.userName) {
+                currentAccount.movements.push(-amount);
+                receiverAcc === null || receiverAcc === void 0 ? void 0 : receiverAcc.movements.push(amount);
+                updateUI(currentAccount);
+                inputTransferTo.value = inputTransferAmount.value = '';
+            }
+        }
+    });
+    btnLoan === null || btnLoan === void 0 ? void 0 : btnLoan.addEventListener('click', e => {
+        e.preventDefault();
+        const amount = inputLoanAmount ? +(inputLoanAmount.value) : null;
+        if (amount && amount > 0 && (currentAccount === null || currentAccount === void 0 ? void 0 : currentAccount.movements) && (currentAccount === null || currentAccount === void 0 ? void 0 : currentAccount.movements.some(mov => mov >= amount * 0.1))) {
+            currentAccount.movements.push(amount);
+            updateUI(currentAccount);
+        }
+        inputLoanAmount.value = '';
+    });
+    btnClose === null || btnClose === void 0 ? void 0 : btnClose.addEventListener('click', e => {
+        e.preventDefault();
+        if (inputCloseUsername !== null && inputClosePin !== null) {
+            if (inputCloseUsername.value === (currentAccount === null || currentAccount === void 0 ? void 0 : currentAccount.userName) && +inputClosePin.value === currentAccount.pin) {
+                const index = accounts.findIndex(acc => acc.userName === (currentAccount === null || currentAccount === void 0 ? void 0 : currentAccount.userName));
+                accounts.splice(index, 1);
+                inputCloseUsername.value = inputClosePin.value = '';
+                if (containerApp)
+                    containerApp.style.opacity = '0';
+            }
         }
     });
     /////////////////////////////////////////////////
@@ -160,5 +188,15 @@ export function logic() {
     const resultantAge = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
     // const resultantAge =  calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
     // console.log(resultantAge)
+    const testFlat = [[1, 42, 3], [4, 88, 54], 99, 75];
+    const testDeepFlat = [[1, 42, [44, 55, 66]], [4, 88, 54], 99, 75];
+    console.log(testFlat.flat());
+    console.log(testDeepFlat.flat(2));
+    //flat
+    const accountMovements = accounts.map(acc => acc.movements);
+    console.log(accountMovements.flat().reduce((acc, cur) => acc + cur, 0));
+    //flatMap
+    const flatMapExample = accounts.flatMap(acc => acc.movements).reduce((acc, cur) => acc + cur, 0);
+    console.log(flatMapExample);
 }
 //# sourceMappingURL=logic.js.map
