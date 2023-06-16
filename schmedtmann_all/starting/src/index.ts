@@ -13,6 +13,7 @@ import { contextThis } from "./modules/contextThis/contextThis.js";
 import { soccerBetApp } from "./modules/soccerBetApp/soccerBetApp.js";
 import { stringCoolPractice } from "./modules/stringCoolPractice/stringCoolPractice.js";
 import { functionPractice } from "./modules/functionPractice/functionPractice.js";
+import { arrayBigPractice } from "./modules/arrayBigPractice/arrayBigPractice.js";
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -47,7 +48,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // stringCoolPractice();
 
-  functionPractice();
-
+  // functionPractice();
+  
+  arrayBigPractice();
 
 });

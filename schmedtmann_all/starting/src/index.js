@@ -1,4 +1,4 @@
-import { functionPractice } from "./modules/functionPractice/functionPractice.js";
+import { arrayBigPractice } from "./modules/arrayBigPractice/arrayBigPractice.js";
 window.addEventListener('DOMContentLoaded', () => {
     'strict';
     // variables();
@@ -17,6 +17,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // contextThis();
     // soccerBetApp();
     // stringCoolPractice();
-    functionPractice();
+    // functionPractice();
+    arrayBigPractice();
 });
 //# sourceMappingURL=index.js.map
