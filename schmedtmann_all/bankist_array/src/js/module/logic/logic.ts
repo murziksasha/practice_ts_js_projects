@@ -92,7 +92,7 @@ function displayMovements(arr: number[]) {
        const html  = `  
         <div class="movements__row">
           <div class="movements__type movements__type--${meaning}">${i+1} ${meaning}</div>
-          <div class="movements__value">${item}€</div>
+          <div class="movements__value">${item.toFixed(2)}€</div>
         </div>
       `;
       containerMovements.insertAdjacentHTML('afterbegin', html);
@@ -108,20 +108,20 @@ const calcDisplaySummary = (accs: Account) => {
   const outGo = accs.movements.filter((a) => a < 0)?.reduce((acc, curr) => acc + curr, 0);
   const interest = accs.movements.filter(mov => mov > 0).map(deposit => deposit * accs.interestRate / 100).filter(a => a >= 1)?.reduce((acc, curr) => acc + curr, 0);
   if (labelSumIn !== null){
-    labelSumIn.textContent = `${incomes}€`;
+    labelSumIn.textContent = `${incomes.toFixed(2)}€`;
   }
   if (labelSumOut !== null && outGo !== null) {
-    labelSumOut.textContent = `${Math.abs(outGo)}€`;
+    labelSumOut.textContent = `${Math.abs(outGo).toFixed(2)}€`;
   }
   if(labelSumInterest !== null && interest){
-    labelSumInterest.textContent = `${interest}€`;
+    labelSumInterest.textContent = `${interest.toFixed(2)}€`;
   }
 }
 
 const calcDisplayBalance = (acc: Account) => {
   acc.balance = acc.movements.reduce((acc, cur) => acc + cur);
   if(labelBalance && labelBalance !== null){
-    labelBalance.textContent = `${acc.balance}€`;
+    labelBalance.textContent = `${acc.balance.toFixed(2)}€`;
   }
 }
 
@@ -258,9 +258,7 @@ btnSort?.addEventListener('click', e => {
     return +average.toFixed();
   }
 
-  const x = new Array(7).fill(`${Math.floor(Math.random() * 100)}`);
 
-  console.log(x)
 
 
 
