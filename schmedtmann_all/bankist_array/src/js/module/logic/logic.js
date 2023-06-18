@@ -209,6 +209,9 @@ export function logic() {
     ];
     const ownersEatTooMuch = [];
     const ownersEatTooLittle = [];
+    let resultStringTooMuch = `'s dogs eat too much!`;
+    let resultStringTooLittle = `'s dogs eat too little!`;
+    const dogOk = [];
     dogs.forEach((item, i) => (item.recFood = Math.trunc(item.weight ** 0.75 * 28)));
     dogs.forEach((item, i) => {
         item.owners.forEach(owners => {
@@ -222,8 +225,23 @@ export function logic() {
             item.curFood > item.recFood ? ownersEatTooMuch.push(...item.owners) : ownersEatTooLittle.push(...item.owners);
         }
     });
-    ownersEatTooMuch.forEach((item, i, arr) => {
-        let resultString = '';
-    });
+    console.log(ownersEatTooMuch.join(' and ') + resultStringTooMuch);
+    console.log(ownersEatTooLittle.join(' and ') + resultStringTooLittle);
+    const tenPercent = (forResult, minus) => {
+        if (minus === '-') {
+            return forResult -= (forResult * 10 / 100);
+        }
+        return forResult += (forResult * 10 / 100);
+    };
+    for (let i = 0; i < dogs.length; i++) {
+        // if(dogs[i].curFood === dogs[i].recFood) console.log(`exactly match curr food and recomm`);
+        console.log(dogs[i].curFood + '   ' + dogs[i].recFood + '   ' + `percent ${tenPercent(dogs[i].recFood)} min ${tenPercent(dogs[i].recFood, '-')}`);
+        if (dogs[i].curFood < tenPercent(dogs[i].recFood) || dogs[i].curFood > tenPercent(dogs[i].recFood, '-')) {
+            dogOk.push(dogs[i].curFood);
+        }
+    }
+    console.log(dogOk);
+    const sortedArr = [...dogs];
+    console.log(sortedArr.sort((a, b) => a.recFood - b.recFood));
 }
 //# sourceMappingURL=logic.js.map
