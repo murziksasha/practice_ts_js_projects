@@ -258,6 +258,41 @@ btnSort?.addEventListener('click', e => {
     return +average.toFixed();
   }
 
+  interface Dog {
+    weight: number;
+    curFood: number;
+    owners: string[];
+    recFood: number;
+  }
+
+  const dogs: Dog[] = [
+    { weight: 22, curFood: 250, owners: ['Alice', 'Bob'], recFood: 0 },
+    { weight: 8, curFood: 200, owners: ['Matilda'], recFood: 0 },
+    { weight: 13, curFood: 275, owners: ['Sarah', 'John'], recFood: 0 },
+    { weight: 32, curFood: 340, owners: ['Michael'], recFood: 0 },
+    ];
+
+    const ownersEatTooMuch: string[] = [];
+    const ownersEatTooLittle: string[] = [];
+
+    dogs.forEach((item: Dog, i) => (item.recFood = Math.trunc(item.weight ** 0.75 * 28)));
+
+    dogs.forEach((item, i) => {
+      item.owners.forEach(owners => {
+        if (owners === 'Sarah') {
+          if(item.recFood){
+            item.curFood > item.recFood ? console.log(`Sarah's dogs eat too much ! current ${item.curFood} vs recommend: ${item.recFood} `) : console.log(`they eat a little curr ${item.curFood} vs recom. ${item.recFood}`);
+          }
+        }
+      });
+      if(item.curFood !== undefined){
+        item.curFood > item.recFood ? ownersEatTooMuch.push(...item.owners) : ownersEatTooLittle.push(...item.owners);
+      }
+    })
+
+    ownersEatTooMuch.forEach((item, i, arr) => {
+      let resultString = '';
+    })
 
 
 
