@@ -14,7 +14,7 @@ interface Account {
 export function logic() {
   const appElement = document.querySelector('.app') as HTMLDivElement;
 
-  
+  let timer: number;
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // BANKIST APP
@@ -128,8 +128,29 @@ function formatMovementDate(date: Date) {
     return `${new Intl.DateTimeFormat(currentAccount?.locale).format(date)}`
 }
 
+function formatNumberIntl(num: number) {
+  const options: Intl.NumberFormatOptions = {
+    style: 'currency',
+    currency: `${currentAccount?.currency}`,
+  }
+  return new Intl.NumberFormat(currentAccount?.locale, options).format(num);
+}
+
+const formatCur = (value: number, locale: string, currency: string) => {
+  const options: Intl.NumberFormatOptions = {
+    style: 'currency',
+    currency: currency,
+  }
+  return new Intl.NumberFormat(locale, options).format(value);
+} 
+
 
 function displayMovements(arr: number[]) {
+
+  const options: Intl.NumberFormatOptions = {
+    style: 'currency',
+    currency: `${currentAccount?.currency}`,
+  }
 
   if(containerMovements !== null){
     containerMovements.innerHTML = '';
@@ -145,7 +166,7 @@ function displayMovements(arr: number[]) {
         <div class="movements__row">
           <div class="movements__type movements__type--${meaning}">${i+1} ${meaning}</div>
           <div class="movements_date">${displayDate}</div>
-          <div class="movements__value">${item.toFixed(2)}€</div>
+          <div class="movements__value">${formatNumberIntl(item)}</div>
         </div>
       `;
       containerMovements.insertAdjacentHTML('afterbegin', html);
@@ -231,6 +252,28 @@ const updateUI = (arr: Account) =>{
   calcDisplaySummary(arr);
 }
 
+const startLogOutTimer = (time: number = 100) => {
+  
+    if(timer)clearInterval(timer);
+
+  
+    timer = setInterval(() => {
+    const min = Math.trunc(time / 60);
+    const sec = time % 60;
+    if(labelTimer) {
+      labelTimer.textContent = `${String(min).padStart(2, '0')} : ${String(sec).padStart(2, '0')}`;
+      
+    }
+    if(min === 0 && sec === 0) {
+      clearInterval(timer);
+      appElement.style.opacity = '0';
+      if(labelWelcome)labelWelcome.textContent = `Log in to get started`;
+    } 
+    time--;
+  }, 1000);
+}
+
+
 btnLogin?.addEventListener('click', e => {
   e.preventDefault();
   if(inputLoginUsername !== null){
@@ -252,10 +295,12 @@ btnLogin?.addEventListener('click', e => {
       
     }
   }
+  
   if(currentAccount){
     updateUI(currentAccount);
   }
-
+  
+  startLogOutTimer();
 });
 
 
@@ -271,6 +316,7 @@ btnTransfer?.addEventListener('click', e => {
       inputTransferTo.value = inputTransferAmount.value = '';
     }
   }
+  startLogOutTimer(200);
 });
 
 btnLoan?.addEventListener('click', e => {
@@ -281,10 +327,12 @@ btnLoan?.addEventListener('click', e => {
     updateUI(currentAccount);
   }
   inputLoanAmount.value = '';
+  startLogOutTimer(200);
 });
 
 
 btnClose?.addEventListener('click', e => {
+  if(timer) clearInterval(timer);
   e.preventDefault();
   if(inputCloseUsername !== null && inputClosePin !== null){
     if(inputCloseUsername.value === currentAccount?.userName && +inputClosePin.value === currentAccount.pin) {
@@ -293,7 +341,6 @@ btnClose?.addEventListener('click', e => {
       inputCloseUsername.value = inputClosePin.value = '';
       if(containerApp)containerApp.style.opacity = '0';
     }
-
   }
 });
 
@@ -315,6 +362,25 @@ btnSort?.addEventListener('click', e => {
 
 
 /////////////////////////////////////////////////
+
+// setTimeout((...args: string[])=> console.log(`Here is your 🍕🍕🍕 ${args.join(' ')}`), 1000, 'success', 'strong', 'gratitude');
+
+const num = 3884764.23;
+
+const options = {
+  style: 'currency',
+  unit: 'celsius',
+  currency: 'EUR',
+  useGrouping: false,
+}
+
+// console.log('US:     ', new Intl.NumberFormat('en-US').format(num));
+// console.log('German:     ', new Intl.NumberFormat('de-DE', options).format(num));
+// console.log('Russian:     ', new Intl.NumberFormat('ru-RU', options).format(num));
+// console.log(`${navigator.language}:     `, new Intl.NumberFormat(navigator.language, options).format(num));
+
+
+
 
 
 //simple practice with date

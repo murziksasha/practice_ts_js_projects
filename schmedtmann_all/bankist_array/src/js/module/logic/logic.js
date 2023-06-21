@@ -1,6 +1,7 @@
 ;
 export function logic() {
     const appElement = document.querySelector('.app');
+    let timer;
     /////////////////////////////////////////////////
     /////////////////////////////////////////////////
     // BANKIST APP
@@ -102,7 +103,25 @@ export function logic() {
         // return `${day}/${month}/${year}`;
         return `${new Intl.DateTimeFormat(currentAccount === null || currentAccount === void 0 ? void 0 : currentAccount.locale).format(date)}`;
     }
+    function formatNumberIntl(num) {
+        const options = {
+            style: 'currency',
+            currency: `${currentAccount === null || currentAccount === void 0 ? void 0 : currentAccount.currency}`,
+        };
+        return new Intl.NumberFormat(currentAccount === null || currentAccount === void 0 ? void 0 : currentAccount.locale, options).format(num);
+    }
+    const formatCur = (value, locale, currency) => {
+        const options = {
+            style: 'currency',
+            currency: currency,
+        };
+        return new Intl.NumberFormat(locale, options).format(value);
+    };
     function displayMovements(arr) {
+        const options = {
+            style: 'currency',
+            currency: `${currentAccount === null || currentAccount === void 0 ? void 0 : currentAccount.currency}`,
+        };
         if (containerMovements !== null) {
             containerMovements.innerHTML = '';
             arr.forEach((item, i) => {
@@ -117,7 +136,7 @@ export function logic() {
         <div class="movements__row">
           <div class="movements__type movements__type--${meaning}">${i + 1} ${meaning}</div>
           <div class="movements_date">${displayDate}</div>
-          <div class="movements__value">${item.toFixed(2)}€</div>
+          <div class="movements__value">${formatNumberIntl(item)}</div>
         </div>
       `;
                 containerMovements.insertAdjacentHTML('afterbegin', html);
@@ -184,6 +203,24 @@ export function logic() {
         //display summary
         calcDisplaySummary(arr);
     };
+    const startLogOutTimer = (time = 100) => {
+        if (timer)
+            clearInterval(timer);
+        timer = setInterval(() => {
+            const min = Math.trunc(time / 60);
+            const sec = time % 60;
+            if (labelTimer) {
+                labelTimer.textContent = `${String(min).padStart(2, '0')} : ${String(sec).padStart(2, '0')}`;
+            }
+            if (min === 0 && sec === 0) {
+                clearInterval(timer);
+                appElement.style.opacity = '0';
+                if (labelWelcome)
+                    labelWelcome.textContent = `Log in to get started`;
+            }
+            time--;
+        }, 1000);
+    };
     btnLogin === null || btnLogin === void 0 ? void 0 : btnLogin.addEventListener('click', e => {
         e.preventDefault();
         if (inputLoginUsername !== null) {
@@ -204,6 +241,7 @@ export function logic() {
         if (currentAccount) {
             updateUI(currentAccount);
         }
+        startLogOutTimer();
     });
     btnTransfer === null || btnTransfer === void 0 ? void 0 : btnTransfer.addEventListener('click', e => {
         e.preventDefault();
@@ -217,6 +255,7 @@ export function logic() {
                 inputTransferTo.value = inputTransferAmount.value = '';
             }
         }
+        startLogOutTimer(200);
     });
     btnLoan === null || btnLoan === void 0 ? void 0 : btnLoan.addEventListener('click', e => {
         e.preventDefault();
@@ -226,8 +265,11 @@ export function logic() {
             updateUI(currentAccount);
         }
         inputLoanAmount.value = '';
+        startLogOutTimer(200);
     });
     btnClose === null || btnClose === void 0 ? void 0 : btnClose.addEventListener('click', e => {
+        if (timer)
+            clearInterval(timer);
         e.preventDefault();
         if (inputCloseUsername !== null && inputClosePin !== null) {
             if (inputCloseUsername.value === (currentAccount === null || currentAccount === void 0 ? void 0 : currentAccount.userName) && +inputClosePin.value === currentAccount.pin) {
@@ -256,6 +298,18 @@ export function logic() {
         }
     });
     /////////////////////////////////////////////////
+    // setTimeout((...args: string[])=> console.log(`Here is your 🍕🍕🍕 ${args.join(' ')}`), 1000, 'success', 'strong', 'gratitude');
+    const num = 3884764.23;
+    const options = {
+        style: 'currency',
+        unit: 'celsius',
+        currency: 'EUR',
+        useGrouping: false,
+    };
+    // console.log('US:     ', new Intl.NumberFormat('en-US').format(num));
+    // console.log('German:     ', new Intl.NumberFormat('de-DE', options).format(num));
+    // console.log('Russian:     ', new Intl.NumberFormat('ru-RU', options).format(num));
+    // console.log(`${navigator.language}:     `, new Intl.NumberFormat(navigator.language, options).format(num));
     //simple practice with date
     const daysPassed = (date1, date2) => {
         return Math.abs(date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24);
