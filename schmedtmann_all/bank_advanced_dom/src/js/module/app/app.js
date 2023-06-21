@@ -22,5 +22,20 @@ export default function app() {
             closeModal();
         }
     });
+    const divCookie = document.createElement('div');
+    divCookie.classList.add('cookie-message');
+    divCookie.innerHTML = `
+      <h2>Hello! Attention, we use the cookies files</h2>
+      <button class='btn btn--text'>Click if you agree</button>
+    `;
+    document.body.insertAdjacentElement('afterbegin', divCookie);
+    divCookie.addEventListener('click', (e) => {
+        divCookie.remove();
+        localStorage.setItem('cookie', 'false');
+    });
+    console.log(getComputedStyle(divCookie).color);
+    console.log(getComputedStyle(divCookie).height);
+    divCookie.style.height = Number.parseFloat(getComputedStyle(divCookie).height) + 60 + 'px';
+    document.documentElement.style.setProperty('--color-primary', 'pink');
 }
 //# sourceMappingURL=app.js.map
