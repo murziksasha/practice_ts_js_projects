@@ -5,7 +5,8 @@ export default function app() {
     const overlay = document.querySelector('.overlay');
     const btnCloseModal = document.querySelector('.btn--close-modal');
     const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
-    const openModal = function () {
+    const openModal = function (e) {
+        e.preventDefault();
         modal === null || modal === void 0 ? void 0 : modal.classList.remove('hidden');
         overlay === null || overlay === void 0 ? void 0 : overlay.classList.remove('hidden');
     };
