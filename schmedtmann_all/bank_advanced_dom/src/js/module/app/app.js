@@ -1,3 +1,4 @@
+import { tabs } from "../tabs/tabs.js";
 export default function app() {
     ///////////////////////////////////////
     // Modal window
@@ -5,6 +6,21 @@ export default function app() {
     const overlay = document.querySelector('.overlay');
     const btnCloseModal = document.querySelector('.btn--close-modal');
     const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+    const linkParent = document.querySelector('.nav__links');
+    tabs('.operations__tab-container', '.btn.operations__tab', '.operations__content', 'operations__tab--active');
+    linkParent.addEventListener('click', e => {
+        e.preventDefault();
+        const target = e.target;
+        if (target.classList.contains('nav__link')) {
+            const id = target.getAttribute('href');
+            if (id) {
+                const proposeElem = document.querySelector(id);
+                if (proposeElem) {
+                    proposeElem.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        }
+    });
     const openModal = function (e) {
         e.preventDefault();
         modal === null || modal === void 0 ? void 0 : modal.classList.remove('hidden');
@@ -29,13 +45,10 @@ export default function app() {
       <button class='btn btn--text'>Click if you agree</button>
     `;
     document.body.insertAdjacentElement('afterbegin', divCookie);
-    divCookie.addEventListener('click', (e) => {
+    divCookie.addEventListener('click', e => {
         divCookie.remove();
-        localStorage.setItem('cookie', 'false');
     });
-    console.log(getComputedStyle(divCookie).color);
-    console.log(getComputedStyle(divCookie).height);
-    divCookie.style.height = Number.parseFloat(getComputedStyle(divCookie).height) + 60 + 'px';
-    document.documentElement.style.setProperty('--color-primary', 'pink');
+    divCookie.style.height =
+        Number.parseFloat(getComputedStyle(divCookie).height) + 60 + 'px';
 }
 //# sourceMappingURL=app.js.map
