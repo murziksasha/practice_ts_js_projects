@@ -7,7 +7,6 @@ export function tabs(tabParent: string, tabItem: string, tabBody: string, active
   const tabsItem = document.querySelectorAll(tabItem);
   const tabContents = document.querySelectorAll(tabBody);
 
-  console.log(tabContents);
   
   
   if(tabParentItem){

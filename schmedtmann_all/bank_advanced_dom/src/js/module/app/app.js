@@ -1,5 +1,7 @@
 import { tabs } from "../tabs/tabs.js";
+import { menuFade } from "../menuFade/menuFade.js";
 export default function app() {
+    menuFade();
     ///////////////////////////////////////
     // Modal window
     const modal = document.querySelector('.modal');
