@@ -1,7 +1,9 @@
 import { tabs } from "../tabs/tabs.js";
 import { menuFade } from "../menuFade/menuFade.js";
+import { stickyNavigation } from "../stickyNavigation/stickyNavigation.js";
 export default function app() {
     menuFade();
+    stickyNavigation();
     ///////////////////////////////////////
     // Modal window
     const modal = document.querySelector('.modal');
