@@ -1,6 +1,10 @@
 
 
+import { stickyWithObserver } from "../stickyWithObserver/stickyWithObserver.js";
+
 export default function app () {
+
+  stickyWithObserver();
 
     ///////////////////////////////////////
     // Modal window
