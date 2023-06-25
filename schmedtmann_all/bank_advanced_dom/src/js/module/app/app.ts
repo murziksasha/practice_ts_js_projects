@@ -1,20 +1,11 @@
 import { tabs } from "../tabs/tabs.js";
 import { menuFade } from "../menuFade/menuFade.js";
 import { stickyNavigation } from "../stickyNavigation/stickyNavigation.js";
-
-
-<<<<<<< HEAD
 import { stickyWithObserver } from "../stickyWithObserver/stickyWithObserver.js";
 
-export default function app () {
-
-  stickyWithObserver();
-
-    ///////////////////////////////////////
-    // Modal window
-=======
-export default function app() {
-
+  export default function app() {
+    
+    stickyWithObserver();
   menuFade();
   stickyNavigation();
   
@@ -26,12 +17,7 @@ export default function app() {
   const btnCloseModal = document.querySelector('.btn--close-modal');
   const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
   const linkParent = document.querySelector('.nav__links') as HTMLUListElement;
-<<<<<<< HEAD
->>>>>>> features
 
-=======
-  
->>>>>>> 20fed2b61636b46b109d09e143ad9c0949d44603
   tabs('.operations__tab-container', '.btn.operations__tab', '.operations__content', 'operations__tab--active')
 
   linkParent.addEventListener('click', e => {
