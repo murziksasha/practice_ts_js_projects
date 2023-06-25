@@ -1,9 +1,17 @@
 import { tabs } from "../tabs/tabs.js";
+import { menuFade } from "../menuFade/menuFade.js";
 import { stickyWithObserver } from "../stickyWithObserver/stickyWithObserver.js";
 export default function app() {
     stickyWithObserver();
+    menuFade();
+    // stickyNavigation();
     ///////////////////////////////////////
     // Modal window
+    const modal = document.querySelector('.modal');
+    const overlay = document.querySelector('.overlay');
+    const btnCloseModal = document.querySelector('.btn--close-modal');
+    const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+    const linkParent = document.querySelector('.nav__links');
     tabs('.operations__tab-container', '.btn.operations__tab', '.operations__content', 'operations__tab--active');
     linkParent.addEventListener('click', e => {
         e.preventDefault();

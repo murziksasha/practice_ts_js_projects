@@ -2,7 +2,6 @@ export function tabs(tabParent, tabItem, tabBody, activeClass, showClass = 'show
     const tabParentItem = document.querySelector(tabParent);
     const tabsItem = document.querySelectorAll(tabItem);
     const tabContents = document.querySelectorAll(tabBody);
-    console.log(tabContents);
     if (tabParentItem) {
         tabBodyShow(); //изначальное скрытие табов.
         tabParentItem.addEventListener('click', e => {
