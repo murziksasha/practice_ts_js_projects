@@ -1,8 +1,12 @@
 
 import { stickyWithObserver } from "../stickyWithObserver/stickyWithObserver.js";
 import { tabs } from "../tabs/tabs.js";
+import { menuFade } from "../menuFade/menuFade.js";
+import { stickyNavigation } from "../stickyNavigation/stickyNavigation.js";
 export default function app() {
     stickyWithObserver();
+    menuFade();
+    stickyNavigation();
     ///////////////////////////////////////
     // Modal window
     const modal = document.querySelector('.modal');
