@@ -20,22 +20,4 @@ export function stickyWithObserver() {
 
   headerObserver.observe(header);
 
-  // const section1 = document.querySelector('#section--1') as HTMLElement;
-
-  // const obsCallback = (entries: IntersectionObserverEntry []) => {
-  //   entries.forEach(entry => {
-  //     console.log(entry);
-  //   });
-  // }
-
-  // const obsOptions = {
-  //   root: null,
-  //   rootMargin: '10px',
-  //   threshold: .1,
-  // }
-
-  // const observer = new IntersectionObserver(obsCallback, obsOptions);
-  // observer.observe(section1);
-
-
 }
