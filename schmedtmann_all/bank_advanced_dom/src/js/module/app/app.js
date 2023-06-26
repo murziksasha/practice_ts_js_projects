@@ -1,10 +1,12 @@
 import { tabs } from "../tabs/tabs.js";
 import { menuFade } from "../menuFade/menuFade.js";
 import { stickyWithObserver } from "../stickyWithObserver/stickyWithObserver.js";
+import { revealSections } from "../revealSections/revealSections.js";
 export default function app() {
     stickyWithObserver();
     menuFade();
     // stickyNavigation();
+    revealSections();
     ///////////////////////////////////////
     // Modal window
     const modal = document.querySelector('.modal');
