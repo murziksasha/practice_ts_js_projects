@@ -4,6 +4,7 @@ import { stickyNavigation } from "../stickyNavigation/stickyNavigation.js";
 
 import { stickyWithObserver } from "../stickyWithObserver/stickyWithObserver.js";
 import { revealSections } from "../revealSections/revealSections.js";
+import { lazyImgLoader } from "../lazyImgLoader/lazyImgLoader.js";
 
   export default function app() {
     
@@ -12,6 +13,7 @@ import { revealSections } from "../revealSections/revealSections.js";
   // stickyNavigation();
 
   revealSections();
+  lazyImgLoader();
   
   ///////////////////////////////////////
   // Modal window
