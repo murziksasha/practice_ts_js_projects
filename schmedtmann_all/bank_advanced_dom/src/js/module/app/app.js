@@ -2,11 +2,13 @@ import { tabs } from "../tabs/tabs.js";
 import { menuFade } from "../menuFade/menuFade.js";
 import { stickyWithObserver } from "../stickyWithObserver/stickyWithObserver.js";
 import { revealSections } from "../revealSections/revealSections.js";
+import { lazyImgLoader } from "../lazyImgLoader/lazyImgLoader.js";
 export default function app() {
     stickyWithObserver();
     menuFade();
     // stickyNavigation();
     revealSections();
+    lazyImgLoader();
     ///////////////////////////////////////
     // Modal window
     const modal = document.querySelector('.modal');

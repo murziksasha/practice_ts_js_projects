@@ -2,7 +2,6 @@ export function revealSections() {
     const allSections = document.querySelectorAll('.section');
     const revealSection = (entries, observer) => {
         const [entry] = entries;
-        console.log(entry);
         if (!entry.isIntersecting)
             return;
         entry.target.classList.remove('section--hidden');
