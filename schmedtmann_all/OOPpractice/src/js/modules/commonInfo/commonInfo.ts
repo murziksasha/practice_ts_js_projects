@@ -8,30 +8,37 @@ export function commonInfo() {
 
   class Car implements myCar{
     constructor(public make: string, public speed: number, private currentSpeed: number = 0){}
-    accelearate(accel = 10) {
+    set accelearate(accel: number) {
       this.currentSpeed = this.currentSpeed  + accel;
-      console.log(this.currentSpeed)
     }
-    brake(br = 5) {
+
+    get accelearate(){
+      return this.currentSpeed;
+    }
+
+    set brake(br: number) {
       this.currentSpeed = this.currentSpeed - br;
-      console.log(this.currentSpeed);
+    }
+
+    get brake() {
+      return this.currentSpeed;
+    }
+
+    get speedUS() {
+      return this.speed = this.speed / 1.6;
+    }
+
+    set speedUS(speed){
+      this.speed = speed * 1.6;
     }
   }
 
-  // const honda = new Car('honda', 220);
 
-  // console.log(honda);
-  // honda.accelearate(100);
-  // honda.accelearate();
-  // honda.brake ();
-  // honda.brake (50);
-  // honda.brake ();
-
-  // const hyndaiGetz = new Car('Hyndai Getz', 200);
-  // console.log('working with hynday Getz')
-  // hyndaiGetz.accelearate(50);
-  // hyndaiGetz.accelearate(100);
-  // hyndaiGetz.brake()
+  console.log('-------------------------------');
+  const hyndaiGetz = new Car('Hyndai Getz', 185);
+  hyndaiGetz.accelearate = 10;
+  console.log(hyndaiGetz.accelearate);
+  console.log(hyndaiGetz.brake);
 
 
   ////////////////////////////
@@ -52,14 +59,22 @@ export function commonInfo() {
     set latest(mov: number){
       this.movements.push(mov)
     }
+
+    static hey() {
+      console.log('Hello');
+    }
   }
 
   const myAccount = new Account('Sasha', [200, 530, 120, 300]);
 
-  console.log(myAccount.latest);
-  myAccount.latest = 150;
-  console.log(myAccount.latest);
-  console.log(myAccount.movements)
+  // console.log(myAccount.latest);
+  // myAccount.latest = 150;
+  // console.log(myAccount.latest);
+  // console.log(myAccount.movements);
+
+
+
+
 
 
 }
