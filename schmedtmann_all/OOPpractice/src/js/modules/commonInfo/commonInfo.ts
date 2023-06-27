@@ -18,20 +18,48 @@ export function commonInfo() {
     }
   }
 
-  const honda = new Car('honda', 220);
+  // const honda = new Car('honda', 220);
 
-  console.log(honda);
-  honda.accelearate(100);
-  honda.accelearate();
-  honda.brake ();
-  honda.brake (50);
-  honda.brake ();
+  // console.log(honda);
+  // honda.accelearate(100);
+  // honda.accelearate();
+  // honda.brake ();
+  // honda.brake (50);
+  // honda.brake ();
 
-  const hyndaiGetz = new Car('Hyndai Getz', 200);
-  console.log('working with hynday Getz')
-  hyndaiGetz.accelearate(50);
-  hyndaiGetz.accelearate(100);
-  hyndaiGetz.brake()
+  // const hyndaiGetz = new Car('Hyndai Getz', 200);
+  // console.log('working with hynday Getz')
+  // hyndaiGetz.accelearate(50);
+  // hyndaiGetz.accelearate(100);
+  // hyndaiGetz.brake()
+
+
+  ////////////////////////////
+
+  class Account {
+    owner: string;
+    movements: number[];
+
+    constructor(owner: string, movements: number[]){
+      this.owner = owner;
+      this.movements = movements;    
+    }
+
+    get latest() {
+      return this.movements.at(-1)  as number;
+    };
+
+    set latest(mov: number){
+      this.movements.push(mov)
+    }
+  }
+
+  const myAccount = new Account('Sasha', [200, 530, 120, 300]);
+
+  console.log(myAccount.latest);
+  myAccount.latest = 150;
+  console.log(myAccount.latest);
+  console.log(myAccount.movements)
 
 
 }
