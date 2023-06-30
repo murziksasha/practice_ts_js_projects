@@ -14,43 +14,99 @@ export function app() {
   const inputCadence = document.querySelector('.form__input--cadence') as HTMLInputElement;
   const inputElevation = document.querySelector('.form__input--elevation');
 
-  let map: any;
-  let mapEvent: any;
+  class Workout {
+    private date = new Date();
+    private id = (Date.now() + '').slice(-10);
+
+    constructor(public coords: string[], public distance: string, public duration: string){}
+
+  }
+
+  class Running extends Workout {
+    private pace: number = 0;
+
+    constructor(public coords: string[], public distance: string, public duration: string, public cadence: string) {
+      super(coords, distance, duration);
+      this.calcPace();
+    }
+
+    calcPace(){
+      //min/km
+     return this.pace = +this.duration / +this.distance;
+    }
+  }
+
+  class Cycling extends Workout {
+    private speed: number = 0;
+    constructor(public coords: string[], public distance: string, public duration: string, public elevationGain: string) {
+      super(coords, distance, duration);
+      this.calcSpeed();
+    }
+
+    calcSpeed() {
+      //km/hour
+      return this.speed = +this.distance / (+this.duration / 60);
+    }
+  }
 
 
-  navigator.geolocation.getCurrentPosition(
-    (position)=>{
-      const {latitude} = position.coords;
-      const {longitude} = position.coords;
-      const coords = [latitude, longitude]
-      //@ts-ignore
-      map = L.map('map').setView(coords, 13);
-      //@ts-ignore
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(map);
-
-      map.on('click', (mapE: Event) => {
-        mapEvent = mapE;
-        form?.classList.remove('hidden');
-        inputDistance?.focus();
+  const run1 = new Running(['39', '-12'], '5.2', '24', '178' );
+  const cycling1 = new Cycling(['39', '-12'], '27', '95', '523' );
+  console.log(run1);
+  console.log(cycling1);
 
 
+  ////////////////////// ARCHITECTURE  ////////////////
+  class App {
+    private map: any; 
+    private mapEvent: any;
 
+    constructor(){
+      this._getPosition();
+      form?.addEventListener('submit', this._newWorkout.bind(this));
+      inputType?.addEventListener('change', this._toggleElevationField);
+    }
 
-      });
-    }, 
-    ()=>alert(`Could not get your position!`));
+    _getPosition(){
+      navigator.geolocation.getCurrentPosition(this._loadMap.bind(this), 
+        ()=>alert(`Could not get your position!`));
+    }
 
-    form?.addEventListener('submit', (e) => {
+    _loadMap(position: any){
+        const {latitude} = position.coords;
+        const {longitude} = position.coords;
+        const coords = [latitude, longitude]
+        //@ts-ignore
+        this.map = L.map('map').setView(coords, 13);
+        //@ts-ignore
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(this.map);
+  
+        this.map.on('click', this._showForm.bind(this));
+    }
+
+    _showForm(mapE: Event){
+      this.mapEvent = mapE;
+      form?.classList.remove('hidden');
+      inputDistance?.focus();
+    }
+
+    _toggleElevationField(){
+      inputElevation?.closest('.form__row')?.classList.toggle('form__row--hidden');
+      inputCadence?.closest('.form__row')?.classList.toggle('form__row--hidden');
+    }
+
+    _newWorkout(e: Event) {
+      
       e.preventDefault();
-
+  
       inputDistance.value = inputDuration.value = inputCadence.value = '';
 
       //@ts-ignore
-        const {lat, lng} = mapEvent.latlng;
+        const {lat, lng} = this.mapEvent.latlng;
       //@ts-ignore
-      L.marker([lat, lng]).addTo(map)
+      L.marker([lat, lng]).addTo(this.map)
       //@ts-ignore
       .bindPopup(L.popup({
         maxWidth: 250,
@@ -60,13 +116,12 @@ export function app() {
         className: 'running-popup'
       }))
       .openPopup();
-    });
+    }
 
-    inputType?.addEventListener('change', () => {
-      console.log('select');
-      inputElevation?.closest('.form__row')?.classList.toggle('form__row--hidden');
-      inputCadence?.closest('.form__row')?.classList.toggle('form__row--hidden');
-    });
+  }
+
+  const app = new App();
+
 
 
   
