@@ -4,6 +4,8 @@ interface myCar {
 }
 
 export function commonInfo() {
+
+
   class Car implements myCar {
     constructor(
       public make: string,
@@ -37,7 +39,7 @@ export function commonInfo() {
 
   class ElectricCar extends Car {
     constructor(
-      public charge: number,
+      private _charge: number,
       public make: string,
       public speed: number
     ) {
@@ -46,6 +48,25 @@ export function commonInfo() {
   }
 
   const tesla = new ElectricCar(100, 'Tesla', 300);
+
+  class EVCL extends ElectricCar {
+    constructor(
+      make: string,
+      speed: number,
+    ){
+      super(100, make, speed);
+    }
+  }
+
+  const rivianCar = new EVCL('EVCL', 220);
+
+  rivianCar.accelearate = 50;
+  rivianCar.brake = 5;
+  console.log(rivianCar.make)
+
+  console.log(rivianCar);
+
+
 
   //////////////////////////////////////////////\
 
@@ -84,15 +105,15 @@ export function commonInfo() {
 
   const acc1 = new Account('Sasha', 'UAH', 1111);
 
-  acc1.deposit(250);
-  acc1.withdraw(111);
-  acc1.requestLoan(1000);
-  console.log(acc1);
-  console.log(acc1.getMovement);
+  // acc1.deposit(250);
+  // acc1.withdraw(111);
+  // acc1.requestLoan(1000);
+  // console.log(acc1);
+  // console.log(acc1.getMovement);
 
-  acc1.deposit(300).deposit(50).withdraw(35).requestLoan(2500)?.withdraw(4000);
+  // acc1.deposit(300).deposit(50).withdraw(35).requestLoan(2500)?.withdraw(4000);
 
-  console.log(acc1.getMovement);
+  // console.log(acc1.getMovement);
 
 
 }
