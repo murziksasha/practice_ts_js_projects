@@ -85,6 +85,23 @@ export function app() {
         }
         _newWorkout(e) {
             e.preventDefault();
+            // get data from form
+            const type = inputType === null || inputType === void 0 ? void 0 : inputType.value;
+            const distance = +(inputDistance === null || inputDistance === void 0 ? void 0 : inputDistance.value);
+            const duration = +(inputDuration === null || inputDuration === void 0 ? void 0 : inputDuration.value);
+            // if workout running, create running object
+            if (type == 'running') {
+                const cadence = +inputCadence.value;
+                // check if data is valid
+                if (!Number.isFinite(distance) || !Number.isFinite(duration || !Number.isFinite(cadence)))
+                    return alert(`Inputs have to be positive numbers`);
+            }
+            // if workout cycling, create cycling object
+            if (type == 'cycling') {
+                const cadence = +(inputElevation === null || inputElevation === void 0 ? void 0 : inputElevation.value);
+            }
+            // Add new object to workout array
+            //Render workout on map as marker
             inputDistance.value = inputDuration.value = inputCadence.value = '';
             //@ts-ignore
             const { lat, lng } = this.mapEvent.latlng;
@@ -98,6 +115,7 @@ export function app() {
                 closeOnClick: false,
                 className: 'running-popup'
             }))
+                .setPopupContent('Hello from ...')
                 .openPopup();
         }
     }

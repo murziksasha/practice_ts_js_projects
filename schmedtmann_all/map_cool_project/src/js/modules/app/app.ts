@@ -8,11 +8,11 @@ export function app() {
 
   const form = document.querySelector('.form');
   const containerWorkouts = document.querySelector('.workouts');
-  const inputType = document.querySelector('.form__input--type');
+  const inputType = document.querySelector('.form__input--type') as HTMLInputElement;
   const inputDistance = document.querySelector('.form__input--distance') as HTMLInputElement;
   const inputDuration = document.querySelector('.form__input--duration') as HTMLInputElement;
   const inputCadence = document.querySelector('.form__input--cadence') as HTMLInputElement;
-  const inputElevation = document.querySelector('.form__input--elevation');
+  const inputElevation = document.querySelector('.form__input--elevation') as HTMLInputElement;
 
   class Workout {
     private date = new Date();
@@ -67,12 +67,12 @@ export function app() {
       inputType?.addEventListener('change', this._toggleElevationField);
     }
 
-    _getPosition(){
+    private _getPosition(){
       navigator.geolocation.getCurrentPosition(this._loadMap.bind(this), 
         ()=>alert(`Could not get your position!`));
     }
 
-    _loadMap(position: any){
+    private _loadMap(position: any){
         const {latitude} = position.coords;
         const {longitude} = position.coords;
         const coords = [latitude, longitude]
@@ -86,20 +86,46 @@ export function app() {
         this.map.on('click', this._showForm.bind(this));
     }
 
-    _showForm(mapE: Event){
+    private _showForm(mapE: Event){
       this.mapEvent = mapE;
       form?.classList.remove('hidden');
       inputDistance?.focus();
     }
 
-    _toggleElevationField(){
+    private _toggleElevationField(){
       inputElevation?.closest('.form__row')?.classList.toggle('form__row--hidden');
       inputCadence?.closest('.form__row')?.classList.toggle('form__row--hidden');
     }
 
-    _newWorkout(e: Event) {
+    private _newWorkout(e: Event) {
       
       e.preventDefault();
+
+      // get data from form
+      const type = inputType?.value;
+      const distance = +inputDistance?.value;
+      const duration = +inputDuration?.value;
+
+      
+      // if workout running, create running object
+      if(type == 'running') {
+        const cadence = +inputCadence.value;
+        // check if data is valid
+        if(!Number.isFinite(distance) || !Number.isFinite(duration || !Number.isFinite(cadence))) return alert(`Inputs have to be positive numbers`);
+      }
+
+      // if workout cycling, create cycling object
+      if(type == 'cycling') {
+        const cadence = +inputElevation?.value;
+      }
+
+      // Add new object to workout array
+
+      //Render workout on map as marker
+
+
+
+
   
       inputDistance.value = inputDuration.value = inputCadence.value = '';
 
@@ -115,6 +141,7 @@ export function app() {
         closeOnClick: false,
         className: 'running-popup'
       }))
+      .setPopupContent('Hello from ...')
       .openPopup();
     }
 
