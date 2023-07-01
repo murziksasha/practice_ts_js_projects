@@ -25,6 +25,7 @@ export function app() {
             this.duration = duration;
             this.cadence = cadence;
             this.pace = 0;
+            this.type = 'running';
             this.calcPace();
         }
         calcPace() {
@@ -40,6 +41,7 @@ export function app() {
             this.duration = duration;
             this.elevationGain = elevationGain;
             this.speed = 0;
+            this.type = 'cycling';
             this.calcSpeed();
         }
         calcSpeed() {
@@ -47,13 +49,10 @@ export function app() {
             return this.speed = +this.distance / (+this.duration / 60);
         }
     }
-    const run1 = new Running(['39', '-12'], '5.2', '24', '178');
-    const cycling1 = new Cycling(['39', '-12'], '27', '95', '523');
-    console.log(run1);
-    console.log(cycling1);
     ////////////////////// ARCHITECTURE  ////////////////
     class App {
         constructor() {
+            this.workouts = [];
             this._getPosition();
             form === null || form === void 0 ? void 0 : form.addEventListener('submit', this._newWorkout.bind(this));
             inputType === null || inputType === void 0 ? void 0 : inputType.addEventListener('change', this._toggleElevationField);
@@ -84,36 +83,51 @@ export function app() {
             (_b = inputCadence === null || inputCadence === void 0 ? void 0 : inputCadence.closest('.form__row')) === null || _b === void 0 ? void 0 : _b.classList.toggle('form__row--hidden');
         }
         _newWorkout(e) {
+            const validInputs = (...inputs) => inputs.every(item => Number.isFinite(item));
+            const allPositives = (...inputs) => inputs.every(item => item > 0);
             e.preventDefault();
             // get data from form
             const type = inputType === null || inputType === void 0 ? void 0 : inputType.value;
             const distance = +(inputDistance === null || inputDistance === void 0 ? void 0 : inputDistance.value);
             const duration = +(inputDuration === null || inputDuration === void 0 ? void 0 : inputDuration.value);
+            //@ts-ignore
+            const { lat, lng } = this.mapEvent.latlng;
+            let workout;
             // if workout running, create running object
             if (type == 'running') {
                 const cadence = +inputCadence.value;
                 // check if data is valid
-                if (!Number.isFinite(distance) || !Number.isFinite(duration || !Number.isFinite(cadence)))
+                if (
+                // !Number.isFinite(distance) || 
+                // !Number.isFinite(duration || 
+                //   !Number.isFinite(cadence)
+                !validInputs(distance, duration, cadence) || !allPositives(distance, duration, cadence))
                     return alert(`Inputs have to be positive numbers`);
+                workout = new Running([lat, lng], distance, duration, cadence);
             }
             // if workout cycling, create cycling object
             if (type == 'cycling') {
-                const cadence = +(inputElevation === null || inputElevation === void 0 ? void 0 : inputElevation.value);
+                const elevation = +(inputElevation === null || inputElevation === void 0 ? void 0 : inputElevation.value);
+                if (!validInputs(distance, duration, elevation) || !allPositives(distance, duration))
+                    return alert(`Inputs have to be positive numbers`);
+                workout = new Cycling([lat, lng], distance, duration, elevation);
             }
             // Add new object to workout array
+            this.workouts.push(workout);
             //Render workout on map as marker
+            this.renderWorkMarker(workout);
             inputDistance.value = inputDuration.value = inputCadence.value = '';
+        }
+        renderWorkMarker(workout) {
             //@ts-ignore
-            const { lat, lng } = this.mapEvent.latlng;
-            //@ts-ignore
-            L.marker([lat, lng]).addTo(this.map)
+            L.marker(workout.coords).addTo(this.map)
                 //@ts-ignore
                 .bindPopup(L.popup({
                 maxWidth: 250,
                 minWidth: 100,
                 autoClose: false,
                 closeOnClick: false,
-                className: 'running-popup'
+                className: `${workout.type}-popup`
             }))
                 .setPopupContent('Hello from ...')
                 .openPopup();

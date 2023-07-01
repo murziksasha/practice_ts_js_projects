@@ -14,18 +14,20 @@ export function app() {
   const inputCadence = document.querySelector('.form__input--cadence') as HTMLInputElement;
   const inputElevation = document.querySelector('.form__input--elevation') as HTMLInputElement;
 
+
   class Workout {
     private date = new Date();
     private id = (Date.now() + '').slice(-10);
 
-    constructor(public coords: string[], public distance: string, public duration: string){}
+    constructor(public coords: number[], public distance: number, public duration: number){}
 
   }
 
   class Running extends Workout {
     private pace: number = 0;
+    type = 'running';
 
-    constructor(public coords: string[], public distance: string, public duration: string, public cadence: string) {
+    constructor(public coords: number[], public distance: number, public duration: number, public cadence: number) {
       super(coords, distance, duration);
       this.calcPace();
     }
@@ -38,7 +40,8 @@ export function app() {
 
   class Cycling extends Workout {
     private speed: number = 0;
-    constructor(public coords: string[], public distance: string, public duration: string, public elevationGain: string) {
+    type = 'cycling';
+    constructor(public coords: number[], public distance: number, public duration: number, public elevationGain: number) {
       super(coords, distance, duration);
       this.calcSpeed();
     }
@@ -50,16 +53,12 @@ export function app() {
   }
 
 
-  const run1 = new Running(['39', '-12'], '5.2', '24', '178' );
-  const cycling1 = new Cycling(['39', '-12'], '27', '95', '523' );
-  console.log(run1);
-  console.log(cycling1);
-
 
   ////////////////////// ARCHITECTURE  ////////////////
   class App {
     private map: any; 
     private mapEvent: any;
+    private workouts: any = [];
 
     constructor(){
       this._getPosition();
@@ -98,6 +97,9 @@ export function app() {
     }
 
     private _newWorkout(e: Event) {
+
+      const validInputs = (...inputs: number[]) => inputs.every(item => Number.isFinite(item));
+      const allPositives = (...inputs: number[]) => inputs.every(item => item > 0);
       
       e.preventDefault();
 
@@ -105,41 +107,56 @@ export function app() {
       const type = inputType?.value;
       const distance = +inputDistance?.value;
       const duration = +inputDuration?.value;
+        //@ts-ignore
+      const {lat, lng} = this.mapEvent.latlng;
+      let workout: any;
 
       
       // if workout running, create running object
       if(type == 'running') {
         const cadence = +inputCadence.value;
         // check if data is valid
-        if(!Number.isFinite(distance) || !Number.isFinite(duration || !Number.isFinite(cadence))) return alert(`Inputs have to be positive numbers`);
+        if(
+          // !Number.isFinite(distance) || 
+          // !Number.isFinite(duration || 
+          //   !Number.isFinite(cadence)
+          !validInputs(distance, duration, cadence) || !allPositives(distance, duration, cadence)
+        ) return alert(`Inputs have to be positive numbers`);
+
+         workout = new Running([lat, lng], distance, duration, cadence);
       }
 
       // if workout cycling, create cycling object
       if(type == 'cycling') {
-        const cadence = +inputElevation?.value;
+        const elevation = +inputElevation?.value;
+
+        if(!validInputs(distance, duration, elevation)  || !allPositives(distance, duration)) return alert(`Inputs have to be positive numbers`);
+
+        workout = new Cycling([lat, lng], distance, duration, elevation)
       }
 
       // Add new object to workout array
+      this.workouts.push(workout);
+
+
 
       //Render workout on map as marker
-
-
-
+      this.renderWorkMarker(workout);
 
   
       inputDistance.value = inputDuration.value = inputCadence.value = '';
+    }
 
+    renderWorkMarker(workout: any) {
       //@ts-ignore
-        const {lat, lng} = this.mapEvent.latlng;
-      //@ts-ignore
-      L.marker([lat, lng]).addTo(this.map)
+      L.marker(workout.coords).addTo(this.map)
       //@ts-ignore
       .bindPopup(L.popup({
         maxWidth: 250,
         minWidth: 100,
         autoClose: false,
         closeOnClick: false,
-        className: 'running-popup'
+        className: `${workout.type}-popup`
       }))
       .setPopupContent('Hello from ...')
       .openPopup();
