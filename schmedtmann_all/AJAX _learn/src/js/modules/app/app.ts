@@ -39,9 +39,16 @@ const renderError = (msg: string) => {
   
   }
 
+  const getJSON = async <T>(url: string, errorMsg = 'Something went wrong'): Promise<T> => {
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error(`${errorMsg} (${res.status})`);
+    }
+    return await (res.json() as Promise<T>);
+  };
+
   const getCountryAndNeighbour = (country: string) =>{
-    fetch(`https://restcountries.com/v3.1/name/${country}`)
-    .then(response => response.json())
+    getJSON(`https://restcountries.com/v3.1/name/${country}`, 'Country not found')
     .then(data => {
       const dataPreparing = workObjKeys(data);
       renderCountry(dataPreparing);
@@ -49,9 +56,10 @@ const renderError = (msg: string) => {
     })
     .then(neighbour => {
       const neighbours = neighbour.borders;
+      // if(!neighbours) throw new Error('There is no neigbour in this country');
+      if(!neighbours) return;
       neighbours.forEach((neighbourCountry: string[]) => {
-        fetch(`https://restcountries.com/v3.1/alpha/${neighbourCountry}`)
-        .then(response => response.json())
+        getJSON(`https://restcountries.com/v3.1/alpha/${neighbourCountry}`, 'Neighbour is not found')
         .then(data => {
           const dataPreparing = workObjKeys(data);
          renderCountry(dataPreparing, 'neighbour');
@@ -71,7 +79,7 @@ const renderError = (msg: string) => {
 
   btn?.addEventListener('click', (e) => {
     const target = e.target as HTMLElement;
-    getCountryAndNeighbour('france')
+    getCountryAndNeighbour('australia')
     target ? target.style.display = 'none' : null;
   });
 
