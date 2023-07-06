@@ -1,3 +1,12 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 export function app() {
     const btn = document.querySelector('.btn-country');
     const countriesContainer = document.querySelector('.countries');
@@ -27,9 +36,15 @@ export function app() {
   `;
         countriesContainer.insertAdjacentHTML('beforeend', html);
     };
+    const getJSON = (url, errorMsg = 'Something went wrong') => __awaiter(this, void 0, void 0, function* () {
+        const res = yield fetch(url);
+        if (!res.ok) {
+            throw new Error(`${errorMsg} (${res.status})`);
+        }
+        return yield res.json();
+    });
     const getCountryAndNeighbour = (country) => {
-        fetch(`https://restcountries.com/v3.1/name/${country}`)
-            .then(response => response.json())
+        getJSON(`https://restcountries.com/v3.1/name/${country}`, 'Country not found')
             .then(data => {
             const dataPreparing = workObjKeys(data);
             renderCountry(dataPreparing);
@@ -37,9 +52,11 @@ export function app() {
         })
             .then(neighbour => {
             const neighbours = neighbour.borders;
+            // if(!neighbours) throw new Error('There is no neigbour in this country');
+            if (!neighbours)
+                return;
             neighbours.forEach((neighbourCountry) => {
-                fetch(`https://restcountries.com/v3.1/alpha/${neighbourCountry}`)
-                    .then(response => response.json())
+                getJSON(`https://restcountries.com/v3.1/alpha/${neighbourCountry}`, 'Neighbour is not found')
                     .then(data => {
                     const dataPreparing = workObjKeys(data);
                     renderCountry(dataPreparing, 'neighbour');
@@ -56,20 +73,21 @@ export function app() {
     };
     const whereAmI = (lat, lng) => {
         console.log(lat + '  ' + lng);
-        fetch(`https://geocode.xyz/${lat},${lng}?geoit=json&auth=927651672794403564921x13086`)
-            .then(data => data.json())
-            .then(geo => {
+        getJSON(`https://geocode.xyz/${lat},${lng}?geoit=json&auth=927651672794403564921x13086`)
+            .then((geo) => {
             console.log(`You are in ${geo.city}, ${geo.country}`);
+            getCountryAndNeighbour(`${geo.country}`);
             return geo;
         })
             .catch(err => console.log(err));
     };
     btn === null || btn === void 0 ? void 0 : btn.addEventListener('click', (e) => {
         const target = e.target;
+        // getCountryAndNeighbour('australia');
         // getCountryAndNeighbour('france');
         // whereAmI('52.508', '13.381');
-        // whereAmI('19.037', '72.873');
-        whereAmI('-33.933', 'sdf18.474');
+        whereAmI('19.037', '72.873');
+        // whereAmI('-33.933', '18.474');
         target ? target.style.display = 'none' : null;
     });
     //implementation with HTMLRequest

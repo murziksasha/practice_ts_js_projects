@@ -39,9 +39,16 @@ const renderError = (msg: string) => {
   
   }
 
+  const getJSON = async <T>(url: string, errorMsg = 'Something went wrong'): Promise<T> => {
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error(`${errorMsg} (${res.status})`);
+    }
+    return await (res.json() as Promise<T>);
+  };
+
   const getCountryAndNeighbour = (country: string) =>{
-    fetch(`https://restcountries.com/v3.1/name/${country}`)
-    .then(response => response.json())
+    getJSON(`https://restcountries.com/v3.1/name/${country}`, 'Country not found')
     .then(data => {
       const dataPreparing = workObjKeys(data);
       renderCountry(dataPreparing);
@@ -49,9 +56,10 @@ const renderError = (msg: string) => {
     })
     .then(neighbour => {
       const neighbours = neighbour.borders;
+      // if(!neighbours) throw new Error('There is no neigbour in this country');
+      if(!neighbours) return;
       neighbours.forEach((neighbourCountry: string[]) => {
-        fetch(`https://restcountries.com/v3.1/alpha/${neighbourCountry}`)
-        .then(response => response.json())
+        getJSON(`https://restcountries.com/v3.1/alpha/${neighbourCountry}`, 'Neighbour is not found')
         .then(data => {
           const dataPreparing = workObjKeys(data);
          renderCountry(dataPreparing, 'neighbour');
@@ -71,10 +79,12 @@ const renderError = (msg: string) => {
 
   const whereAmI = (lat: string, lng: string) => {
     console.log(lat + '  ' + lng);
-    fetch(`https://geocode.xyz/${lat},${lng}?geoit=json&auth=927651672794403564921x13086`)
-    .then(data => data.json())
-    .then(geo => {
+    
+    getJSON(`https://geocode.xyz/${lat},${lng}?geoit=json&auth=927651672794403564921x13086`)
+    .then((geo: any) => {
       console.log(`You are in ${geo.city}, ${geo.country}`);
+      getCountryAndNeighbour(`${geo.country}`);
+
       return geo;
     })
     .catch(err => console.log(err))
@@ -82,10 +92,11 @@ const renderError = (msg: string) => {
 
   btn?.addEventListener('click', (e) => {
     const target = e.target as HTMLElement;
+    // getCountryAndNeighbour('australia');
     // getCountryAndNeighbour('france');
     // whereAmI('52.508', '13.381');
-    // whereAmI('19.037', '72.873');
-    whereAmI('-33.933', 'sdf18.474');
+    whereAmI('19.037', '72.873');
+    // whereAmI('-33.933', '18.474');
     target ? target.style.display = 'none' : null;
   });
 
