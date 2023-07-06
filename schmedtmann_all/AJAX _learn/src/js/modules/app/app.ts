@@ -69,9 +69,23 @@ const renderError = (msg: string) => {
 
   }
 
+  const whereAmI = (lat: string, lng: string) => {
+    console.log(lat + '  ' + lng);
+    fetch(`https://geocode.xyz/${lat},${lng}?geoit=json&auth=927651672794403564921x13086`)
+    .then(data => data.json())
+    .then(geo => {
+      console.log(`You are in ${geo.city}, ${geo.country}`);
+      return geo;
+    })
+    .catch(err => console.log(err))
+  };
+
   btn?.addEventListener('click', (e) => {
     const target = e.target as HTMLElement;
-    getCountryAndNeighbour('france')
+    // getCountryAndNeighbour('france');
+    // whereAmI('52.508', '13.381');
+    // whereAmI('19.037', '72.873');
+    whereAmI('-33.933', 'sdf18.474');
     target ? target.style.display = 'none' : null;
   });
 
