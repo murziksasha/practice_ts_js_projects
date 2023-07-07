@@ -72,7 +72,6 @@ export function doubleFetchCountry() {
             .finally(() => countriesContainer.style.opacity = '1');
     };
     const whereAmI = (lat, lng) => {
-        console.log(lat + '  ' + lng);
         getJSON(`https://geocode.xyz/${lat},${lng}?geoit=json&auth=927651672794403564921x13086`)
             .then((geo) => {
             console.log(`You are in ${geo.city}, ${geo.country}`);
@@ -90,7 +89,12 @@ export function doubleFetchCountry() {
         // whereAmI('52.508', '13.381');
         // whereAmI('19.037', '72.873');
         // whereAmI('-33.933', '18.474');
-        whereAmI('46.300450', '30.654730');
+        new Promise((res, rej) => navigator.geolocation.getCurrentPosition(res, rej))
+            .then((data) => {
+            console.log(data.coords);
+            const { latitude: lat, longitude: lng } = data.coords;
+            whereAmI(lat, lng);
+        });
         target ? target.style.display = 'none' : null;
     });
     //implementation with HTMLRequest

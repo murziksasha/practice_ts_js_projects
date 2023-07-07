@@ -79,7 +79,6 @@ const renderError = (msg: string) => {
   }
 
   const whereAmI = (lat: string, lng: string) => {
-    console.log(lat + '  ' + lng);
     
     getJSON(`https://geocode.xyz/${lat},${lng}?geoit=json&auth=927651672794403564921x13086`)
     .then((geo: any) => {
@@ -99,7 +98,12 @@ const renderError = (msg: string) => {
     // whereAmI('52.508', '13.381');
     // whereAmI('19.037', '72.873');
     // whereAmI('-33.933', '18.474');
-    whereAmI('46.300450', '30.654730');
+    new Promise((res, rej) => navigator.geolocation.getCurrentPosition(res, rej))
+    .then((data: any) => {
+      console.log(data.coords);
+      const {latitude: lat, longitude: lng} = data.coords;
+      whereAmI(lat, lng);
+    });
     target ? target.style.display = 'none' : null;
   });
 
