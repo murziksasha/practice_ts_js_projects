@@ -11,7 +11,7 @@ export function createImgTask() {
     return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
   }
 
- const createImage = (imgPath: string)=> {
+ const createImage = (imgPath: string): Promise<HTMLImageElement> => {
   return new Promise((resolve, reject) => {
     const img = document.createElement('img') as HTMLImageElement;
     img.src = imgPath;
@@ -26,28 +26,41 @@ export function createImgTask() {
   })
  }
 
-
-  btn?.addEventListener('click', () => {
-    createImage('img/img-1.jpg')
-    .then(img => {
-      currentImg = img;
+  const loadNPause = async (arr: string[]) => {
+    try {
+      const img1 = await createImage(arr[0]);
       console.log('img 1 loaded');
-      return wait(2);
-    })
-    .then(img => {
-      currentImg.style.display = 'none';
-      return createImage('img/img-2.jpg');
-    })
-    .then(img =>{
-      currentImg = img;
+      await wait(2);
+      img1.style.display = 'none';
+      
+      const img2 = await createImage(arr[1]);
       console.log('img 2 loaded');
-      return wait(2);
+      await wait(2);
+      img2.style.display = 'none';
+
+      const img3 = await createImage(arr[2]);
+      console.log('img 3 loaded');
+      await wait(2);
+      img3.style.display = 'none';
+    } catch (err) {
+      console.error(err + '  😞');
+    }
+  }
+
+  const dataForImg = ['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg'];
+
+  btn?.addEventListener('click', () => loadNPause(dataForImg));
+
+  const loadAll = async (arr: string[]) => {
+    arr.map(img => {
+      // const imgMy = createImage(img);
+      const imgMy = createImage(img);
+      console.log(img);
+
     })
-    .then (() => {
-      currentImg.style.display = 'none';
-    })
-    .catch(err => console.error(err + '  😞'))
-  });
+  }
+
+  // loadAll(dataForImg)
 
 
 }

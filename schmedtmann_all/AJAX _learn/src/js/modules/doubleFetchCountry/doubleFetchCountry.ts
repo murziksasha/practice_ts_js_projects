@@ -9,10 +9,10 @@ export function doubleFetchCountry(){
 
 ///////////////////////////////////////
 
-const renderError = (msg: string) => {
-  countriesContainer.innerText= '';
-  countriesContainer?.insertAdjacentText('beforeend', msg);
-}
+  const renderError = (msg: string) => {
+    countriesContainer.innerText= '';
+    countriesContainer?.insertAdjacentText('beforeend', msg);
+  }
 
   const workObjKeys = (obj: any) => {
     const keys = Object.keys(obj);

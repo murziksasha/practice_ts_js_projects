@@ -1,7 +1,10 @@
-import { createImgTask } from "../createImgTask/createImgTask.js";
+import { refactorCode } from "../refactorCode/refactorCode.js";
 export function app() {
     // doubleFetchCountry();
     // practiceEventLoop();
-    createImgTask();
+    // createImgTask();
+    // asyncPractice();
+    // promisesParallel();
+    refactorCode();
 }
 //# sourceMappingURL=app.js.map
