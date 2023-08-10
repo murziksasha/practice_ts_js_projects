@@ -583,6 +583,9 @@ window.addEventListener("DOMContentLoaded", ()=>{
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "controller", ()=>controller);
+//@ts-ignore
+var _iconsSvg = require("url:../../img/icons.svg");
+var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
 var __awaiter = undefined && undefined.__awaiter || function(thisArg, _arguments, P, generator) {
     function adopt(value) {
         return value instanceof P ? value : new P(function(resolve) {
@@ -611,8 +614,9 @@ var __awaiter = undefined && undefined.__awaiter || function(thisArg, _arguments
     });
 };
 function controller() {
+    let id = window.location.hash.slice(1);
     const key = `a8d95058-27af-4278-9ab6-28f5d9eba0d9`;
-    const link = `https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886?key=${key}`;
+    let link = `https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886?key=${key}`;
     const recipeContainer = document.querySelector(".recipe");
     const timeout = function(s) {
         return new Promise(function(_, reject) {
@@ -621,10 +625,29 @@ function controller() {
             }, s * 1000);
         });
     };
+    const renderSpinner = (parentEl)=>{
+        const markUp = `
+      <div class="spinner">
+        <svg>
+          <use href="${(0, _iconsSvgDefault.default)}#icon-loader"></use>
+        </svg>
+      </div>
+    `;
+        if (parentEl) {
+            parentEl.innerHTML = "";
+            parentEl.insertAdjacentHTML("afterbegin", markUp);
+        }
+    };
     const showRecipe = function() {
         return __awaiter(this, void 0, void 0, function*() {
             try {
+                // id = '5ed6604591c37cdc054bc886';   
+                console.log(id);
+                if (!id) return;
+                link = `https://forkify-api.herokuapp.com/api/v2/recipes/${id}?key=${key}`;
                 // 1 Loading recipe
+                //spinner
+                renderSpinner(recipeContainer);
                 const res = yield fetch(link);
                 const data = yield res.json();
                 if (!res.ok) throw new Error(`${res.status}`);
@@ -651,14 +674,14 @@ function controller() {
         <div class="recipe__details">
           <div class="recipe__info">
             <svg class="recipe__info-icon">
-              <use href="src/img/icons.svg#icon-clock"></use>
+              <use href="${(0, _iconsSvgDefault.default)}#icon-clock"></use>
             </svg>
             <span class="recipe__info-data recipe__info-data--minutes">${recipe.cookingTime}</span>
             <span class="recipe__info-text">minutes</span>
         </div>
         <div class="recipe__info">
           <svg class="recipe__info-icon">
-            <use href="src/img/icons.svg#icon-users"></use>
+            <use href="${(0, _iconsSvgDefault.default)}#icon-users"></use>
           </svg>
           <span class="recipe__info-data recipe__info-data--people">${recipe.servings}</span>
           <span class="recipe__info-text">servings</span>
@@ -666,12 +689,12 @@ function controller() {
           <div class="recipe__info-buttons">
             <button class="btn--tiny btn--increase-servings">
               <svg>
-                <use href="src/img/icons.svg#icon-minus-circle"></use>
+                <use href="${(0, _iconsSvgDefault.default)}#icon-minus-circle"></use>
               </svg>
             </button>
             <button class="btn--tiny btn--increase-servings">
               <svg>
-                <use href="src/img/icons.svg#icon-plus-circle"></use>
+                <use href="${(0, _iconsSvgDefault.default)}#icon-plus-circle"></use>
               </svg>
             </button>
           </div>
@@ -679,12 +702,12 @@ function controller() {
 
         <div class="recipe__user-generated">
           <svg>
-            <use href="src/img/icons.svg#icon-user"></use>
+            <use href="${(0, _iconsSvgDefault.default)}#icon-user"></use>
           </svg>
         </div>
         <button class="btn--round">
           <svg class="">
-            <use href="src/img/icons.svg#icon-bookmark-fill"></use>
+            <use href="${(0, _iconsSvgDefault.default)}#icon-bookmark-fill"></use>
           </svg>
         </button>
       </div>
@@ -696,7 +719,7 @@ function controller() {
                     return `
                 <li class="recipe__ingredient">
                   <svg class="recipe__icon">
-                    <use href="src/img/icons.svg#icon-check"></use>
+                    <use href="$}#icon-check"></use>
                   </svg>
                   <div class="recipe__quantity">${ing.quantity}</div>
                   <div class="recipe__description">
@@ -723,7 +746,7 @@ function controller() {
           >
             <span>Directions</span>
             <svg class="search__icon">
-              <use href="src/img/icons.svg#icon-arrow-right"></use>
+              <use href="${(0, _iconsSvgDefault.default)}#icon-arrow-right"></use>
             </svg>
           </a>
         </div>
@@ -739,10 +762,54 @@ function controller() {
     };
     // https://forkify-api.herokuapp.com/v2
     ///////////////////////////////////////
-    showRecipe();
+    const patternEvent = [
+        "hashchange",
+        "load"
+    ];
+    patternEvent.forEach((element)=>{
+        window.addEventListener(element, showRecipe);
+    });
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+},{"url:../../img/icons.svg":"3umpu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3umpu":[function(require,module,exports) {
+module.exports = require("6c10ad504fe7fbca").getBundleURL("g05j8") + "icons.dfd7a6db.svg" + "?" + Date.now();
+
+},{"6c10ad504fe7fbca":"lgJ39"}],"lgJ39":[function(require,module,exports) {
+"use strict";
+var bundleURL = {};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
+    if (!value) {
+        value = getBundleURL();
+        bundleURL[id] = value;
+    }
+    return value;
+}
+function getBundleURL() {
+    try {
+        throw new Error();
+    } catch (err) {
+        var matches = ("" + err.stack).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^)\n]+/g);
+        if (matches) // The first two stack frames will be this function and getBundleURLCached.
+        // Use the 3rd one, which will be a runtime in the original bundle.
+        return getBaseURL(matches[2]);
+    }
+    return "/";
+}
+function getBaseURL(url) {
+    return ("" + url).replace(/^((?:https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/.+)\/[^/]+$/, "$1") + "/";
+}
+// TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
+function getOrigin(url) {
+    var matches = ("" + url).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^/]+/);
+    if (!matches) throw new Error("Origin not found");
+    return matches[0];
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
+
+},{}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
