@@ -1,6 +1,5 @@
 
 
-
   export const state = {
     recipe: {}
   }
