@@ -641,27 +641,9 @@ function controller() {
     const showRecipe = function() {
         return __awaiter(this, void 0, void 0, function*() {
             try {
-                // id = '5ed6604591c37cdc054bc886';   
-                console.log(id);
-                if (!id) return;
-                link = `https://forkify-api.herokuapp.com/api/v2/recipes/${id}?key=${key}`;
-                // 1 Loading recipe
                 //spinner
                 renderSpinner(recipeContainer);
-                const res = yield fetch(link);
-                const data = yield res.json();
-                if (!res.ok) throw new Error(`${res.status}`);
-                let { recipe } = data.data;
-                recipe = {
-                    id: recipe.id,
-                    title: recipe.title,
-                    publisher: recipe.publisher,
-                    sourceUrl: recipe.source_url,
-                    image: recipe.image_url,
-                    servings: recipe.servings,
-                    cookingTime: recipe.cooking_time,
-                    ingredients: recipe.ingredients
-                };
+                // 1 Loading recipe
                 // 2 Rendering Recipe
                 const markUp = `
         <figure class="recipe__fig">
