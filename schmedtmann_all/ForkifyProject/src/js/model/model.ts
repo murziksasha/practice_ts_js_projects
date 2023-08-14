@@ -2,6 +2,7 @@
 import { API_KEY, API_URL } from "../config/config.js";
 import { getJSON } from "../helpers/helpers.js";
 
+
   export const state = {
     recipe: {}
   }
@@ -30,6 +31,7 @@ import { getJSON } from "../helpers/helpers.js";
       console.log(state.recipe);
     } catch(err) {
       console.error(`${err} 💣💣💣💣`);
+      throw (err);
     }
 
   };

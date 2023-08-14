@@ -37,6 +37,7 @@ export const loadRecipe = function (id) {
         }
         catch (err) {
             console.error(`${err} 💣💣💣💣`);
+            throw (err);
         }
     });
 };

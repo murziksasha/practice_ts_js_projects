@@ -624,7 +624,7 @@ function controller() {
                 // 2 Rendering Recipe
                 (0, _recipeViewJsDefault.default).render((0, _modelJs.state).recipe);
             } catch (err) {
-                console.log(err);
+                (0, _recipeViewJsDefault.default).renderError();
             }
         });
     };
@@ -696,6 +696,7 @@ const loadRecipe = function(id) {
             console.log(state.recipe);
         } catch (err) {
             console.error(`${err} 💣💣💣💣`);
+            throw err;
         }
     });
 };
@@ -804,6 +805,8 @@ class RecipeView {
     constructor(){
         this._parentElement = document.querySelector(".recipe");
         this._data = {};
+        this._errorMessage = "We could not find that recipe. Please try another one!";
+        this._message = "";
     }
     render(data) {
         this._data = data;
@@ -817,6 +820,9 @@ class RecipeView {
         patternEvent.forEach((element)=>{
             window.addEventListener(element, handler);
         });
+    }
+    clean() {
+        this._parentElement.innerHTML = "";
     }
     generateMarkup() {
         const markUp = `
@@ -895,7 +901,7 @@ class RecipeView {
     </div>
   `;
         if (this._parentElement) {
-            this._parentElement.innerHTML = "";
+            this.clean();
             this._parentElement.insertAdjacentHTML("afterbegin", markUp);
         }
     }
@@ -908,9 +914,37 @@ class RecipeView {
       </div>
     `;
         if (this._parentElement) {
-            this._parentElement.innerHTML = "";
+            this.clean();
             this._parentElement.insertAdjacentHTML("afterbegin", markUp);
         }
+    }
+    renderError(message = this._errorMessage) {
+        const markUp = `
+      <div class="error">
+        <div>
+          <svg>
+            <use href="${(0, _iconsSvgDefault.default)}#icon-alert-triangle"></use>
+          </svg>
+        </div>
+        <p>${message}</p>
+      </div>
+    `;
+        this.clean();
+        this._parentElement.insertAdjacentHTML("afterbegin", markUp);
+    }
+    renderMessage(message = this._message) {
+        const markUp = `
+      <div class="message">
+        <div>
+          <svg>
+            <use href="${(0, _iconsSvgDefault.default)}#icon-smile"></use>
+          </svg>
+        </div>
+        <p>${this._message}</p>
+      </div>
+    `;
+        this.clean();
+        this._parentElement.insertAdjacentHTML("afterbegin", markUp);
     }
     generateMarkupIngredient(ing) {
         return `
@@ -929,7 +963,7 @@ class RecipeView {
 }
 exports.default = new RecipeView();
 
-},{"url:../../img/icons.svg":"3umpu","fractional":"3SU56","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3umpu":[function(require,module,exports) {
+},{"url:../../img/icons.svg":"3umpu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","fractional":"3SU56"}],"3umpu":[function(require,module,exports) {
 module.exports = require("6c10ad504fe7fbca").getBundleURL("g05j8") + "icons.dfd7a6db.svg" + "?" + Date.now();
 
 },{"6c10ad504fe7fbca":"lgJ39"}],"lgJ39":[function(require,module,exports) {

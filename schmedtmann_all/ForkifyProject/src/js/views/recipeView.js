@@ -6,6 +6,8 @@ class RecipeView {
     constructor() {
         this._parentElement = document.querySelector('.recipe');
         this._data = {};
+        this._errorMessage = 'We could not find that recipe. Please try another one!';
+        this._message = '';
     }
     render(data) {
         this._data = data;
@@ -16,6 +18,9 @@ class RecipeView {
         patternEvent.forEach(element => {
             window.addEventListener(element, handler);
         });
+    }
+    clean() {
+        this._parentElement.innerHTML = '';
     }
     generateMarkup() {
         const markUp = `
@@ -94,7 +99,7 @@ class RecipeView {
     </div>
   `;
         if (this._parentElement) {
-            this._parentElement.innerHTML = '';
+            this.clean();
             this._parentElement.insertAdjacentHTML('afterbegin', markUp);
         }
     }
@@ -107,9 +112,37 @@ class RecipeView {
       </div>
     `;
         if (this._parentElement) {
-            this._parentElement.innerHTML = '';
+            this.clean();
             this._parentElement.insertAdjacentHTML('afterbegin', markUp);
         }
+    }
+    renderError(message = this._errorMessage) {
+        const markUp = `
+      <div class="error">
+        <div>
+          <svg>
+            <use href="${icons}#icon-alert-triangle"></use>
+          </svg>
+        </div>
+        <p>${message}</p>
+      </div>
+    `;
+        this.clean();
+        this._parentElement.insertAdjacentHTML('afterbegin', markUp);
+    }
+    renderMessage(message = this._message) {
+        const markUp = `
+      <div class="message">
+        <div>
+          <svg>
+            <use href="${icons}#icon-smile"></use>
+          </svg>
+        </div>
+        <p>${this._message}</p>
+      </div>
+    `;
+        this.clean();
+        this._parentElement.insertAdjacentHTML('afterbegin', markUp);
     }
     generateMarkupIngredient(ing) {
         return `

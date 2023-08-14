@@ -21,7 +21,7 @@ export function controller() {
                 recipeView.render(state.recipe);
             }
             catch (err) {
-                console.log(err);
+                recipeView.renderError();
             }
         });
     };
