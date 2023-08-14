@@ -7,6 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { API_KEY, API_URL } from "../config/config.js";
 export const state = {
     recipe: {}
 };
@@ -17,7 +18,7 @@ export const loadRecipe = function (id) {
             return;
         const key = `a8d95058-27af-4278-9ab6-28f5d9eba0d9`;
         // const link = `https://forkify-api.herokuapp.com/api/v2/recipes/${id}?key=${key}`;
-        const link = `https://forkify-api.herokuapp.com/api/v2/recipes/${id}?key=${key}`;
+        const link = `${API_URL}/${id}?key=${API_KEY}`;
         const res = yield fetch(link);
         const data = yield res.json();
         if (!res.ok)

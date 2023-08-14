@@ -652,6 +652,7 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "state", ()=>state);
 parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe);
+var _configJs = require("../config/config.js");
 var __awaiter = undefined && undefined.__awaiter || function(thisArg, _arguments, P, generator) {
     function adopt(value) {
         return value instanceof P ? value : new P(function(resolve) {
@@ -688,7 +689,7 @@ const loadRecipe = function(id) {
         if (!id) return;
         const key = `a8d95058-27af-4278-9ab6-28f5d9eba0d9`;
         // const link = `https://forkify-api.herokuapp.com/api/v2/recipes/${id}?key=${key}`;
-        const link = `https://forkify-api.herokuapp.com/api/v2/recipes/${id}?key=${key}`;
+        const link = `${(0, _configJs.API_URL)}/${id}?key=${(0, _configJs.API_KEY)}`;
         const res = yield fetch(link);
         const data = yield res.json();
         if (!res.ok) throw new Error(`${res.status}`);
@@ -707,7 +708,7 @@ const loadRecipe = function(id) {
     });
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../config/config.js":"cIbW6"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -737,7 +738,15 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"l60JC":[function(require,module,exports) {
+},{}],"cIbW6":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "API_KEY", ()=>API_KEY);
+parcelHelpers.export(exports, "API_URL", ()=>API_URL);
+const API_KEY = `a8d95058-27af-4278-9ab6-28f5d9eba0d9`;
+const API_URL = "https://forkify-api.herokuapp.com/api/v2/recipes";
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l60JC":[function(require,module,exports) {
 //@ts-ignore
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
@@ -865,7 +874,7 @@ class RecipeView {
 }
 exports.default = new RecipeView();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","url:../../img/icons.svg":"3umpu","fractional":"3SU56"}],"3umpu":[function(require,module,exports) {
+},{"url:../../img/icons.svg":"3umpu","fractional":"3SU56","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3umpu":[function(require,module,exports) {
 module.exports = require("6c10ad504fe7fbca").getBundleURL("g05j8") + "icons.dfd7a6db.svg" + "?" + Date.now();
 
 },{"6c10ad504fe7fbca":"lgJ39"}],"lgJ39":[function(require,module,exports) {

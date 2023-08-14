@@ -1,4 +1,5 @@
 
+import { API_KEY, API_URL } from "../config/config.js";
 
   export const state = {
     recipe: {}
@@ -10,7 +11,7 @@
     if(!id) return;
     const key = `a8d95058-27af-4278-9ab6-28f5d9eba0d9`;
     // const link = `https://forkify-api.herokuapp.com/api/v2/recipes/${id}?key=${key}`;
-    const link = `https://forkify-api.herokuapp.com/api/v2/recipes/${id}?key=${key}`;
+    const link = `${API_URL}/${id}?key=${API_KEY}`;
 
 
     const res = await fetch(link);
