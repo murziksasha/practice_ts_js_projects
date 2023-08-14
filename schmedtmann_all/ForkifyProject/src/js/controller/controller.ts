@@ -4,17 +4,6 @@ import recipeView from '../views/recipeView.js';
 
 export function controller() {
 
-  const recipeContainer = document.querySelector('.recipe') as HTMLElement;
-
-  const timeout = function (s: any) {
-    return new Promise(function (_, reject) {
-      setTimeout(function () {
-        reject(new Error(`Request took too long! Timeout after ${s} second`));
-      }, s * 1000);
-    });
-  };
-
-
 
   const controlRecipes = async function() {
     try{
@@ -28,7 +17,7 @@ export function controller() {
       recipeView.render(state.recipe);
       
     } catch(err) {
-      alert(err);
+      console.log(err);
     }
   }
 
@@ -37,10 +26,10 @@ export function controller() {
   ///////////////////////////////////////
 
 
-  const patternEvent =  ['hashchange', 'load'];
-  patternEvent.forEach(element => {
-    window.addEventListener(element, controlRecipes);
-  });
+  const init = function() {
+    recipeView.addHandlerRender(controlRecipes);
+  } 
+  init();
 
 
 }

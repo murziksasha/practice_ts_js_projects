@@ -10,14 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { state, loadRecipe } from '../model/model.js';
 import recipeView from '../views/recipeView.js';
 export function controller() {
-    const recipeContainer = document.querySelector('.recipe');
-    const timeout = function (s) {
-        return new Promise(function (_, reject) {
-            setTimeout(function () {
-                reject(new Error(`Request took too long! Timeout after ${s} second`));
-            }, s * 1000);
-        });
-    };
     const controlRecipes = function () {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -29,15 +21,15 @@ export function controller() {
                 recipeView.render(state.recipe);
             }
             catch (err) {
-                alert(err);
+                console.log(err);
             }
         });
     };
     // https://forkify-api.herokuapp.com/v2
     ///////////////////////////////////////
-    const patternEvent = ['hashchange', 'load'];
-    patternEvent.forEach(element => {
-        window.addEventListener(element, controlRecipes);
-    });
+    const init = function () {
+        recipeView.addHandlerRender(controlRecipes);
+    };
+    init();
 }
 //# sourceMappingURL=controller.js.map

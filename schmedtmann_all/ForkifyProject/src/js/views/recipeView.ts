@@ -16,6 +16,13 @@ class RecipeView {
     this.generateMarkup();
   }
 
+  addHandlerRender(handler: EventListenerOrEventListenerObject) {
+    const patternEvent =  ['hashchange', 'load'];
+    patternEvent.forEach(element => {
+      window.addEventListener(element, handler);
+    });
+  }
+
   private generateMarkup() {
     const markUp = `
     <figure class="recipe__fig">
