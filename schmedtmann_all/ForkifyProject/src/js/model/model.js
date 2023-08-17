@@ -10,7 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { API_KEY, API_URL } from "../config/config.js";
 import { getJSON } from "../helpers/helpers.js";
 export const state = {
-    recipe: {}
+    recipe: {},
+    search: {
+        query: '',
+        results: []
+    }
 };
 export const loadRecipe = function (id) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -33,7 +37,26 @@ export const loadRecipe = function (id) {
                 cookingTime: recipe.cooking_time,
                 ingredients: recipe.ingredients,
             };
-            console.log(state.recipe);
+        }
+        catch (err) {
+            console.error(`${err} 💣💣💣💣`);
+            throw (err);
+        }
+    });
+};
+export const loadSearchResults = function (query) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            state.search.query = query;
+            const data = yield getJSON(`${API_URL}?search=${query}`);
+            state.search.results = data.data.recipes.map((rec) => {
+                return {
+                    id: rec.id,
+                    title: rec.title,
+                    publisher: rec.publisher,
+                    image: rec.image_url,
+                };
+            });
         }
         catch (err) {
             console.error(`${err} 💣💣💣💣`);

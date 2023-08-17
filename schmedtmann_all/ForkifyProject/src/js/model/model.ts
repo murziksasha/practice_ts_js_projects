@@ -4,8 +4,12 @@ import { getJSON } from "../helpers/helpers.js";
 
 
   export const state = {
-    recipe: {}
-  }
+    recipe: {},
+    search: {
+      query: '',
+      results: []
+    }
+  };
 
   export const loadRecipe = async function(id: string) {
 
@@ -28,11 +32,31 @@ import { getJSON } from "../helpers/helpers.js";
         cookingTime: recipe.cooking_time,
         ingredients: recipe.ingredients,
       }
-      console.log(state.recipe);
     } catch(err) {
       console.error(`${err} 💣💣💣💣`);
       throw (err);
     }
 
   };
+
+  export const loadSearchResults = async function(query: string) {
+    try {
+      state.search.query = query;
+
+       const data = await getJSON(`${API_URL}?search=${query}`);
+       state.search.results = data.data.recipes.map((rec: any) => {
+        return {
+          id: rec.id,
+          title: rec.title,
+          publisher: rec.publisher,
+          image: rec.image_url,
+        }
+       });
+    } catch(err) {
+      console.error(`${err} 💣💣💣💣`);
+      throw (err);
+    }
+  };
+
+
 
