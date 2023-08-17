@@ -11,6 +11,8 @@ export default class View {
   protected _message: string = '';
 
   render(data: any) {
+    if(!data || (Array.isArray(data) && data.length === 0)) return this.renderError();
+
     this._data = data;
     this.generateMarkup();
   }

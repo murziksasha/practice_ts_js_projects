@@ -12,6 +12,11 @@ import recipeView from '../views/recipeView.js';
 import searchView from '../views/searchView.js';
 import resultsView from '../views/resultsView.js';
 export function controller() {
+    //@ts-ignore
+    if (module.hot) {
+        //@ts-ignore
+        module.hot.accept();
+    }
     const controlRecipes = function () {
         return __awaiter(this, void 0, void 0, function* () {
             try {

@@ -6,6 +6,11 @@ import resultsView from '../views/resultsView.js';
 
 export function controller() {
 
+  //@ts-ignore
+  if(module.hot){
+    //@ts-ignore
+    module.hot.accept();
+  }
 
   const controlRecipes = async function() {
 

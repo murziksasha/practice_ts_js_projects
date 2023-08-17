@@ -1,35 +1,40 @@
+//@ts-ignore
+import icons from 'url:../../img/icons.svg';
 import View from "./View.js";
 class ResultsView extends View {
     constructor() {
         super(...arguments);
         this._parentElement = document.querySelector('.results');
-    }
-    render(data) {
-        this._data = data;
-        this.generateMarkup();
+        this._errorMessage = 'No recipes found for your query! Please try again :) ';
+        this._message = '';
     }
     generateMarkup() {
-        return this._data.map((item) => {
-            if (this._parentElement) {
-                this.clean();
-                let markUpPreview = this._generateMarkupPreview(item);
-                return this._parentElement.insertAdjacentHTML('afterbegin', markUpPreview);
-            }
-        }).join('');
+        let markUp = '';
+        this._data.map((item) => {
+            markUp += this._generateMarkupPreview(item);
+        });
+        if (this._parentElement) {
+            this.clean();
+            this._parentElement.insertAdjacentHTML('afterbegin', markUp);
+        }
     }
     _generateMarkupPreview(item) {
-        console.log(item);
         const markUp = `
-      <li class="preview">
-        <a class="preview__link" href="#23456">
+      <li class="preview" data-id = "${item.id}">
+        <a class="preview__link" href="${item.id}">
           <figure class="preview__fig">
-            <img src="src/img/test-1.jpg" alt="Test" />
+            <img src="${item.image}" alt="Test" />
           </figure>
           <div class="preview__data">
             <h4 class="preview__name">
-              Pasta with Tomato Cream ...
+              ${item.title}
             </h4>
-            <p class="preview__publisher">The Pioneer Woman</p>
+            <p class="preview__publisher">${item.publisher}</p>
+            <div class="preview__user-generated">
+              <svg>
+                <use href="${icons}#icon-user"/>
+              </svg>
+            </div>
           </div>
         </a>
       </li>

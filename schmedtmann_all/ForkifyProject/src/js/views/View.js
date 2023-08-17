@@ -10,6 +10,8 @@ export default class View {
         this._message = '';
     }
     render(data) {
+        if (!data || (Array.isArray(data) && data.length === 0))
+            return this.renderError();
         this._data = data;
         this.generateMarkup();
     }
