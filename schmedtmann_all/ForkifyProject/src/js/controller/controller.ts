@@ -1,7 +1,8 @@
-import { state, loadRecipe, loadSearchResults} from '../model/model.js';
+import { state, loadRecipe, loadSearchResults, getSearchResultsPage} from '../model/model.js';
 import recipeView from '../views/recipeView.js';
 import searchView from '../views/searchView.js';
 import resultsView from '../views/resultsView.js';
+import paginationView from '../views/paginationView.js';
 
 
 export function controller() {
@@ -38,19 +39,26 @@ export function controller() {
       if(!query) return;
 
       await loadSearchResults(query);
-      console.log(state.search.results);
-      resultsView.render(state.search.results);
+      // resultsView.render(state.search.results);
+      resultsView.render(getSearchResultsPage());
+
+      // render initial pagiantion buttons
+      paginationView.render(state.search);
 
     } catch (error) {
       console.log(error);
     }
   }
 
-
+  const controlPagination = (goToPage: number) => {
+    resultsView.render(getSearchResultsPage(goToPage));
+    paginationView.render(state.search);
+  };
 
   const init = function() {
     recipeView.addHandlerRender(controlRecipes);
     searchView.addHandlerSearch(controlSearchResults)
+    paginationView.addHandlerClick(controlPagination);
   } 
   init();
 
