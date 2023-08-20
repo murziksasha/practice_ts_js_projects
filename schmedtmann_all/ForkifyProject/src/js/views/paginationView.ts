@@ -55,17 +55,17 @@ class PaginationView extends View {
     // Other page
     if(currPage < numPages) {
       return `
-        <button data-goto="${currPage - 1}" class="btn--inline pagination__btn--next">
-          <span>Page ${currPage - 1}</span>
+        <button data-goto="${currPage - 1}" class="btn--inline pagination__btn--prev">
+        <svg class="search__icon">
+          <use href="${icons}#icon-arrow-left"></use>
+        </svg>
+        <span>Page ${currPage - 1}</span>
+        </button>
+        <button data-goto="${currPage + 1}" class="btn--inline pagination__btn--next">
+        <span>Page ${currPage + 1}</span>
           <svg class="search__icon">
             <use href="${icons}#icon-arrow-right"></use>
           </svg>
-        </button>
-        <button data-goto="${currPage + 1}" class="btn--inline pagination__btn--prev">
-          <svg class="search__icon">
-            <use href="${icons}#icon-arrow-left"></use>
-          </svg>
-          <span>Page ${currPage + 1}</span>
         </button>
         `;
     }

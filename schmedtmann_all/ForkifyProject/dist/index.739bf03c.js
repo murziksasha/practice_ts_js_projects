@@ -665,7 +665,7 @@ function controller() {
     init();
 }
 
-},{"../model/model.js":"gsv5J","../views/recipeView.js":"l60JC","../views/searchView.js":"9OQAM","../views/resultsView.js":"cSbZE","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../views/paginationView.js":"6z7bi"}],"gsv5J":[function(require,module,exports) {
+},{"../model/model.js":"gsv5J","../views/recipeView.js":"l60JC","../views/searchView.js":"9OQAM","../views/resultsView.js":"cSbZE","../views/paginationView.js":"6z7bi","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gsv5J":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "state", ()=>state);
@@ -1593,17 +1593,17 @@ class PaginationView extends (0, _viewJsDefault.default) {
       `;
         // Other page
         if (currPage < numPages) return `
-        <button data-goto="${currPage - 1}" class="btn--inline pagination__btn--next">
-          <span>Page ${currPage - 1}</span>
+        <button data-goto="${currPage - 1}" class="btn--inline pagination__btn--prev">
+        <svg class="search__icon">
+          <use href="${0, _iconsSvgDefault.default}#icon-arrow-left"></use>
+        </svg>
+        <span>Page ${currPage - 1}</span>
+        </button>
+        <button data-goto="${currPage + 1}" class="btn--inline pagination__btn--next">
+        <span>Page ${currPage + 1}</span>
           <svg class="search__icon">
             <use href="${0, _iconsSvgDefault.default}#icon-arrow-right"></use>
           </svg>
-        </button>
-        <button data-goto="${currPage + 1}" class="btn--inline pagination__btn--prev">
-          <svg class="search__icon">
-            <use href="${0, _iconsSvgDefault.default}#icon-arrow-left"></use>
-          </svg>
-          <span>Page ${currPage + 1}</span>
         </button>
         `;
         // Page 1, and there are NO pages
@@ -1612,6 +1612,6 @@ class PaginationView extends (0, _viewJsDefault.default) {
 }
 exports.default = new PaginationView();
 
-},{"./View.js":"5cUXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","url:../../img/icons.svg":"3umpu"}]},["79pyb","ebWYT"], "ebWYT", "parcelRequire9fa7")
+},{"url:../../img/icons.svg":"3umpu","./View.js":"5cUXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["79pyb","ebWYT"], "ebWYT", "parcelRequire9fa7")
 
 //# sourceMappingURL=index.739bf03c.js.map
