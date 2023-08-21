@@ -10,7 +10,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { API_KEY, API_URL, RES_PER_PAGE } from "../config/config.js";
 import { getJSON } from "../helpers/helpers.js";
 export const state = {
-    recipe: {},
+    recipe: {
+        id: '',
+        title: '',
+        ingredients: [],
+        servings: 0,
+        publisher: '',
+        sourceUrl: '',
+        image: '',
+        cookingTime: '',
+    },
     search: {
         query: '',
         results: [],
@@ -71,5 +80,12 @@ export const getSearchResultsPage = function (page = state.search.page) {
     const start = (page - 1) * state.search.resultsPerPage; //0;
     const end = page * state.search.resultsPerPage; //9;
     return state.search.results.slice(start, end);
+};
+export const updateServings = (newServings) => {
+    state.recipe.ingredients.forEach((ing) => {
+        ing.quantity = (ing.quantity * newServings) / state.recipe.servings;
+        //newQT = OldQT * newServings / oldServings // 2 * 8 / 4 = 4
+    });
+    state.recipe.servings = newServings;
 };
 //# sourceMappingURL=model.js.map

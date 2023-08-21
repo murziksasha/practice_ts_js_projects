@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { state, loadRecipe, loadSearchResults, getSearchResultsPage } from '../model/model.js';
+import { state, loadRecipe, loadSearchResults, getSearchResultsPage, updateServings } from '../model/model.js';
 import recipeView from '../views/recipeView.js';
 import searchView from '../views/searchView.js';
 import resultsView from '../views/resultsView.js';
@@ -55,8 +55,15 @@ export function controller() {
         resultsView.render(getSearchResultsPage(goToPage));
         paginationView.render(state.search);
     };
+    const controlServings = (newServings) => {
+        // Update the recipe servings (in state)
+        updateServings(newServings);
+        // Update the recipe view
+        recipeView.render(state.recipe);
+    };
     const init = function () {
         recipeView.addHandlerRender(controlRecipes);
+        recipeView.addHandlerUpdateServings(controlServings);
         searchView.addHandlerSearch(controlSearchResults);
         paginationView.addHandlerClick(controlPagination);
     };

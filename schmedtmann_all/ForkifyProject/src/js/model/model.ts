@@ -4,7 +4,16 @@ import { getJSON } from "../helpers/helpers.js";
 
 
   export const state = {
-    recipe: {},
+    recipe: {
+      id: '',
+      title: '',
+      ingredients: [],
+      servings: 0,
+      publisher: '',
+      sourceUrl: '',
+      image: '',
+      cookingTime: '',
+    },
     search: {
       query: '',
       results: [],
@@ -65,6 +74,14 @@ import { getJSON } from "../helpers/helpers.js";
     const start = (page - 1) * state.search.resultsPerPage;//0;
     const end = page * state.search.resultsPerPage;//9;
     return state.search.results.slice(start, end);
+  }
+
+  export const updateServings = (newServings: number) => {
+    state.recipe.ingredients.forEach((ing: any) => {
+      ing.quantity = (ing.quantity * newServings) / state.recipe.servings;
+      //newQT = OldQT * newServings / oldServings // 2 * 8 / 4 = 4
+    });
+    state.recipe.servings = newServings;
   }
 
 
