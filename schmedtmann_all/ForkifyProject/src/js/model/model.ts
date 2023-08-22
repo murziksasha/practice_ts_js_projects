@@ -13,13 +13,15 @@ import { getJSON } from "../helpers/helpers.js";
       sourceUrl: '',
       image: '',
       cookingTime: '',
+      bookmarked: false,
     },
     search: {
       query: '',
       results: [],
       page: 1,
       resultsPerPage: RES_PER_PAGE,
-    }
+    },
+    bookmarks: [] as string[],
   };
 
   export const loadRecipe = async function(id: string) {
@@ -63,6 +65,7 @@ import { getJSON } from "../helpers/helpers.js";
           image: rec.image_url,
         }
        });
+       state.search.page = 1;
     } catch(err) {
       console.error(`${err} 💣💣💣💣`);
       throw (err);
@@ -83,6 +86,15 @@ import { getJSON } from "../helpers/helpers.js";
     });
     state.recipe.servings = newServings;
   }
+
+  export const addBookmark = (recipe: any) => {
+    //add bookmark
+    state.bookmarks.push(recipe);
+
+    //Mark current recipe as bookmark
+    if(recipe.id === state.recipe.id) state.recipe.bookmarked = true;
+
+  };
 
 
 

@@ -392,7 +392,11 @@ body {
   opacity: 1;
 }
 
-.preview__link:link, .preview__link:visited {
+.preview__link {
+  display: flex;
+}
+
+.preview__link:visited {
   border-right: 1px solid #fff;
   align-items: center;
   padding: 1.5rem 3.25rem;

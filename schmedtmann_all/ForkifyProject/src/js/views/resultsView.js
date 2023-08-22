@@ -18,10 +18,19 @@ class ResultsView extends View {
             this._parentElement.insertAdjacentHTML('afterbegin', markUp);
         }
     }
+    addHandlerClickElemSearch(handler) {
+        this._parentElement.addEventListener('click', (e) => {
+            const targetElement = e.target;
+            const elem = targetElement === null || targetElement === void 0 ? void 0 : targetElement.closest('li.preview');
+            if (!elem)
+                return;
+            handler(elem.dataset.id);
+        });
+    }
     _generateMarkupPreview(item) {
         const markUp = `
       <li class="preview" data-id = "${item.id}">
-        <a class="preview__link" href="${item.id}">
+        <div class="preview__link">
           <figure class="preview__fig">
             <img src="${item.image}" alt="Test" />
           </figure>
@@ -36,7 +45,7 @@ class ResultsView extends View {
               </svg>
             </div>
           </div>
-        </a>
+        </div>
       </li>
     `;
         return markUp;

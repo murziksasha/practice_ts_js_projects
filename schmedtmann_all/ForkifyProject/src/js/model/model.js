@@ -19,13 +19,15 @@ export const state = {
         sourceUrl: '',
         image: '',
         cookingTime: '',
+        bookmarked: false,
     },
     search: {
         query: '',
         results: [],
         page: 1,
         resultsPerPage: RES_PER_PAGE,
-    }
+    },
+    bookmarks: [],
 };
 export const loadRecipe = function (id) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -68,6 +70,7 @@ export const loadSearchResults = function (query) {
                     image: rec.image_url,
                 };
             });
+            state.search.page = 1;
         }
         catch (err) {
             console.error(`${err} 💣💣💣💣`);
@@ -87,5 +90,12 @@ export const updateServings = (newServings) => {
         //newQT = OldQT * newServings / oldServings // 2 * 8 / 4 = 4
     });
     state.recipe.servings = newServings;
+};
+export const addBookmark = (recipe) => {
+    //add bookmark
+    state.bookmarks.push(recipe);
+    //Mark current recipe as bookmark
+    if (recipe.id === state.recipe.id)
+        state.recipe.bookmarked = true;
 };
 //# sourceMappingURL=model.js.map

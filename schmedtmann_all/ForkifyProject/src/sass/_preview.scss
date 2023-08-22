@@ -1,6 +1,6 @@
 .preview {
   &__link {
-    &:link,
+    display: flex;
     &:visited {
       display: flex;
       align-items: center;

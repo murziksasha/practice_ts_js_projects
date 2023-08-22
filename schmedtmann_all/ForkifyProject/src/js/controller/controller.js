@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { state, loadRecipe, loadSearchResults, getSearchResultsPage, updateServings } from '../model/model.js';
+import { state, loadRecipe, loadSearchResults, getSearchResultsPage, updateServings, addBookmark } from '../model/model.js';
 import recipeView from '../views/recipeView.js';
 import searchView from '../views/searchView.js';
 import resultsView from '../views/resultsView.js';
@@ -20,11 +20,12 @@ export function controller() {
     }
     const controlRecipes = function () {
         return __awaiter(this, void 0, void 0, function* () {
+            let defaultID = '5ed6604591c37cdc054bc886';
             try {
                 //spinner
                 recipeView.renderSpinner();
                 // 1 Loading recipe
-                yield loadRecipe('5ed6604591c37cdc054bc886');
+                yield loadRecipe(defaultID);
                 // 2 Rendering Recipe
                 recipeView.render(state.recipe);
             }
@@ -61,10 +62,19 @@ export function controller() {
         // Update the recipe view
         recipeView.render(state.recipe);
     };
+    const controlClickElement = (id) => __awaiter(this, void 0, void 0, function* () {
+        yield loadRecipe(id);
+        recipeView.render(state.recipe);
+    });
+    const controlAddBookmark = () => {
+        addBookmark(state.recipe);
+        console.log(state.recipe);
+    };
     const init = function () {
         recipeView.addHandlerRender(controlRecipes);
         recipeView.addHandlerUpdateServings(controlServings);
         searchView.addHandlerSearch(controlSearchResults);
+        resultsView.addHandlerClickElemSearch(controlClickElement);
         paginationView.addHandlerClick(controlPagination);
     };
     init();

@@ -148,7 +148,7 @@ class RecipeView extends View {
       this._parentElement.insertAdjacentHTML('afterbegin', markUp);
   }
     
-  addHandlerRender(handler: EventListenerOrEventListenerObject) {
+  addHandlerRender(handler: any) {
     const patternEvent =  ['hashchange', 'load'];
     patternEvent.forEach(element => {
       window.addEventListener(element, handler);

@@ -625,11 +625,12 @@ function controller() {
     module.hot.accept();
     const controlRecipes = function() {
         return __awaiter(this, void 0, void 0, function*() {
+            let defaultID = "5ed6604591c37cdc054bc886";
             try {
                 //spinner
                 (0, _recipeViewJsDefault.default).renderSpinner();
                 // 1 Loading recipe
-                yield (0, _modelJs.loadRecipe)("5ed6604591c37cdc054bc886");
+                yield (0, _modelJs.loadRecipe)(defaultID);
                 // 2 Rendering Recipe
                 (0, _recipeViewJsDefault.default).render((0, _modelJs.state).recipe);
             } catch (err) {
@@ -663,10 +664,19 @@ function controller() {
         // Update the recipe view
         (0, _recipeViewJsDefault.default).render((0, _modelJs.state).recipe);
     };
+    const controlClickElement = (id)=>__awaiter(this, void 0, void 0, function*() {
+            yield (0, _modelJs.loadRecipe)(id);
+            (0, _recipeViewJsDefault.default).render((0, _modelJs.state).recipe);
+        });
+    const controlAddBookmark = ()=>{
+        (0, _modelJs.addBookmark)((0, _modelJs.state).recipe);
+        console.log((0, _modelJs.state).recipe);
+    };
     const init = function() {
         (0, _recipeViewJsDefault.default).addHandlerRender(controlRecipes);
         (0, _recipeViewJsDefault.default).addHandlerUpdateServings(controlServings);
         (0, _searchViewJsDefault.default).addHandlerSearch(controlSearchResults);
+        (0, _resultsViewJsDefault.default).addHandlerClickElemSearch(controlClickElement);
         (0, _paginationViewJsDefault.default).addHandlerClick(controlPagination);
     };
     init();
@@ -680,6 +690,7 @@ parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe);
 parcelHelpers.export(exports, "loadSearchResults", ()=>loadSearchResults);
 parcelHelpers.export(exports, "getSearchResultsPage", ()=>getSearchResultsPage);
 parcelHelpers.export(exports, "updateServings", ()=>updateServings);
+parcelHelpers.export(exports, "addBookmark", ()=>addBookmark);
 var _configJs = require("../config/config.js");
 var _helpersJs = require("../helpers/helpers.js");
 var __awaiter = undefined && undefined.__awaiter || function(thisArg, _arguments, P, generator) {
@@ -718,14 +729,16 @@ const state = {
         publisher: "",
         sourceUrl: "",
         image: "",
-        cookingTime: ""
+        cookingTime: "",
+        bookmarked: false
     },
     search: {
         query: "",
         results: [],
         page: 1,
         resultsPerPage: (0, _configJs.RES_PER_PAGE)
-    }
+    },
+    bookmarks: []
 };
 const loadRecipe = function(id) {
     return __awaiter(this, void 0, void 0, function*() {
@@ -766,6 +779,7 @@ const loadSearchResults = function(query) {
                     image: rec.image_url
                 };
             });
+            state.search.page = 1;
         } catch (err) {
             console.error(`${err} 💣💣💣💣`);
             throw err;
@@ -784,6 +798,12 @@ const updateServings = (newServings)=>{
     //newQT = OldQT * newServings / oldServings // 2 * 8 / 4 = 4
     });
     state.recipe.servings = newServings;
+};
+const addBookmark = (recipe)=>{
+    //add bookmark
+    state.bookmarks.push(recipe);
+    //Mark current recipe as bookmark
+    if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
 };
 
 },{"../config/config.js":"cIbW6","../helpers/helpers.js":"75M5l","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cIbW6":[function(require,module,exports) {
@@ -1550,10 +1570,18 @@ class ResultsView extends (0, _viewJsDefault.default) {
             this._parentElement.insertAdjacentHTML("afterbegin", markUp);
         }
     }
+    addHandlerClickElemSearch(handler) {
+        this._parentElement.addEventListener("click", (e)=>{
+            const targetElement = e.target;
+            const elem = targetElement === null || targetElement === void 0 ? void 0 : targetElement.closest("li.preview");
+            if (!elem) return;
+            handler(elem.dataset.id);
+        });
+    }
     _generateMarkupPreview(item) {
         const markUp = `
       <li class="preview" data-id = "${item.id}">
-        <a class="preview__link" href="${item.id}">
+        <div class="preview__link">
           <figure class="preview__fig">
             <img src="${item.image}" alt="Test" />
           </figure>
@@ -1568,7 +1596,7 @@ class ResultsView extends (0, _viewJsDefault.default) {
               </svg>
             </div>
           </div>
-        </a>
+        </div>
       </li>
     `;
         return markUp;

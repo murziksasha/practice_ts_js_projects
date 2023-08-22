@@ -20,10 +20,19 @@ class ResultsView extends View {
     
   }
 
+  addHandlerClickElemSearch(handler: any) {
+    this._parentElement.addEventListener('click', (e) => {
+      const targetElement = e.target as Element; 
+      const elem = targetElement?.closest('li.preview') as HTMLElement;
+      if(!elem) return;
+      handler(elem.dataset.id);
+    });
+  }
+
   private _generateMarkupPreview(item: any) {
     const markUp = `
       <li class="preview" data-id = "${item.id}">
-        <a class="preview__link" href="${item.id}">
+        <div class="preview__link">
           <figure class="preview__fig">
             <img src="${item.image}" alt="Test" />
           </figure>
@@ -38,7 +47,7 @@ class ResultsView extends View {
               </svg>
             </div>
           </div>
-        </a>
+        </div>
       </li>
     `;
 
