@@ -1,8 +1,11 @@
-import { state, loadRecipe, loadSearchResults, getSearchResultsPage, updateServings, addBookmark} from '../model/model.js';
+import { state, loadRecipe, loadSearchResults, getSearchResultsPage, updateServings, addBookmark, deleteBookmark} from '../model/model.js';
 import recipeView from '../views/recipeView.js';
 import searchView from '../views/searchView.js';
 import resultsView from '../views/resultsView.js';
+import bookmarksView from '../views/bookmarksView.js';
 import paginationView from '../views/paginationView.js';
+
+
 
 
 export function controller() {
@@ -13,7 +16,8 @@ export function controller() {
     module.hot.accept();
   }
 
-  
+  bookmarksView.render(state.bookmarks);
+
   const controlRecipes = async function() {
     let defaultID = '5ed6604591c37cdc054bc886';
     try{
@@ -28,6 +32,7 @@ export function controller() {
       
     } catch(err) {
       recipeView.renderError();
+      console.error(err);
     }
 
 
@@ -47,6 +52,7 @@ export function controller() {
 
       // render initial pagiantion buttons
       paginationView.render(state.search);
+
 
     } catch (error) {
       console.log(error);
@@ -72,16 +78,26 @@ export function controller() {
   }
 
   const controlAddBookmark = () => {
-    addBookmark(state.recipe);
-    console.log(state.recipe);
+    // 1) add/remove bookmark
+    if(!state.recipe.bookmarked) addBookmark(state.recipe)
+    else deleteBookmark(state.recipe.id);
+
+    //2) Update recipe view
+    recipeView.render(state.recipe);
+
+    // 3) Render bookmarks
+    bookmarksView.render(state.bookmarks);
+
   }
 
 
   const init = function() {
     recipeView.addHandlerRender(controlRecipes);
     recipeView.addHandlerUpdateServings(controlServings);
+    recipeView.addHandlerAddBookmark(controlAddBookmark);
     searchView.addHandlerSearch(controlSearchResults);
     resultsView.addHandlerClickElemSearch(controlClickElement);
+    bookmarksView.addHandlerClickElemSearch(controlClickElement);
     paginationView.addHandlerClick(controlPagination);
 
   } 

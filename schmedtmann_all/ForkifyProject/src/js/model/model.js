@@ -7,8 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { API_KEY, API_URL, RES_PER_PAGE } from "../config/config.js";
-import { getJSON } from "../helpers/helpers.js";
+import { API_KEY, API_URL, RES_PER_PAGE } from '../config/config.js';
+import { getJSON } from '../helpers/helpers.js';
 export const state = {
     recipe: {
         id: '',
@@ -31,7 +31,7 @@ export const state = {
 };
 export const loadRecipe = function (id) {
     return __awaiter(this, void 0, void 0, function* () {
-        // id = '5ed6604591c37cdc054bc886'; 
+        // id = '5ed6604591c37cdc054bc886';
         if (!id)
             return;
         const key = `a8d95058-27af-4278-9ab6-28f5d9eba0d9`;
@@ -49,11 +49,16 @@ export const loadRecipe = function (id) {
                 servings: recipe.servings,
                 cookingTime: recipe.cooking_time,
                 ingredients: recipe.ingredients,
+                bookmarked: false,
             };
+            if (state.bookmarks.some((bookmark) => bookmark.id === id))
+                state.recipe.bookmarked = true;
+            else
+                state.recipe.bookmarked = false;
         }
         catch (err) {
             console.error(`${err} 💣💣💣💣`);
-            throw (err);
+            throw err;
         }
     });
 };
@@ -74,7 +79,7 @@ export const loadSearchResults = function (query) {
         }
         catch (err) {
             console.error(`${err} 💣💣💣💣`);
-            throw (err);
+            throw err;
         }
     });
 };
@@ -91,11 +96,30 @@ export const updateServings = (newServings) => {
     });
     state.recipe.servings = newServings;
 };
+const persistBookmarks = () => {
+    localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks));
+};
 export const addBookmark = (recipe) => {
     //add bookmark
     state.bookmarks.push(recipe);
     //Mark current recipe as bookmark
     if (recipe.id === state.recipe.id)
         state.recipe.bookmarked = true;
+    persistBookmarks();
 };
+export const deleteBookmark = (id) => {
+    const index = state.bookmarks.findIndex((el) => el.id === id);
+    state.bookmarks.splice(index, 1);
+    //Mark current recipe as NOT bookmarked
+    if (id === state.recipe.id)
+        state.recipe.bookmarked = false;
+    persistBookmarks();
+};
+const init = () => {
+    const storage = localStorage.getItem('bookmarks');
+    if (storage)
+        state.bookmarks = JSON.parse(storage);
+};
+init();
+console.log(state.bookmarks);
 //# sourceMappingURL=model.js.map
