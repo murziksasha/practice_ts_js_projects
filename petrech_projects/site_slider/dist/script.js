@@ -23,11 +23,27 @@ class Slider {
     if (this.page) {
       this.slides = Array.from(this.page.children);
     }
+    this.blockHanson = document.querySelector('div.hanson');
     this.showSlides(this.slideIndex);
   }
   showSlides(n) {
     if (n > this.slides.length) this.slideIndex = 1;
     if (n < 1) this.slideIndex = this.slides.length;
+    try {
+      if (!this.blockHanson) return;
+      this.blockHanson.style.opacity = '0';
+      if (n === 3) {
+        this.blockHanson.classList.add('animate__animated');
+        setTimeout(() => {
+          if (this.blockHanson) {
+            this.blockHanson.classList.add('animate__fadeInUpBig');
+            this.blockHanson.style.opacity = '1';
+          }
+        }, 3000);
+      } else {
+        this.blockHanson.classList.remove('animate__fadeInUpBig');
+      }
+    } catch (e) {}
     this.slides.forEach(slide => {
       slide.style.display = 'none';
     });
