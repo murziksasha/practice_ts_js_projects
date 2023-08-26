@@ -7,7 +7,13 @@ export default class MiniSlider extends Slider {
         this.prevSelector = prevSelector;
     }
     init() {
-        console.log(this.container, this.next, this.prev);
+        if (this.container)
+            this.container.style.cssText = `
+      display: flex;
+      flex-wrap: wrap;
+      overflow: hidden;
+      align-items: flex-start;
+    `;
     }
 }
 //# sourceMappingURL=slider-mini.js.map

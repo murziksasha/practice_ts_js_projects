@@ -154,7 +154,12 @@ class MiniSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
     this.prevSelector = prevSelector;
   }
   init() {
-    console.log(this.container, this.next, this.prev);
+    if (this.container) this.container.style.cssText = `
+      display: flex;
+      flex-wrap: wrap;
+      overflow: hidden;
+      align-items: flex-start;
+    `;
   }
 }
 
@@ -272,6 +277,10 @@ document.addEventListener('DOMContentLoaded', () => {
   slider.render();
   const showUpSlider = new _modules_slider_slider_mini_js__WEBPACK_IMPORTED_MODULE_1__["default"]('.showup__content-slider', '.showup__next', '.showup__prev');
   showUpSlider.init();
+  const modulesSlider = new _modules_slider_slider_mini_js__WEBPACK_IMPORTED_MODULE_1__["default"]('.modules__content-slider', '.modules__info-btns .slick-next', '.modules__info-btns .slick-prev');
+  modulesSlider.init();
+  const feedSlider = new _modules_slider_slider_mini_js__WEBPACK_IMPORTED_MODULE_1__["default"]('.feed__slider', '.feed__slider .slick-next', '.feed__slider .slick-prev');
+  feedSlider.init();
   const player = new _modules_playVideo_playVideo_js__WEBPACK_IMPORTED_MODULE_2__["default"]('.showup .play', '.overlay');
   player.init();
 });
