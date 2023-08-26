@@ -130,6 +130,36 @@ class MainSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
 /***/ }),
 
+/***/ "./src/js/modules/slider/slider-mini.js":
+/*!**********************************************!*\
+  !*** ./src/js/modules/slider/slider-mini.js ***!
+  \**********************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ MiniSlider; }
+/* harmony export */ });
+/* harmony import */ var _slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./slider */ "./src/js/modules/slider/slider.js");
+
+class MiniSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  constructor(pageSelector, nextSelector, prevSelector) {
+    super({
+      pageSelector,
+      nextSelector,
+      prevSelector
+    });
+    this.pageSelector = pageSelector;
+    this.nextSelector = nextSelector;
+    this.prevSelector = prevSelector;
+  }
+  init() {
+    console.log(this.container, this.next, this.prev);
+  }
+}
+
+/***/ }),
+
 /***/ "./src/js/modules/slider/slider.js":
 /*!*****************************************!*\
   !*** ./src/js/modules/slider/slider.js ***!
@@ -141,25 +171,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": function() { return /* binding */ Slider; }
 /* harmony export */ });
 class Slider {
-  // constructor(
-  //   public pageSelector: string,
-  //   public btnsSelector: string,
-  // )
   constructor(_ref) {
     let {
-      pageSelector = '',
-      btnsSelector = '',
-      next = '',
-      prev = ''
+      pageSelector,
+      btnsSelector,
+      nextSelector,
+      prevSelector
     } = _ref;
+    this.container = null;
+    this.btns = [];
+    this.prev = null;
+    this.next = null;
     this.slides = [];
     this.slideIndex = 1;
-    this.page = document.querySelector(pageSelector);
-    this.btns = Array.from(document.querySelectorAll(btnsSelector));
-    if (this.page) {
-      this.slides = Array.from(this.page.children);
+    this.blockHanson = null;
+    if (typeof pageSelector === 'string') this.container = document.querySelector(pageSelector);
+    if (typeof btnsSelector === 'string') this.btns = Array.from(document.querySelectorAll(btnsSelector));
+    if (this.container) {
+      this.slides = Array.from(this.container.children);
     }
     this.blockHanson = document.querySelector('div.hanson');
+    if (typeof nextSelector === 'string') this.next = document.querySelector(nextSelector);
+    if (typeof prevSelector === 'string') this.prev = document.querySelector(prevSelector);
   }
 }
 
@@ -229,13 +262,17 @@ var __webpack_exports__ = {};
   \************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_slider_slider_main_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/slider/slider-main.js */ "./src/js/modules/slider/slider-main.js");
-/* harmony import */ var _modules_playVideo_playVideo_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/playVideo/playVideo.js */ "./src/js/modules/playVideo/playVideo.js");
+/* harmony import */ var _modules_slider_slider_mini_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/slider/slider-mini.js */ "./src/js/modules/slider/slider-mini.js");
+/* harmony import */ var _modules_playVideo_playVideo_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/playVideo/playVideo.js */ "./src/js/modules/playVideo/playVideo.js");
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
   const slider = new _modules_slider_slider_main_js__WEBPACK_IMPORTED_MODULE_0__["default"]('.page', '.next');
   slider.render();
-  const player = new _modules_playVideo_playVideo_js__WEBPACK_IMPORTED_MODULE_1__["default"]('.showup .play', '.overlay');
+  const showUpSlider = new _modules_slider_slider_mini_js__WEBPACK_IMPORTED_MODULE_1__["default"]('.showup__content-slider', '.showup__next', '.showup__prev');
+  showUpSlider.init();
+  const player = new _modules_playVideo_playVideo_js__WEBPACK_IMPORTED_MODULE_2__["default"]('.showup .play', '.overlay');
   player.init();
 });
 }();
