@@ -152,6 +152,26 @@ class MiniSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
     this.pageSelector = pageSelector;
     this.nextSelector = nextSelector;
     this.prevSelector = prevSelector;
+    this.slideLocalCounter = 0;
+    this._length = this.slides.length - 1;
+    console.log(this._length);
+  }
+  _sliderClickNext() {
+    let next = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+    var _a, _b;
+    this.slideLocalCounter = this.slideLocalCounter + next;
+    if (next === -1) {
+      if (this.slideLocalCounter < 0) this.slideLocalCounter = this.slides.length - 1;
+      (_a = this.container) === null || _a === void 0 ? void 0 : _a.insertBefore(this.slides[this.slideLocalCounter], this.slides[0]);
+    } else {
+      if (this.slideLocalCounter > this._length) this.slideLocalCounter = 0;
+      (_b = this.container) === null || _b === void 0 ? void 0 : _b.insertBefore(this.slides[this.slideLocalCounter], this.slides[0]);
+    }
+  }
+  bindTriggers() {
+    var _a, _b;
+    (_a = this.next) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => this._sliderClickNext());
+    (_b = this.prev) === null || _b === void 0 ? void 0 : _b.addEventListener('click', () => this._sliderClickNext(-1));
   }
   init() {
     if (this.container) this.container.style.cssText = `
@@ -160,6 +180,7 @@ class MiniSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
       overflow: hidden;
       align-items: flex-start;
     `;
+    this.bindTriggers();
   }
 }
 

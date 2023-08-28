@@ -7,10 +7,10 @@ interface ISliderParametr {
 
 export default class Slider {
   protected container: HTMLElement | null  = null;
-  protected btns: HTMLElement[] | null = [];
+  protected btns: HTMLElement[] = [];
   protected prev: HTMLElement | null = null;
   protected next: HTMLElement | null= null;
-  protected slides: HTMLElement[] = [];
+  protected slides: HTMLElement[]  = [];
   protected slideIndex: number = 1;
   protected blockHanson: HTMLDivElement | null = null;
 
