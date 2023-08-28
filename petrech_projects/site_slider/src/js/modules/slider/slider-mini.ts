@@ -7,7 +7,6 @@ export default class MiniSlider extends Slider{
 
   constructor(public pageSelector: string, public nextSelector: string, public prevSelector: string) {
     super({pageSelector, nextSelector, prevSelector});
-    console.log(this._length);
   }
 
   private _sliderClickNext(next = 1) {

@@ -2,6 +2,71 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/js/modules/difference/difference.js":
+/*!*************************************************!*\
+  !*** ./src/js/modules/difference/difference.js ***!
+  \*************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ Difference; }
+/* harmony export */ });
+class Difference {
+  constructor(oldOfficerSelector, newOfficerSelector, itemsSelector) {
+    var _a, _b;
+    this.oldOfficerSelector = oldOfficerSelector;
+    this.newOfficerSelector = newOfficerSelector;
+    this.itemsSelector = itemsSelector;
+    this.oldCounter = 0;
+    this.newCounter = 0;
+    this.oldOfficer = document.querySelector(oldOfficerSelector);
+    this.newOfficer = document.querySelector(newOfficerSelector);
+    this.items = itemsSelector;
+    this.oldItems = (_a = this.oldOfficer) === null || _a === void 0 ? void 0 : _a.querySelectorAll(itemsSelector);
+    this.newItems = (_b = this.oldOfficer) === null || _b === void 0 ? void 0 : _b.querySelectorAll(itemsSelector);
+  }
+  bindTriggers() {
+    var _a, _b, _c, _d;
+    (_b = (_a = this.oldOfficer) === null || _a === void 0 ? void 0 : _a.querySelector('plus')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', () => {
+      if (this.oldItems && this.oldCounter !== this.oldItems.length - 2) {
+        this.oldItems[this.oldCounter].style.display = 'flex';
+        this.oldCounter++;
+      } else {
+        if (this.oldItems) {
+          this.oldItems[this.oldCounter].style.display = 'flex';
+          this.oldItems[this.oldItems.length - 1].remove();
+        }
+      }
+    });
+    (_d = (_c = this.newOfficer) === null || _c === void 0 ? void 0 : _c.querySelector('plus')) === null || _d === void 0 ? void 0 : _d.addEventListener('click', () => {
+      if (this.newItems && this.newCounter !== this.newItems.length - 2) {
+        this.newItems[this.newCounter].style.display = 'flex';
+        this.newCounter++;
+      } else {
+        if (this.newItems) {
+          this.newItems[this.newCounter].style.display = 'flex';
+          this.newItems[this.newItems.length - 1].remove();
+        }
+      }
+    });
+  }
+  hideItems(items) {
+    if (items) items.forEach((item, i, arr) => {
+      if (i !== arr.length - 1) {
+        if (item instanceof HTMLElement) item.style.display = 'none';
+      }
+    });
+  }
+  init() {
+    this.hideItems(this.oldItems);
+    this.hideItems(this.newItems);
+    this.bindTriggers();
+  }
+}
+
+/***/ }),
+
 /***/ "./src/js/modules/playVideo/playVideo.js":
 /*!***********************************************!*\
   !*** ./src/js/modules/playVideo/playVideo.js ***!
@@ -154,7 +219,6 @@ class MiniSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
     this.prevSelector = prevSelector;
     this.slideLocalCounter = 0;
     this._length = this.slides.length - 1;
-    console.log(this._length);
   }
   _sliderClickNext() {
     let next = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
@@ -290,6 +354,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_slider_slider_main_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/slider/slider-main.js */ "./src/js/modules/slider/slider-main.js");
 /* harmony import */ var _modules_slider_slider_mini_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/slider/slider-mini.js */ "./src/js/modules/slider/slider-mini.js");
 /* harmony import */ var _modules_playVideo_playVideo_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/playVideo/playVideo.js */ "./src/js/modules/playVideo/playVideo.js");
+/* harmony import */ var _modules_difference_difference_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/difference/difference.js */ "./src/js/modules/difference/difference.js");
+
 
 
 
@@ -304,6 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
   feedSlider.init();
   const player = new _modules_playVideo_playVideo_js__WEBPACK_IMPORTED_MODULE_2__["default"]('.showup .play', '.overlay');
   player.init();
+  new _modules_difference_difference_js__WEBPACK_IMPORTED_MODULE_3__["default"]('.officerold', '.officernew', '.officer__card-item').init();
 });
 }();
 /******/ })()

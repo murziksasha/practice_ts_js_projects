@@ -7,7 +7,6 @@ export default class MiniSlider extends Slider {
         this.prevSelector = prevSelector;
         this.slideLocalCounter = 0;
         this._length = this.slides.length - 1;
-        console.log(this._length);
     }
     _sliderClickNext(next = 1) {
         var _a, _b;
