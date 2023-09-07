@@ -1,8 +1,13 @@
 export default function primitives() {
 
-  // Создайте в двух вариантах (алиасах и интерфейсах) следующую структуру:
+  type Style = 'none' | 'dotted' | 'dashed' | 'solid';
 
-  // Product : price, isNew, isSale, title
-  // Vehicle : wheels, year, brand
-  // Car: type, model +Product, +Vehicle
+  type Color = 'Red' | 'Green' | 'Blue' | 'Black' | 'White';
+  
+  type BorderStyle = `${Style} ${Uncapitalize<Color>}`;
+  
+  let borderStyle: BorderStyle = 'solid red';
+  
+  let borderStyle2: BorderStyle = 'dashed white';
+
 }
