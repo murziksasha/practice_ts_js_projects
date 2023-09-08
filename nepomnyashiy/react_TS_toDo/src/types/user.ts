@@ -9,7 +9,8 @@ export type LocalGithubUser = {
   location: string;
   bio: string;
   twitter: string;
-  public: number;
+  repos: number;
+  // public: number;
   followers: number;
   following: number;
   created: string;
