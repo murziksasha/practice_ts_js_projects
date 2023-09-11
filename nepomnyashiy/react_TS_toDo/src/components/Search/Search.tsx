@@ -22,7 +22,7 @@ export const Search = ({hasError, onSubmit }: SearchProps) => {
 
     const text = event.currentTarget.username.value;
 
-    if(text) {
+    if(text.trim()) {
       onSubmit(text);
       event.currentTarget.reset();
     }
