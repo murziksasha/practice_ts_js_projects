@@ -1,0 +1,10 @@
+.app {
+  margin: 0 auto;
+  max-width: 1000px;
+}
+
+.search-panel {
+  background-color: var(--main-color-bg);
+  padding: 25px;
+  margin: 25px 0;
+}

@@ -1,0 +1,10 @@
+.employeesAddForm {
+  padding: 15px;
+  background-color: var(--main-color-bg);
+  & input {
+    margin-right: 10px;
+  }
+  &Btn {
+    background-color: var(--main-color-bg);
+  }
+}

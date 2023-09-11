@@ -1,0 +1,55 @@
+.employeesListItem {
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--main-color-bg);
+  &:last-child{
+    border-bottom: none;
+  }
+  & span{
+    line-height: 35px;
+    font-size: 20px;
+  }
+
+  & input {
+    line-height: 35px;
+    font-size: 20px;
+    text-align: center;
+    border: 0;
+  }
+
+  &IconWrapper button{
+    width: 35px;
+    height: 35px;
+    margin: 3px;
+    font-size: 17px;
+    border: none;
+  }
+  &BtnCookie{
+    color: #e09f3e;
+  }
+  &BtnTrash{
+    color: #e5383b;
+  }
+  &Star{
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    line-height: 35px;
+    font-size: 16px;
+    color: #ffd700;
+    transition: .3s all;
+    transform: translateX(30px);
+    opacity: 0;
+  }
+  &.like .fa-star{
+    opacity: 1;
+    transform: translate(0px);
+  }
+  &.increase{
+    color: #e09f3e;
+  }
+
+}
+
+
+
+
