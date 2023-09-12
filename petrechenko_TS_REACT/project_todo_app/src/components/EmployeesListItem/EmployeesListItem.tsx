@@ -1,19 +1,26 @@
 import styles from './EmployeesListItem.module.scss';
 
-interface EmployeesListItemProps { }
+export interface EmployeesListItemProps {
+  name: string;
+  salary: number;
+  increase: boolean;
+ }
 
 
 
-export const EmployeesListItem = ({ }: EmployeesListItemProps) => {
+export const EmployeesListItem = ({ name, salary, increase}: EmployeesListItemProps) => {
 
   const style = {
     divIconStyle: 'd-flex justify-content-center align-items-center',
+    color: increase ? '#e09f3e' : ''
   }
 
+
   return (
-    <li className={`${styles.employeesListItem} list-group-item d-flex justify-content-between`}>
-      <span className={`${styles.employeesListItem}-label`}>John Smith</span>
-      <input type="text" className={`${styles.employeesListItem}-input`} defaultValue={'1000$'} />
+    <li className={`${styles.employeesListItem} d-flex justify-content-between`} style={style}>
+      <span className={`${styles.employeesListItem}`}>{name}</span>
+      <input type="text" className={`${styles.employeesListItem}`} defaultValue={salary} 
+      style={style}/>
       <div className={`${styles.employeesListItemIconWrapper} ${style.divIconStyle}`}>
         <button type="button" className={`${styles.employeesListItemBtnCookie} ${"btn-cookie btn-sm"}`}>
           <i className="fas fa-cookie"></i>

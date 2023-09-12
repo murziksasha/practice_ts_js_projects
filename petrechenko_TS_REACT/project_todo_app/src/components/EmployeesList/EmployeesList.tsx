@@ -1,12 +1,13 @@
-import { EmployeesListItem } from '../EmployeesListItem';
+import { EmployeesListItem, EmployeesListItemProps } from '../EmployeesListItem';
 import styles from './EmployeesList.module.scss';
 
-interface EmployeesListProps { }
 
-export const EmployeesList = ({ }: EmployeesListProps) => (
+export const EmployeesList = ({ data }: { data: EmployeesListItemProps[] }) => (
   <ul className={styles.employeesList}>
-    <EmployeesListItem/>
-    <EmployeesListItem/>
-    <EmployeesListItem/>
+    {
+      data.map((employee, index) => (
+        <EmployeesListItem key = {index} {...employee}/>
+      ))
+    }
   </ul>
 );
