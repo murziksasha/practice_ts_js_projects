@@ -12,17 +12,17 @@ import { WhoAmI } from './components/WhoAmI';
 
 function App() {
   const data: EmployeesListItemProps[] = [
-    {name: 'John C.', salary: 800, increase: false},
-    {name: 'Alex M.', salary: 3000, increase: true},
-    {name: 'Carl W.', salary: 5000, increase: false},
+    {name: 'John C.', salary: 800, increase: false, star: false},
+    {name: 'Alex M.', salary: 3000, increase: false, star: false},
+    {name: 'Carl W.', salary: 5000, increase: false, star: false},
   ];
   return (
     <div className="app">
 
-
+{/* 
       <WhoAmI name='Alex' surname='Bingo' link='https://facebook.com.ua'/>
       <WhoAmI name='Sasha' surname='Grigoriev' link='https://facebook.com.ua'/>
-      <br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br /> */}
 
 
       <AppInfo/>
