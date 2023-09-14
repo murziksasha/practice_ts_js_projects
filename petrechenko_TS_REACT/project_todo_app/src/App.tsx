@@ -10,6 +10,11 @@ import { EmployeesAddForm } from './components/EmployeesAddForm';
 import { EmployeesListItemProps} from './components/EmployeesListItem';
 import { WhoAmI } from './components/WhoAmI';
 
+{/* 
+      <WhoAmI name='Alex' surname='Bingo' link='https://facebook.com.ua'/>
+      <WhoAmI name='Sasha' surname='Grigoriev' link='https://facebook.com.ua'/>
+      <br /><br /><br /><br /><br /> */}
+
 function App() {
   const data: EmployeesListItemProps[] = [
     {name: 'John C.', salary: 800, increase: false, star: false},
@@ -18,12 +23,6 @@ function App() {
   ];
   return (
     <div className="app">
-
-{/* 
-      <WhoAmI name='Alex' surname='Bingo' link='https://facebook.com.ua'/>
-      <WhoAmI name='Sasha' surname='Grigoriev' link='https://facebook.com.ua'/>
-      <br /><br /><br /><br /><br /> */}
-
 
       <AppInfo/>
 

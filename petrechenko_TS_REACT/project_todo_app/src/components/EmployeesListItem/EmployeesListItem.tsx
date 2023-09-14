@@ -35,7 +35,7 @@ export const EmployeesListItem = ({ name, salary, increase, star}: EmployeesList
         className={`${styles.employeesListItem}`}
         onClick={likeChanged}
         >{name}</span>
-      <input type="text" className={`${styles.employeesListItem}`} defaultValue={salary} 
+      <input type="text" className={`${styles.employeesListItem}`} defaultValue={salary+ ' $'} 
       style={style}/>
       <div className={`${styles.employeesListItemIconWrapper} ${style.divIconStyle}`}>
         <button 
