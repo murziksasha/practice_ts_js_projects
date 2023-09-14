@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import styles from './EmployeesListItem.module.scss';
 
+
 export interface EmployeesListItemProps {
+  id: number;
   name: string;
   salary: number;
   increase: boolean;
   star: boolean;
+  onDelete?: () => void;
  }
 
 
-
-export const EmployeesListItem = ({ name, salary, increase, star}: EmployeesListItemProps) => {
+export const EmployeesListItem: React.FC<EmployeesListItemProps> = ({ name, salary, increase, star, onDelete}) => {
   const [raise, setRaise] = useState(increase);
   const [like, setLike] = useState(star);
 
@@ -45,7 +47,9 @@ export const EmployeesListItem = ({ name, salary, increase, star}: EmployeesList
         >
           <i className="fas fa-cookie"></i>
         </button>
-        <button type="button" className={`${styles.employeesListItemBtnTrash} ${"btn-trash btn-sm"}`}>
+        <button type="button" className={`${styles.employeesListItemBtnTrash} ${"btn-trash btn-sm"}`}
+        onClick={onDelete}
+        >
           <i className="fas fa-trash"></i>
         </button>
         <i className={`${styles.employeesListItemStar} ${"fas fa-star"}`} style={starLike}></i>

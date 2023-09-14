@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 
 import './App.css';
 import { AppInfo } from './components/AppInfo';
@@ -15,25 +15,48 @@ import { WhoAmI } from './components/WhoAmI';
       <WhoAmI name='Sasha' surname='Grigoriev' link='https://facebook.com.ua'/>
       <br /><br /><br /><br /><br /> */}
 
-function App() {
-  const data: EmployeesListItemProps[] = [
-    {name: 'John C.', salary: 800, increase: false, star: false},
-    {name: 'Alex M.', salary: 3000, increase: false, star: false},
-    {name: 'Carl W.', salary: 5000, increase: false, star: false},
-  ];
-  return (
-    <div className="app">
+type AppState = {
+  data: EmployeesListItemProps[];
+}
 
-      <AppInfo/>
+const data: EmployeesListItemProps[] = [
+  {name: 'John C.', salary: 800, increase: false, star: false, id: 1},
+  {name: 'Alex M.', salary: 3000, increase: false, star: false, id: 2},
+  {name: 'Carl W.', salary: 5000, increase: false, star: false, id: 3},
+];
 
-      <div className="search-panel">
-        <SearchPanel/>
-        <AppFilter/>
-      </div>
-      <EmployeesList data = {data}/>
-      <EmployeesAddForm/>
-    </div>
-  );
+class  App extends Component<{}, AppState>{
+  state = {
+    data: [...data]
+  }
+
+  deleteItem = (id: number) => {
+    this.setState(({data}) => {
+      return {
+        data: data.filter(item => item.id !== id)
+      }
+    });
+  }
+
+  
+  render() {
+      return (
+        <div className="app">
+    
+          <AppInfo/>
+    
+          <div className="search-panel">
+            <SearchPanel/>
+            <AppFilter/>
+          </div>
+          <EmployeesList 
+            data={this.state.data}
+            onDelete={this.deleteItem}
+            />
+          <EmployeesAddForm/>
+        </div>
+    )
+  }
 }
 
 export default App;
