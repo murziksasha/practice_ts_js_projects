@@ -1,11 +1,19 @@
+import { useState } from 'react';
+import { EmployeesListItemProps } from '../EmployeesListItem';
 import styles from './AppInfo.module.scss';
 
-interface AppInfoProps { }
+interface AppInfoProps {
+  data: EmployeesListItemProps[];
+ }
 
-export const AppInfo = ({ }: AppInfoProps) => (
-  <div className={styles.appInfo}>
-    <h1>Учет сотрудников в компании №</h1>
-    <h2>Общее число сотрудников:</h2>
-    <h2>Премию получат:</h2>
-  </div>
-);
+export const AppInfo = ({ data}: AppInfoProps) => {
+
+
+  return (
+    <div className={styles.appInfo}>
+      <h1>Учет сотрудников в компании №</h1>
+      <h2>Общее число сотрудников: {data.length}</h2>
+      <h2>Премию получат:{data.filter(item=>item.increase).length}</h2>
+    </div>
+  );
+}

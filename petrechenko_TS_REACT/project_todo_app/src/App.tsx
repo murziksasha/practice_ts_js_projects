@@ -49,12 +49,22 @@ class  App extends Component<{}, AppState>{
   });
   }
 
+  onToggleIncrease = (id: number) => {
+    console.log(`Increase this ${id}`)
+  }
+
+  onToggleRaise = (id: number) => {
+    console.log(`Rise this ${id}`)
+  }
+
   
   render() {
       return (
         <div className="app">
     
-          <AppInfo/>
+          <AppInfo 
+            data={this.state.data}
+          />
     
           <div className="search-panel">
             <SearchPanel/>
@@ -63,6 +73,8 @@ class  App extends Component<{}, AppState>{
           <EmployeesList 
             data={this.state.data}
             onDelete={this.deleteItem}
+            onToggleIncrease={this.onToggleIncrease}
+            onToggleRaise={this.onToggleRaise}
             />
           <EmployeesAddForm             
           addUser={this.addUser}

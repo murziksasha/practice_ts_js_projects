@@ -3,11 +3,13 @@ import styles from './EmployeesList.module.scss';
 
 export type EmployeesListProps = {
   data: EmployeesListItemProps[];
-  onDelete: (id: any) => void;
+  onDelete: (id: number) => void;
+  onToggleIncrease: (id: number) => void;
+  onToggleRaise: (id: number) => void;
 }
 
 
-export const EmployeesList: React.FC<EmployeesListProps> = ({data, onDelete}) => (
+export const EmployeesList: React.FC<EmployeesListProps> = ({data, onDelete, onToggleIncrease, onToggleRaise}) => (
   <ul className={styles.employeesList}>
     {
       data.map((employee) => (
