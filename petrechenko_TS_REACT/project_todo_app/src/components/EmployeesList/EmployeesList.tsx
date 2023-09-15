@@ -2,7 +2,7 @@ import { EmployeesListItem, EmployeesListItemProps } from '../EmployeesListItem'
 import styles from './EmployeesList.module.scss';
 
 export type EmployeesListProps = {
-  data: EmployeesListItemProps[],
+  data: EmployeesListItemProps[];
   onDelete: (id: any) => void;
 }
 

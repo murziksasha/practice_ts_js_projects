@@ -9,6 +9,7 @@ export interface EmployeesListItemProps {
   increase: boolean;
   star: boolean;
   onDelete?: () => void;
+  addUser?: () => void;
  }
 
 

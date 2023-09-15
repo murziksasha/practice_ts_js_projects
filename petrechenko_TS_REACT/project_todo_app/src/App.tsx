@@ -27,8 +27,9 @@ const data: EmployeesListItemProps[] = [
 
 class  App extends Component<{}, AppState>{
   state = {
-    data: [...data]
+    data: [...data],
   }
+  maxId= this.state.data.length + 1;
 
   deleteItem = (id: number) => {
     this.setState(({data}) => {
@@ -36,6 +37,16 @@ class  App extends Component<{}, AppState>{
         data: data.filter(item => item.id !== id)
       }
     });
+  }
+
+  addUser = (newUser: EmployeesListItemProps) => {
+    newUser.id = this.maxId++;
+    this.setState(({data}) => {
+      const newArr = [...data, newUser];
+      return {
+          data: newArr
+      }
+  });
   }
 
   
@@ -53,7 +64,9 @@ class  App extends Component<{}, AppState>{
             data={this.state.data}
             onDelete={this.deleteItem}
             />
-          <EmployeesAddForm/>
+          <EmployeesAddForm             
+          addUser={this.addUser}
+          />
         </div>
     )
   }
