@@ -10,33 +10,35 @@ export interface EmployeesListItemProps {
   star: boolean;
   onDelete?: () => void;
   addUser?: () => void;
+  onToggleIncrease?: () => void;
+  onToggleRaise?: () => void;
  }
 
 
-export const EmployeesListItem: React.FC<EmployeesListItemProps> = ({ name, salary, increase, star, onDelete}) => {
-  const [raise, setRaise] = useState(increase);
-  const [like, setLike] = useState(star);
+export const EmployeesListItem: React.FC<EmployeesListItemProps> = ({ 
+  name,
+  salary, 
+  increase, 
+  star, 
+  onDelete, 
+  onToggleIncrease, 
+  onToggleRaise
+}) => {
+
 
   const style = {
     divIconStyle: 'd-flex justify-content-center align-items-center',
-    color: raise ? '#e09f3e' : ''
+    color: increase ? '#e09f3e' : ''
   }
 
-  const starLike = like ? {opacity: '1', transform: 'translate(0px)'}: {};
+  const starLike = star ? {opacity: '1', transform: 'translate(0px)'}: {};
   
-  const onIncrease = () => {
-    setRaise((prevCounter) => !prevCounter);
-  }
-
-  const likeChanged = () => {
-    setLike((prevLike) => !prevLike);
-  }
 
   return (
     <li className={`${styles.employeesListItem} d-flex justify-content-between`} style={style}>
       <span 
         className={`${styles.employeesListItem}`}
-        onClick={likeChanged}
+        onClick={onToggleRaise}
         >{name}</span>
       <input type="text" className={`${styles.employeesListItem}`} defaultValue={salary+ ' $'} 
       style={style}/>
@@ -44,7 +46,7 @@ export const EmployeesListItem: React.FC<EmployeesListItemProps> = ({ name, sala
         <button 
         type="button" 
         className={`${styles.employeesListItemBtnCookie} ${"btn-cookie btn-sm"}`}
-        onClick={onIncrease}
+        onClick={onToggleIncrease}
         >
           <i className="fas fa-cookie"></i>
         </button>

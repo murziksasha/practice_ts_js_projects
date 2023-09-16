@@ -20,8 +20,8 @@ type AppState = {
 }
 
 const data: EmployeesListItemProps[] = [
-  {name: 'John C.', salary: 800, increase: false, star: false, id: 1},
-  {name: 'Alex M.', salary: 3000, increase: false, star: false, id: 2},
+  {name: 'John C.', salary: 800, increase: true, star: false, id: 1},
+  {name: 'Alex M.', salary: 3000, increase: false, star: true, id: 2},
   {name: 'Carl W.', salary: 5000, increase: false, star: false, id: 3},
 ];
 
@@ -50,11 +50,27 @@ class  App extends Component<{}, AppState>{
   }
 
   onToggleIncrease = (id: number) => {
-    console.log(`Increase this ${id}`)
+    this.setState(({data}) => {
+      const index = data.findIndex(elem => elem.id === id);
+      const oldDataObj = data[index];
+      const newItem = {...oldDataObj, increase: !oldDataObj.increase};
+      const newArr = [...data.slice(0, index), newItem, ...data.slice(index+ 1)];
+
+      return {
+        data: newArr
+      }
+    });
   }
 
   onToggleRaise = (id: number) => {
-    console.log(`Rise this ${id}`)
+    this.setState(({data}) => ({
+      data: data.map(item => {
+        if(item.id === id) {
+          return {...item, star: !item.star}
+        }
+        return item;
+      })
+    }));
   }
 
   

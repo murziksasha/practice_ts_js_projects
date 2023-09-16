@@ -17,6 +17,8 @@ export const EmployeesList: React.FC<EmployeesListProps> = ({data, onDelete, onT
           key = {employee.id} 
           {...employee}
           onDelete={() => onDelete(employee.id)}
+          onToggleIncrease={() => onToggleIncrease(employee.id)}
+          onToggleRaise={() => onToggleRaise(employee.id)}
           />
       ))
     }
