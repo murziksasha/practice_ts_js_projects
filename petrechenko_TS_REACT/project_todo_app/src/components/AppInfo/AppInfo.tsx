@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { EmployeesListItemProps } from '../EmployeesListItem';
 import styles from './AppInfo.module.scss';
 
