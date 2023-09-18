@@ -28,6 +28,7 @@ const data: EmployeesListItemProps[] = [
 class  App extends Component<{}, AppState>{
   state = {
     data: [...data],
+    term: 'C',
   }
   maxId= this.state.data.length + 1;
 
@@ -73,13 +74,25 @@ class  App extends Component<{}, AppState>{
     }));
   }
 
+  searchEmp = (items: EmployeesListItemProps[], term: string) => {
+    if(term.length === 0) return items;
+    return items.filter(item => {
+      return item.name.indexOf(term) > -1;
+    });
+  }
+
   
   render() {
+    const {data, term} = this.state;
+    const visibleData = this.searchEmp(data, term);
+    console.log(visibleData);
+
+
       return (
         <div className="app">
     
           <AppInfo 
-            data={this.state.data}
+            data={data}
           />
     
           <div className="search-panel">
@@ -87,7 +100,7 @@ class  App extends Component<{}, AppState>{
             <AppFilter/>
           </div>
           <EmployeesList 
-            data={this.state.data}
+            data={visibleData}
             onDelete={this.deleteItem}
             onToggleIncrease={this.onToggleIncrease}
             onToggleRaise={this.onToggleRaise}
