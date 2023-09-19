@@ -17,6 +17,8 @@ import { WhoAmI } from './components/WhoAmI';
 
 type AppState = {
   data: EmployeesListItemProps[];
+  term: string;
+  filter: string;
 }
 
 const data: EmployeesListItemProps[] = [
@@ -28,7 +30,8 @@ const data: EmployeesListItemProps[] = [
 class  App extends Component<{}, AppState>{
   state = {
     data: [...data],
-    term: 'C',
+    term: '',
+    filter: 'all',
   }
   maxId= this.state.data.length + 1;
 
@@ -81,11 +84,30 @@ class  App extends Component<{}, AppState>{
     });
   }
 
+  onUpdateSearch = (term: string) => {
+    this.setState({term});
+  }
+
+  filterPost = (items: EmployeesListItemProps[], filter: string) => {
+    switch(filter) {
+      case 'increase':
+        return items.filter(item => item.increase);
+      case 'moreThan1000':
+        return items.filter(item => item.salary > 1000);
+      default: 
+        return items;
+
+    }
+  }
+
+  onFilterSelect = (filter: string) => {
+    this.setState({filter});
+  }
+
   
   render() {
-    const {data, term} = this.state;
-    const visibleData = this.searchEmp(data, term);
-    console.log(visibleData);
+    const {data, term, filter} = this.state;
+    const visibleData = this.filterPost(this.searchEmp(data, term), filter);
 
 
       return (
@@ -96,8 +118,10 @@ class  App extends Component<{}, AppState>{
           />
     
           <div className="search-panel">
-            <SearchPanel/>
-            <AppFilter/>
+            <SearchPanel onUpdateSearch={this.onUpdateSearch}/>
+            <AppFilter
+            onFilterSelect={this.onFilterSelect}
+            />
           </div>
           <EmployeesList 
             data={visibleData}
@@ -106,7 +130,7 @@ class  App extends Component<{}, AppState>{
             onToggleRaise={this.onToggleRaise}
             />
           <EmployeesAddForm             
-          addUser={this.addUser}
+            addUser={this.addUser}
           />
         </div>
     )
