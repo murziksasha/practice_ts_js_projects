@@ -1,4 +1,5 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { Error } from '../Error/Error';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -34,6 +35,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
       // You can customize the error UI here
       return (
         <div>
+          <Error/>
           <h1>Something went wrong!</h1>
           <p>{this.state.error?.toString()}</p>
           <div>Error stack trace:</div>
