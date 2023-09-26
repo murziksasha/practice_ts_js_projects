@@ -1,63 +1,123 @@
+import {Component} from 'react';
+
 import styles from './CharInfo.module.scss';
+import MarvelService from '../../services/MarvelService';
+import { Error } from '../Error/Error';
+import Spinner from '../Spinner/Spinner';
+import { Skeleton } from '../Skeleton/Skeleton';
 
-import thor from '../../resources/img/thor.jpeg';
+
+interface CharInfoProps { 
+    charId: string;
+}
+
+interface IChar {
+    char: {
+        name: string;
+        description: string;
+        thumbnail: string;
+        homepage: string;
+        wiki: string;
+        comics: string[];
+    }
+}
+
+const View = ({char}: IChar) => {
+
+    const {name, description, thumbnail, homepage, wiki, comics} = char;
+
+    return (
+        <>
+            <div className={styles.char__basics}>
+                <img src={thumbnail} alt={name} style={{objectFit: 'contain'}}/>
+                <div>
+                    <div className={styles.char__info_name}>{name}</div>
+                    <div className={styles.char__btns}>
+                        <a href={homepage} className={`${styles.button} ${styles.button__main}`} target='_blank'>
+                            <div className={styles.inner}>homepage</div>
+                        </a>
+                        <a href={wiki} className={`${styles.button} ${styles.button__secondary}`} target='_blank'>
+                            <div className={styles.inner}>Wiki</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div className={styles.char__descr}>
+                {description.length > 0 ? description : 'Sorry, no description here...'}
+            </div>
+            <div className={styles.char__comics}>Comics:</div>
+            <ul className={styles.char__comics_list}>
+                {comics.length > 0 ? null : 'There is no comics with this character'}
+                {comics.map((item: any, i) => {
+                    if(i > 15) return;
+                    return (
+                      <li key ={i} className={styles.char__comics_item}>
+                        {item.name}
+                      </li>
+                    )
+                })
+                }
+            </ul>
+        </>
+    )
+}
+
+export class CharInfo extends Component<CharInfoProps>{
+
+    state = {
+        char: {
+            name:  '',
+            description: '',
+            thumbnail: '',
+            homepage: '',
+            wiki: '',
+            comics: []
+        },
+        loading: false,
+        error: false,
+    }
+
+    marvelService = new MarvelService();
+    
+    componentDidMount(): void {
+        this.updateChar();
+    }
+
+    componentDidUpdate(prevProps: Readonly<CharInfoProps>, prevState: Readonly<{}>): void {
+        if(this.props.charId !== prevProps.charId){
+            this.updateChar();
+        }
+    }
+
+    updateChar = () => { 
+        const {charId} = this.props;
+        if(!charId) return;
+        this.setState({loading: true});
+        this.marvelService.getCharacter(charId)
+        .then((res: any) => {
+            this.setState({char: res, loading: false, error: false});
+        })
+        .catch(this.onError);
+    }
+
+    onError = () => {
+        this.setState({loading: false, error: true})
+    }
 
 
-interface CharInfoProps { }
-
-export const CharInfo = ({ }: CharInfoProps) => {
-  return (
-      <div className={styles.char__info}>
-          <div className={styles.char__basics}>
-              <img src={thor} alt="abyss"/>
-              <div>
-                  <div className={styles.char__info_name}>thor</div>
-                  <div className={styles.char__btns}>
-                      <a href="#" className={`${styles.button} ${styles.button__main}`}>
-                          <div className={styles.inner}>homepage</div>
-                      </a>
-                      <a href="#" className={`${styles.button} ${styles.button__secondary}`}>
-                          <div className={styles.inner}>Wiki</div>
-                      </a>
-                  </div>
-              </div>
-          </div>
-          <div className={styles.char__descr}>
-              In Norse mythology, Loki is a god or jötunn (or both). Loki is the son of Fárbauti and Laufey, and the brother of Helblindi and Býleistr. By the jötunn Angrboða, Loki is the father of Hel, the wolf Fenrir, and the world serpent Jörmungandr. By Sigyn, Loki is the father of Nari and/or Narfi and with the stallion Svaðilfari as the father, Loki gave birth—in the form of a mare—to the eight-legged horse Sleipnir. In addition, Loki is referred to as the father of Váli in the Prose Edda.
-          </div>
-          <div className={styles.char__comics}>Comics:</div>
-          <ul className={styles.char__comics_list}>
-              <li className={styles.char__comics_item}>
-                  All-Winners Squad: Band of Heroes (2011) #3
-              </li>
-              <li className={styles.char__comics_item}>
-                  Alpha Flight (1983) #50
-              </li>
-              <li className={styles.char__comics_item}>
-                  Amazing Spider-Man (1999) #503
-              </li>
-              <li className={styles.char__comics_item}>
-                  Amazing Spider-Man (1999) #504
-              </li>
-              <li className={styles.char__comics_item}>
-                  AMAZING SPIDER-MAN VOL. 7: BOOK OF EZEKIEL TPB (Trade Paperback)
-              </li>
-              <li className={styles.char__comics_item}>
-                  Amazing-Spider-Man: Worldwide Vol. 8 (Trade Paperback)
-              </li>
-              <li className={styles.char__comics_item}>
-                  Asgardians Of The Galaxy Vol. 2: War Of The Realms (Trade Paperback)
-              </li>
-              <li className={styles.char__comics_item}>
-                  Vengeance (2011) #4
-              </li>
-              <li className={styles.char__comics_item}>
-                  Avengers (1963) #1
-              </li>
-              <li className={styles.char__comics_item}>
-                  Avengers (1996) #1
-              </li>
-          </ul>
-      </div>
-  )
+    render() {
+        const { char, loading, error} = this.state;
+        const skeleton = char.name || loading || error ? null : <Skeleton/>
+        const errorMessage = error ? <Error/> : null;
+        const spinner = loading ? <Spinner/> : null;
+        const content = !(error || loading || !(char.name.length > 0)) ? <View char={char}/> : null;
+        return (
+            <div className={styles.char__info}>
+                {skeleton}
+                {errorMessage}
+                {spinner}
+                {content}
+            </div>
+        )
+    }
 }

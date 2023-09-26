@@ -1,4 +1,4 @@
-import React from 'react';
+import {Component} from 'react';
 import './App.scss';
 
 import { AppHeader } from './components/AppHeader/AppHeader';
@@ -10,20 +10,33 @@ import { CharInfo } from './components/CharInfo/CharInfo';
 import decoration from '../../app-marvel-ts-react/src/resources/img/vision.png';
 
 
-function App() {
-  return (
-    <div className="app">
-        <AppHeader/>
-        <main>
-            <RandomChar/>
-            <div className="char__content">
-                <CharList/>
-                <CharInfo/>
+class App extends Component {
+
+    state = {
+        selectedChar: '',
+    }
+
+    onCharSelected = (id: number) => {
+        this.setState({
+            selectedChar: id,
+        })
+    }
+
+    render() {
+        return (
+            <div className="app">
+                <AppHeader/>
+                <main>
+                    <RandomChar/>
+                    <div className="char__content">
+                        <CharList onCharSelected = {this.onCharSelected}/>
+                        <CharInfo charId = {this.state.selectedChar}/>
+                    </div>
+                    <img className="bg-decoration" src={decoration} alt="vision"/>
+                </main>
             </div>
-            <img className="bg-decoration" src={decoration} alt="vision"/>
-        </main>
-    </div>
-)
+        )
+    }
 }
 
 export default App;
