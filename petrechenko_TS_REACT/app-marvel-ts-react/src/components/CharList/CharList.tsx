@@ -1,6 +1,6 @@
 import styles from './CharList.module.scss';
-import MarvelService from '../../services/MarvelService';
-import { Component, useEffect, useState } from 'react';
+import {useMarvelService} from '../../services/MarvelService';
+import { useEffect, useState } from 'react';
 import Spinner from '../Spinner/Spinner';
 import { Error } from '../Error/Error';
 
@@ -40,41 +40,26 @@ interface IChars {
   
   export function CharList({ onCharSelected }: CharListProps) {
     const [char, setChar] = useState<IChars[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<boolean>(false);
     const [newItemLoading, setNewItemLoading] = useState<boolean>(false);
     const [offset, setOffset] = useState<number>(52);
   
-    const marvelService = new MarvelService();
+    const {loading, error, getAllCharacters} = useMarvelService();
+
 
     const onRequest = () => {
       setNewItemLoading(true);
-      marvelService
-        .getAllCharacters(offset)
-        .then((res: any) => {
-        if(char.length === 0){
-            setChar([...res]);
-        } 
-        if(char.length >= 9) {
-            console.log('i am there')
-            setChar((prevChar) => [...prevChar, ...res]);
-        }
-          setOffset((prevOffset) => prevOffset + 9); // Increase offset by 9
-          setLoading(false);
+      getAllCharacters(offset)
+        .then((res) => {
+          setChar([...res])
+          setOffset((prevOffset) => prevOffset + 9);
           setNewItemLoading(false);
-        })
-        .catch(onError);
+        });
     };
   
     useEffect(() => {
       onRequest();
     }, []);
   
-    
-    const onError = () => {
-      setLoading(false);
-      setError(true);
-    };
   
     const errorMessage = error ? <Error /> : null;
     const spinner = loading ? <Spinner /> : null;
@@ -92,7 +77,7 @@ interface IChars {
         <button
           className={`${styles.button} ${styles.button__main} ${styles.button__long}`}
           disabled={newItemLoading}
-          onClick={() => onRequest()}
+          onClick={onRequest}
         >
           <div className={styles.inner}>load more</div>
         </button>

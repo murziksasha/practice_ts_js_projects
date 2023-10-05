@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 
 import styles from './CharInfo.module.scss';
-import MarvelService from '../../services/MarvelService';
+import {useMarvelService} from '../../services/MarvelService';
 import { Error } from '../Error/Error';
 import Spinner from '../Spinner/Spinner';
 import { Skeleton } from '../Skeleton/Skeleton';
@@ -69,21 +69,15 @@ export function CharInfo ({charId}: CharInfoProps){
             comics: [],
     });
 
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
-
-    const marvelService = new MarvelService();
+    const {loading, error, getCharacter, clearError} = useMarvelService();
 
     const updateChar = () => { 
+        clearError();
         if(!charId) return;
-        setLoading(true);
-        marvelService.getCharacter(`${charId}`)
+        getCharacter(`${charId}`)
         .then((res: any) => {
             setChar(() => (char = res));
-            setLoading(false);
-            setError(false);
-        })
-        .catch(onError);
+        });
     }
     
     useEffect(updateChar, []);
@@ -92,11 +86,6 @@ export function CharInfo ({charId}: CharInfoProps){
         updateChar();
     }, [charId]);
 
-
-    const onError = () => {
-        setLoading(false);
-        setError(true);
-    }
 
 
 

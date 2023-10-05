@@ -35,7 +35,6 @@ export function FormTrain() {
   }
 
     useEffect(() => {
-      console.log(`effect number`)
     fetch('https://www.random.org/integers/?num=1&min=-50&max=50&col=1&base=10&format=plain&rnd=new')
       .then((res) => res.json())
       .then((data) => {
