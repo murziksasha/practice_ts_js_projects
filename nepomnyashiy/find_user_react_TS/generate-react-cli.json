@@ -16,6 +16,8 @@
       "withStyle": true,
       "withTest": false,
       "withIndex": true
-    }
+    },
+    "usesStyledComponents": false,
+    "testLibrary": "None"
   }
 }
