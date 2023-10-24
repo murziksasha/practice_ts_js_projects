@@ -1,10 +1,22 @@
+import { PizzaData } from '../../types/PizzaData';
 import { Pizza } from '../Pizza';
 import styles from './Menu.module.scss';
 
-interface MenuProps { }
+interface MenuProps { 
+  data: PizzaData[];
+}
 
-export const Menu = ({ }: MenuProps) => (
-  <div className={styles.menu}>
-    <Pizza/>
-  </div>
+export const Menu = ({ data }: MenuProps) => (
+  <main className={styles.menu}>
+    <h2>our menu</h2>
+    {data.length > 0 && data.map(({name, ingredients, photoName, price}, index) => (
+      <Pizza
+        key={index}
+        pizzaName={name}
+        ingredients={ingredients}
+        photoName={photoName}
+        price={price}
+      />
+    ))}
+  </main>
 );

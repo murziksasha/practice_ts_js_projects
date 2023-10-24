@@ -1,9 +1,17 @@
 import styles from './Pizza.module.scss';
 
-interface PizzaProps { }
+interface PizzaProps { 
+  pizzaName: string;
+  ingredients: string;
+  photoName: string;
+  price: number;
+}
 
-export const Pizza = ({ }: PizzaProps) => (
-  <div className={styles.Pizza} data-testid="Pizza">
-    Pizza Component
+export const Pizza = ({pizzaName, ingredients, photoName, price }: PizzaProps) => (
+  <div className={styles.pizza}>
+    <img src={`../../${photoName}`} alt={pizzaName} />
+    <h3>{pizzaName}</h3>
+    <p>{ingredients}</p>
+    <span>{price} $</span>
   </div>
 );

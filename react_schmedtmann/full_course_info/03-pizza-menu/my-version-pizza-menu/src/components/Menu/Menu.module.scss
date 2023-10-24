@@ -1,1 +1,9 @@
-.menu {}
+.menu {
+  & h2 {
+    margin: 0 auto;
+    width: 200px;
+    text-transform: uppercase;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+  }
+}
