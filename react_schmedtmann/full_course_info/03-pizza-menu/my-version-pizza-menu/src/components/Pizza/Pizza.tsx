@@ -5,13 +5,14 @@ interface PizzaProps {
   ingredients: string;
   photoName: string;
   price: number;
+  soldOut: boolean
 }
 
-export const Pizza = ({pizzaName, ingredients, photoName, price }: PizzaProps) => (
+export const Pizza = ({pizzaName, ingredients, photoName, price, soldOut }: PizzaProps) => (
   <div className={styles.pizza}>
     <img src={`../../${photoName}`} alt={pizzaName} />
     <h3>{pizzaName}</h3>
     <p>{ingredients}</p>
-    <span>{price} $</span>
+    <span>{!soldOut ? price + '  $' : 'SOLD OUT'}</span>
   </div>
 );
