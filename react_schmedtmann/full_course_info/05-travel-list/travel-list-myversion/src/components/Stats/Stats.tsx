@@ -11,7 +11,7 @@ export const Stats = ({ items }: StatsProps) => {
     </em></p>;
   const itemsLength = items.length;
   const itemsPackedLength = items.filter(item => item.packed).length;
-  const percentage = Math.round(itemsPackedLength / itemsLength) * 100;
+  const percentage = Math.round((itemsPackedLength / itemsLength) * 100);
 
 
 
