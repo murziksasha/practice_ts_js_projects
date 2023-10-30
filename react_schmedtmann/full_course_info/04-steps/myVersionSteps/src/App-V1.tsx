@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import logo from './logo.svg';
 import './App.css';
 
-interface IButtonStyle {
-  backgroundColor: string;
-  color: string;
-}
 
 const messages = [
   "Learn React ⚛️",
@@ -15,7 +12,7 @@ const messages = [
 function App() {
   const [step, setStep] = useState(1);
 
-  const buttonStyle: IButtonStyle = {
+  const buttonStyle = {
   backgroundColor: '#7950f2',
   color: '#fff'
   }
@@ -35,8 +32,8 @@ function App() {
    }
 
   useEffect(() => {
-    
-  }, [step]);
+    console.log(step);
+  }, [step])
 
 
 
@@ -52,10 +49,11 @@ function App() {
       <p className="message">{messages[step - 1]}</p>
 
       <div className="buttons">
-        <Button buttonStyle={buttonStyle}
-          onHandleClick={handleClick}
-          text={'someText'}
-        />
+        <button 
+        style={buttonStyle} 
+        className="previous"
+        onClick={() => handleClick(-1)}
+        >Previous</button>
         <button 
         style={buttonStyle} 
         className="next"
@@ -64,21 +62,6 @@ function App() {
       </div>
     </div>
   );
-}
-
-interface IButtonProps {
-  buttonStyle: IButtonStyle;
-  onHandleClick: () => void;
-  text: string;
-}
-
-function Button({buttonStyle, onHandleClick, text}: IButtonProps) {
-
-  console.log(buttonStyle);
-
-  return <button onClick={onHandleClick}>
-    <p className={buttonStyle.color}>{text}</p>
-  </button>
 }
 
 export default App;
