@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ITempMovieData, ITempWatchedData } from '../../Types/types-for-data';
 import './App.css';
 import { Navbar } from '../Navbar';
@@ -9,10 +9,7 @@ import { Search } from '../Search';
 import { NumResults } from '../NumResults';
 import { ListBox } from '../ListBox';
 import { WatchedBox } from '../WatchedBox';
-import { loadMovie } from '../LoadMovie/LoadMovie';
-import { Loader } from '../Loader';
-import { error } from 'console';
-import { ErrorMessage } from '../ErrorMessage';
+import { isGeneratorFunction } from 'util/types';
 
 
 
@@ -71,48 +68,18 @@ function App() {
 
   const [movies, setMovies] = useState<ITempMovieData[]>(tempMovieData);
   const [watched, setWatched] = useState<ITempWatchedData[]>(tempWatchedData);
-  const [isLoading, setIsLoading] = useState<Boolean>(true);
-  const [isError, setIsError] = useState('');
-  const [query, setQuery] = useState<string>('love');
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsError('');
-      setIsLoading(true);
-      try {
-        const newMovies = await loadMovie(query);
-        setMovies(newMovies);
-      } catch (error) {
-        // Handle any specific error or set default state
-        console.error('Error fetching movies:', error);
-        setIsError(`Sorry, something wrong: ${error}, please reload the page...`);
-        setMovies([]); // Set an empty array or default value for movies
-      } finally{
-        setIsLoading(false);
-      }
-    };
-
-    if(!query.length) {
-      setMovies([]);
-      setIsError('');
-      return;
-    }
-  
-    fetchData();
-  },[query]);
 
 
   return (
     <>
       <Navbar>
-        <Search query={query} setQuery={setQuery}/>
+        
+        {/* <Search/> */}
         <NumResults movies={movies}/>
       </Navbar>
 
       <Main>
-        {isLoading && <Loader/>}
-        {!isLoading && !isError && <ListBox movies={movies}/>}
-        {isError && <ErrorMessage message={isError}/>}
+        <ListBox movies={movies}/>
         <WatchedBox average={average} watched={watched}/>
       </Main> 
     </>

@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import styles from './Search.module.scss';
 
-interface SearchProps { }
+interface SearchProps { 
+  query: string;
+  setQuery: (query: string) => void;
+}
 
-export const Search = ({ }: SearchProps) => {
-  const [query, setQuery] = useState("");
+export const Search = ({ query, setQuery}: SearchProps) => {
 
   return (
     <input
