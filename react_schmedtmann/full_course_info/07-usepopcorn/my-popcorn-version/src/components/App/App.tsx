@@ -13,6 +13,7 @@ import { loadMovie } from '../LoadMovie/LoadMovie';
 import { Loader } from '../Loader';
 import { error } from 'console';
 import { ErrorMessage } from '../ErrorMessage';
+import { SelectedMovie } from '../SelectedMovie';
 
 
 
@@ -74,6 +75,7 @@ function App() {
   const [isLoading, setIsLoading] = useState<Boolean>(true);
   const [isError, setIsError] = useState('');
   const [query, setQuery] = useState<string>('love');
+  const [selectedId, setSelectedId] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -113,7 +115,8 @@ function App() {
         {isLoading && <Loader/>}
         {!isLoading && !isError && <ListBox movies={movies}/>}
         {isError && <ErrorMessage message={isError}/>}
-        <WatchedBox average={average} watched={watched}/>
+        {selectedId ? <SelectedMovie selectedId={selectedId}/> 
+          : <WatchedBox average={average} watched={watched}/>}
       </Main> 
     </>
   );

@@ -36,7 +36,7 @@ export const WatchedBox = ({average, watched }: WatchedBoxProps) => {
 
           <ul className="list">
             {watched.map((movie) => (
-              <WatchedMovie movie={movie} key={movie.imdbID}/>
+            <WatchedMovie movie={movie} key={movie.imdbID}/>
             ))}
           </ul>
         </>
