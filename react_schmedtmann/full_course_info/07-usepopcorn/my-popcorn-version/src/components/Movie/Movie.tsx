@@ -3,10 +3,11 @@ import styles from './Movie.module.scss';
 
 interface MovieProps { 
   movie: ITempMovieData;
+  handleSelectMovie: (id: string) => void;
 }
 
-export const Movie = ({movie }: MovieProps) => (
-  <li>
+export const Movie = ({movie, handleSelectMovie }: MovieProps) => (
+  <li onClick={() => handleSelectMovie(movie.imdbID)}>
     <img src={movie.Poster} alt={`${movie.Title} poster`} />
     <h3>{movie.Title}</h3>
     <div>

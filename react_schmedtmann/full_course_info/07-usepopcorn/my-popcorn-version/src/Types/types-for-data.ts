@@ -7,7 +7,13 @@ export interface ITempMovieData {
 }
 
 export interface ITempWatchedData extends ITempMovieData {
-  runtime: number;
+  Runtime: string;
   imdbRating: number;
   userRating: number;
+  Released?: string;
+  Plot?: string;
+  Genre?: string;
+  Actors?: string;
+  Director?: string;
+
 }

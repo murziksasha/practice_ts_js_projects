@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { ITempMovieData } from '../../Types/types-for-data';
-import styles from './ListBox.module.scss';
 import { MovieList } from '../MovieList';
 
 interface ListBoxProps {
   movies: ITempMovieData[];
- }
+  handleSelectMovie: (id: string) => void;
+}
 
-export const ListBox = ({movies }: ListBoxProps) => {
+export const ListBox = ({movies, handleSelectMovie }: ListBoxProps) => {
   const [isOpen1, setIsOpen1] = useState(true);
 
   return (
@@ -19,7 +19,7 @@ export const ListBox = ({movies }: ListBoxProps) => {
           {isOpen1 ? "–" : "+"}
         </button>
         {isOpen1 && (
-          <MovieList movies={movies}/>
+          <MovieList movies={movies} handleSelectMovie={handleSelectMovie}/>
         )}
       </div>
     );

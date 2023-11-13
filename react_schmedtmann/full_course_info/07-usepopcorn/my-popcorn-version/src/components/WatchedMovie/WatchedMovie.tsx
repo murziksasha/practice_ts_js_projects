@@ -3,9 +3,10 @@ import styles from './WatchedMovie.module.scss';
 
 interface WatchedMovieProps {
   movie: ITempWatchedData;
+  handleDeleteWatched: (id: string) => void;
  }
 
-export const WatchedMovie = ({ movie}: WatchedMovieProps) => (
+export const WatchedMovie = ({ movie, handleDeleteWatched}: WatchedMovieProps) => (
   <li>
     <img src={movie.Poster} alt={`${movie.Title} poster`} />
     <h3>{movie.Title}</h3>
@@ -20,8 +21,9 @@ export const WatchedMovie = ({ movie}: WatchedMovieProps) => (
       </p>
       <p>
         <span>⏳</span>
-        <span>{movie.runtime} min</span>
+        <span>{movie.Runtime} min</span>
       </p>
+      <button className="btn-delete" onClick={() => handleDeleteWatched(movie.imdbID)}>X</button>
     </div>
   </li>
 );

@@ -20,9 +20,10 @@ interface StarRatingProps {
   size?: number;
   className?: string;
   messages?: string[];
+  onSetRating?: (rating: number) => void;
 }
 
-export const StarRating = ({maxRatingStars=5, defaultRating=0, color='#fcc419', size=48, messages=[], className}: StarRatingProps) => {
+export const StarRating = ({maxRatingStars=5, defaultRating=0, color='#fcc419', size=48, messages=[], className, onSetRating}: StarRatingProps) => {
 
   const textStyle = {
     lineHeight: '1',
@@ -36,6 +37,7 @@ export const StarRating = ({maxRatingStars=5, defaultRating=0, color='#fcc419', 
 
   function handleRating(rating: number) {
     setRating(rating)
+    if(onSetRating) onSetRating(rating)
   }
 
   return (

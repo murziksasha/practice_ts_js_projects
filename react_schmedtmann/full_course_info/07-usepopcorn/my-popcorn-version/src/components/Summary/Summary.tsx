@@ -5,7 +5,7 @@ interface SummaryProps {
   watched: ITempWatchedData[];
   avgImdbRating: number;
   avgUserRating: number;
-  avgRuntime: number;
+  avgRuntime?: number;
 }
 
 export function WatchedSummary({watched, avgImdbRating, avgUserRating, avgRuntime}:SummaryProps) {
@@ -19,11 +19,11 @@ export function WatchedSummary({watched, avgImdbRating, avgUserRating, avgRuntim
         </p>
         <p>
           <span>⭐️</span>
-          <span>{avgImdbRating}</span>
+          <span>{Math.floor(avgImdbRating)}</span>
         </p>
         <p>
           <span>🌟</span>
-          <span>{avgUserRating}</span>
+          <span>{Math.floor(avgUserRating)}</span>
         </p>
         <p>
           <span>⏳</span>

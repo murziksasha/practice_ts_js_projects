@@ -16,5 +16,20 @@ export const loadMovie = async function(searchText: string) {
   } catch(err) {
     console.error(`${err} 💣💣💣💣`);
   }
+};
 
+export const loadMovieById = async function(id?:string | null) {
+
+  if(!id) return;
+
+
+   const link = `${API_URL}?i=${id}&apikey=${API_KEY}`;
+
+  try {
+    const data = await getJSON(link);
+    if(data.Response === 'False') throw new Error('Movies not found');
+    return data;
+  } catch(err) {
+    console.error(`${err} 💣💣💣💣`);
+  }
 };

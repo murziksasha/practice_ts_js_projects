@@ -6,16 +6,18 @@ import { WatchedMovie } from '../WatchedMovie';
 
 interface WatchedBoxProps {
   average: (arr: number[]) => number;
+  handleDeleteWatched: (id: string) => void;
   watched: ITempWatchedData[];
  }
 
-export const WatchedBox = ({average, watched }: WatchedBoxProps) => {
+export const WatchedBox = ({average, watched, handleDeleteWatched }: WatchedBoxProps) => {
 
   const [isOpen2, setIsOpen2] = useState(true);
 
   const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
   const avgUserRating = average(watched.map((movie) => movie.userRating));
-  const avgRuntime = average(watched.map((movie) => movie.runtime));
+  // const avgRuntime = average(watched.map((movie) => 10));
+  const avgRuntime = average(watched.map((movie) => Number(movie.Runtime.split(' ').at(0))));
   
   return (
     <div className="box">
@@ -36,7 +38,7 @@ export const WatchedBox = ({average, watched }: WatchedBoxProps) => {
 
           <ul className="list">
             {watched.map((movie) => (
-            <WatchedMovie movie={movie} key={movie.imdbID}/>
+            <WatchedMovie movie={movie} key={movie.imdbID} handleDeleteWatched={handleDeleteWatched}/>
             ))}
           </ul>
         </>
