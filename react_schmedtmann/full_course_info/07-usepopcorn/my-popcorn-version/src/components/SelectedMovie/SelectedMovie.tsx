@@ -40,6 +40,29 @@ export const SelectedMovie = ({selectedId, hadleCloseMovie, handleAddWathed, wat
     fetchIdData();
   }, [selectedId]);
 
+  useEffect(() => {
+    if(!movie?.Title) return;
+    document.title = `${movie?.Title}`;
+    return (function() {
+      document.title = 'usePopcorn'
+    });
+  },[movie?.Title]);
+
+  useEffect(() => {
+    function onKeyPressEscClose(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        hadleCloseMovie();
+      }
+      console.log(e.key);
+    }
+  
+    document.addEventListener('keydown', onKeyPressEscClose as EventListener);
+  
+    return function () {
+      document.removeEventListener('keydown', onKeyPressEscClose as EventListener);
+    };
+  }, []);
+
   const isWatched = watched.some((movie) => movie.imdbID === selectedId);
   const watchedUserRating = watched.find(movie => movie.imdbID === selectedId)?.userRating;
 
@@ -58,11 +81,13 @@ export const SelectedMovie = ({selectedId, hadleCloseMovie, handleAddWathed, wat
 
 
 
+
+
   return (
     <div className="details">
       {isLoading ? <Loader/> : 
       <>
-      <header>
+      <header >
         <button className="btn-back" onClick={hadleCloseMovie}>&larr;</button>
         <img src={movie?.Poster} alt={movie?.Title} />
         <div className="details-overview">

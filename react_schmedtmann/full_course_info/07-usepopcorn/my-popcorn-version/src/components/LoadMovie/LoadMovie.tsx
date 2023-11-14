@@ -5,6 +5,8 @@ import { getJSON } from "../../services/fetchData";
 
 export const loadMovie = async function(searchText: string) {
 
+  
+
   if(!searchText) return;
   const link = `${API_URL}?apikey=${API_KEY}&s=${searchText}`;
 

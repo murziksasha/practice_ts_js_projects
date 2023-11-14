@@ -93,6 +93,8 @@ function App() {
     setSelectedId(null);
   }
 
+
+
   useEffect(() => {
     const fetchData = async () => {
       setIsError('');
@@ -122,6 +124,9 @@ function App() {
 
     fetchData();
   }, [query]);
+
+
+
 
 
   return (
