@@ -14,6 +14,7 @@ import { Loader } from '../Loader';
 import { ErrorMessage } from '../ErrorMessage';
 import { SelectedMovie } from '../SelectedMovie';
 import { ListBox } from '../ListBox';
+import { useLocalStorageState } from '../../hooks/useLocalStorageState';
 
 // const tempMovieData: ITempMovieData[] = [
 //   {
@@ -66,17 +67,12 @@ const average = (arr: number[]) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 function App() {
-  const [movies, setMovies] =
-    useState<ITempMovieData[]>([]);
-  const [watched, setWatched] =
-    useState<ITempWatchedData[]>(() =>{
-      const watchedInLocalStore = localStorage.getItem('watched') 
-      return watchedInLocalStore ? JSON.parse(watchedInLocalStore) : [];
-    });
+  const [movies, setMovies] = useState<ITempMovieData[]>([]);
   const [isLoading, setIsLoading] = useState<Boolean>(true);
   const [isError, setIsError] = useState('');
   const [query, setQuery] = useState<string>('love');
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [watched, setWatched] = useLocalStorageState<ITempWatchedData[]>([], 'watched');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -108,9 +104,6 @@ function App() {
     fetchData();
   }, [query]);
 
-  useEffect(() => {
-    localStorage.setItem('watched', JSON.stringify(watched));
-  }, [watched]);
 
   function handleSelectMovie(id: string) {
     setSelectedId(selectedId => (id === selectedId ? null: id));

@@ -1,8 +1,10 @@
-import {useEffect, useState } from 'react';
+import {useEffect, useRef, useState } from 'react';
 import { loadMovieById } from '../LoadMovie/LoadMovie';
 import { ITempWatchedData } from '../../Types/types-for-data';
 import { StarRating } from '../StarRating';
 import { Loader } from '../Loader';
+import { count } from 'console';
+import { useKey } from '../../hooks/useKey';
 
 export interface SelectedMovieProps { 
   selectedId: string;
@@ -16,6 +18,12 @@ export const SelectedMovie = ({selectedId, hadleCloseMovie, handleAddWathed, wat
   const [movie, setMovie] = useState<ITempWatchedData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [userRating, setUserRating] = useState<number>(0);
+
+  const countRef = useRef(0);
+
+  useEffect(() => {
+   if(userRating)countRef.current = countRef.current + 1;
+  }, [userRating])
 
   useEffect(() => {
     const fetchIdData = async () => {
@@ -48,20 +56,8 @@ export const SelectedMovie = ({selectedId, hadleCloseMovie, handleAddWathed, wat
     });
   },[movie?.Title]);
 
-  useEffect(() => {
-    function onKeyPressEscClose(e: KeyboardEvent) {
-      if (e.key === 'Escape') {
-        hadleCloseMovie();
-      }
-      console.log(e.key);
-    }
-  
-    document.addEventListener('keydown', onKeyPressEscClose as EventListener);
-  
-    return function () {
-      document.removeEventListener('keydown', onKeyPressEscClose as EventListener);
-    };
-  }, []);
+  useKey('Escape', hadleCloseMovie);
+
 
   const isWatched = watched.some((movie) => movie.imdbID === selectedId);
   const watchedUserRating = watched.find(movie => movie.imdbID === selectedId)?.userRating;

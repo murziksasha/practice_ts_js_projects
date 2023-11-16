@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "generate-react-cli": "^8.3.0"
+  }
+}
