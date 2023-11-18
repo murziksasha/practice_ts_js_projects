@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './MyCounter.module.scss';
 
 interface MyCounterProps { }
@@ -6,6 +6,13 @@ interface MyCounterProps { }
 export const MyCounter = ({ }: MyCounterProps) => {
   const [counter, setCounter] = useState<number>(0);
   const [step, setStep] = useState<number>(1);
+
+  useEffect(() => {
+    console.log('render', counter);
+    document.title=  `this is ${counter}  clicks`;
+    setStep(prev => (prev - 1) + 1);
+
+  }, [counter, setStep]);
 
   function handleClickCounter() {
     setCounter((counter) => counter + step);

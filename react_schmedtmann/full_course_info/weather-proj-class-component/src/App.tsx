@@ -1,33 +1,41 @@
 import React, { Component } from "react";
 
 interface AppState {
-  count: number;
+  location: string;
 }
 
 class App extends Component<{}, AppState> {
+
   constructor(props: {}) {
     super(props);
     this.state = {
-      count: 0
-    };
+      location: 'ukraine',
+    }
   }
 
-  increase = (num: number) => {
-    this.setState((prevState) => ({ count: prevState.count + num }));
-  };
+  handleChangeLocation = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.target;
+    this.setState({location: target.value});
+  }
+
+  fetchWeather = () => {
+    console.log('loading data...');
+    console.log(this.state.location);
+  }
+
 
   render() {
-    const date = new Date('june 21 2027');
-    date.setDate(date.getDate() + this.state.count) 
     return (
-      <div>
-        <span>{date.toDateString()}</span>
+      <div className="App">
+        <h1>Classy Weather</h1>
+        <div>
+          <input type="text" placeholder="Search from location..." 
+            value={this.state.location} onChange={this.handleChangeLocation}/>
+        </div>
         <br />
-        <button onClick={() => this.increase(-1)}>-</button>
-        <span>{this.state.count}</span>
-        <button onClick={() => this.increase(1)}>+</button>
+        <button onClick={this.fetchWeather}>Get Weather</button>
       </div>
-    );
+    )
   }
 }
 
