@@ -7,7 +7,7 @@ export default function Pricing() {
   return (
     <>
       <PageNav/>
-      <h2>Pricing</h2>
+      <h1>Pricing</h1>
     </>
   );
 }
