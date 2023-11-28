@@ -1,0 +1,16 @@
+.nav {
+  background-color: yellow;
+  & ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+  }
+  & :global(.active) {
+    // your styles for active links
+    // for example, you can change the color or add a background color
+   background-color: green
+
+  }
+
+}
+
