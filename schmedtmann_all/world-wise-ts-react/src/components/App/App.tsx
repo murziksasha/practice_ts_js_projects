@@ -1,10 +1,10 @@
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Homepage from '../../pages/Homepage/Homepage';
 import PageNotFound from '../../pages/PageNotFound/PageNotFound';
-import Product from '../../pages/Pricing/Pricing';
-import Pricing from '../../pages/Pricing/Pricing';
-import './App.scss';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
+import Login from '../../pages/Login/Login';
+import AppLayout from '../../pages/AppLayout/AppLayout';
+import Product from '../../pages/Product/Product';
 
 
 export default function App() {
@@ -12,8 +12,9 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Homepage />} />
-        <Route path='/pricing' element={<Pricing />} />
         <Route path='/product' element={<Product />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/app' element={<AppLayout/>}/>
         <Route path='*' element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
