@@ -1,13 +1,71 @@
-import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import Homepage from '../../pages/Homepage/Homepage';
 import PageNotFound from '../../pages/PageNotFound/PageNotFound';
 import Login from '../../pages/Login/Login';
 import AppLayout from '../../pages/AppLayout/AppLayout';
 import Product from '../../pages/Product/Product';
+import CityList from '../CityList/CityList';
+import CountryList from '../CountryList/CountryList';
+import City from '../City/City';
+import Form from '../Form/Form';
 
+const BASE_URL = 'http://localhost:9000';
+
+
+
+export interface IDataCities {
+  "cityName": string;
+  "country": string;
+  "emoji": string;
+  "date": string;
+  "notes": string;
+  "position": {
+    "lat": number;
+    "lng": number;
+  },
+  "id": number;
+}
 
 export default function App() {
+  const [dataCities, setDataCities] = useState<IDataCities[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const timeout = (s: number) => new Promise<void>((_, reject) => {
+        const timerId = setTimeout(() => {
+          reject(new Error(`Request took too long! Timeout after ${s} seconds`));
+        }, s * 1000);
+
+        return () => clearTimeout(timerId);
+      });
+
+      try {
+        setIsLoading(true);
+        const response = await Promise.race([
+          fetch(`${BASE_URL}/cities`),
+          timeout(10),
+        ]) as Response;
+
+        if (!response.ok) {
+          throw new Error(`${response.status}`);
+        }
+        
+        const data: IDataCities[] = await response.json();
+        setDataCities(data);
+      } catch (error) {
+        console.error(error); 
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
   return (
     <BrowserRouter>
       <Routes>
@@ -15,10 +73,12 @@ export default function App() {
         <Route path='/product' element={<Product />} />
         <Route path='/login' element={<Login />} />
         <Route path='/app' element={<AppLayout/>}>
-          <Route index element={<p>LIST...</p>}/>
-          <Route path='cities' element={<p>List of cities</p> }/>
-          <Route path='countries' element={<p>countries....</p> }/>
-          <Route path='form' element={<p>Form...</p> }/>
+          {/* <Route index element={<CityList cities={dataCities} isLoading={isLoading}/>}/> */}
+          <Route index element={<Navigate replace to='cities' />}/>
+          <Route path='cities' element={<CityList cities={dataCities} isLoading={isLoading}/>}/>
+          <Route path='cities/:id' element={<City/>}/>
+          <Route path='countries' element={<CountryList cities={dataCities} isLoading={isLoading}/>}/>
+          <Route path='form' element={<Form/>}/>
         </Route>
         <Route path='*' element={<PageNotFound />} />
       </Routes>

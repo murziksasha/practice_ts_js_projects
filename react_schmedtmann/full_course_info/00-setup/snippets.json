@@ -1,6 +1,6 @@
 {
   "Print to console": {
-    "prefix": "cl",
+    "prefix": "clg",
     "scope": "javascript,typescript,javascriptreact",
     "body": ["console.log($1)"],
     "description": "console.log"
@@ -42,5 +42,11 @@
       ""
     ],
     "description": "React styled component"
+  },
+  "importCSSModule": {
+    "prefix": "csm",
+    "scope": "javascript,typescript,javascriptreact",
+    "body": ["import styles from './${TM_FILENAME_BASE}.module.css'"],
+    "description": "Import CSS Module as `styles`"
   }
 }

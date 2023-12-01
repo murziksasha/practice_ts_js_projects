@@ -1,6 +1,12 @@
-import styles from "./CountryItem.module.css";
+import { IDataCities } from "../App/App";
+import styles from "./CountryItem.module.scss";
 
-function CountryItem({ country }) {
+interface IPropsCountryItem {
+  country: Partial<IDataCities>;
+}
+
+
+function CountryItem({ country }: IPropsCountryItem) {
   return (
     <li className={styles.countryItem}>
       <span>{country.emoji}</span>

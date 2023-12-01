@@ -1,6 +1,10 @@
-import styles from "./Message.module.css";
+import styles from "./Message.module.scss";
 
-function Message({ message }) {
+interface IPropsMessage {
+  message: string;
+}
+
+function Message({ message }: IPropsMessage) {
   return (
     <p className={styles.message}>
       <span role="img">👋</span> {message}
