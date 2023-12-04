@@ -9,23 +9,13 @@ import CityList from '../CityList/CityList';
 import CountryList from '../CountryList/CountryList';
 import City from '../City/City';
 import Form from '../Form/Form';
+import { CityContext, IDataCities } from '../../utils/context';
 
 const BASE_URL = 'http://localhost:9000';
 
 
 
-export interface IDataCities {
-  "cityName": string;
-  "country": string;
-  "emoji": string;
-  "date": string;
-  "notes": string;
-  "position": {
-    "lat": number;
-    "lng": number;
-  },
-  "id": number;
-}
+
 
 export default function App() {
   const [dataCities, setDataCities] = useState<IDataCities[]>([]);
@@ -67,6 +57,10 @@ export default function App() {
 
 
   return (
+    <CityContext.Provider value = {{
+      dataCities,
+      isLoading
+    }}>
     <BrowserRouter>
       <Routes>
         <Route index element={<Homepage />} />
@@ -75,13 +69,14 @@ export default function App() {
         <Route path='/app' element={<AppLayout/>}>
           {/* <Route index element={<CityList cities={dataCities} isLoading={isLoading}/>}/> */}
           <Route index element={<Navigate replace to='cities' />}/>
-          <Route path='cities' element={<CityList cities={dataCities} isLoading={isLoading}/>}/>
+          <Route path='cities' element={<CityList/>}/>
+          <Route path='countries' element={<CountryList />}/>
           <Route path='cities/:id' element={<City/>}/>
-          <Route path='countries' element={<CountryList cities={dataCities} isLoading={isLoading}/>}/>
           <Route path='form' element={<Form/>}/>
         </Route>
         <Route path='*' element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
+    </CityContext.Provider>
   );
 }

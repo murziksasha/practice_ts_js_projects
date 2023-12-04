@@ -1,23 +1,20 @@
-import { IDataCities } from '../App/App';
+
+import { useContext } from 'react';
+import { CityContext, IDataCities } from '../../utils/context';
 import CityItem from '../CityItem/CityItem';
 import Message from '../Message/Message';
 import Spinner from '../Spinner/Spinner';
 import styles from './CityList.module.scss';
 
-interface IPropsCityList {
-  cities: IDataCities[];
-  isLoading: boolean;
-}
+interface IPropsCityList {}
 
-export default function CityList({
-  cities,
-  isLoading,
-}: IPropsCityList) {
+export default function CityList({}: IPropsCityList) {
+  const {isLoading, dataCities} = useContext(CityContext);
   if (isLoading) return <Spinner />;
-  if(!cities.length) return <Message message={`Add your city by clickig a city on the map`}/>
+  if(!dataCities.length) return <Message message={`Add your city by clickig a city on the map`}/>
   return (
     <ul className={styles.cityList}>
-      {cities.map((city) => (
+      {dataCities.map((city) => (
         <CityItem city={city} key={city.id} />
       ))}
     </ul>
