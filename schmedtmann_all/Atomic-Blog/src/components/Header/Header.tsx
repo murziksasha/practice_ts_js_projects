@@ -1,6 +1,5 @@
 
-import { useContext } from 'react';
-import { IPost, PostContext } from '../../utils/context';
+import {usePosts } from '../../utils/context';
 import { Results } from '../Results';
 import { SearchPosts } from '../SearchPosts';
 import styles from './Header.module.scss';
@@ -10,7 +9,7 @@ export interface HeaderProps {
  }
 
 export const Header = ({ }: HeaderProps) => {
-  const {onClearPosts} = useContext(PostContext)
+  const {onClearPosts} = usePosts();
   return (
     <header>
       <h1>

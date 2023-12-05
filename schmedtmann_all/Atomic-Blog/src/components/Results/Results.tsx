@@ -1,6 +1,5 @@
 
-import { useContext } from 'react';
-import { PostContext } from '../../utils/context';
+import {usePosts } from '../../utils/context';
 import styles from './Results.module.scss';
 
 interface ResultsProps {
@@ -8,7 +7,7 @@ interface ResultsProps {
  }
 
 export const Results = ({  }: ResultsProps) => {
-  const {posts} = useContext(PostContext);
+  const {posts} = usePosts()
   return (<p>🚀 {posts.length} atomic posts found</p>
   );
 }

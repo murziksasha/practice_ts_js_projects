@@ -1,11 +1,10 @@
-import { useContext } from 'react';
+import { usePosts } from '../../utils/context';
 import styles from './List.module.scss';
-import { PostContext } from '../../utils/context';
 
 type ListProps = {}
 
 export const List = ({ }: ListProps) => {
-  const {posts} = useContext(PostContext);
+  const {posts} = usePosts();
 
   return (
     <ul>

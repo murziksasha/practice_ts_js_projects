@@ -1,14 +1,13 @@
 
-import { useContext } from 'react';
 import styles from './SearchPosts.module.scss';
-import { PostContext } from '../../utils/context';
+import { usePosts } from '../../utils/context';
 
 
 
 type SearchPostsProps = {};
 
 export const SearchPosts = ({ }: SearchPostsProps) => {
-const {searchQuery, setSearchQuery} = useContext(PostContext);
+const {searchQuery, setSearchQuery} = usePosts();
 
   return (<input
     value={searchQuery}

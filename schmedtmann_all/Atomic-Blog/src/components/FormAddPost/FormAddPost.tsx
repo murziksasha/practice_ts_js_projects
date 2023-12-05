@@ -1,12 +1,11 @@
 import { useContext, useState } from 'react';
 import styles from './FormAddPost.module.scss';
-import { MainProps } from '../Main';
-import { PostContext } from '../../utils/context';
+import { usePosts } from '../../utils/context';
 
 type FormAddPostProps = {}
 
 export const FormAddPost = ({  }: FormAddPostProps) => {
-  const {onAddPost} = useContext(PostContext);
+  const {onAddPost} = usePosts();
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
