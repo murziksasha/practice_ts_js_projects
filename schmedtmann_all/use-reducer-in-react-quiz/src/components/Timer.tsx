@@ -1,10 +1,7 @@
-import { useEffect } from "react"
-import { Action } from "../App";
+import { useEffect } from "react";
+import { useQuestions } from "../utils/context";
 
-interface IPropsTimer {
-  secondsRemaining: number;
-  dispatch: React.Dispatch<Action>;
-}
+
 
 function formatTime(totalSeconds: number): string {
   if (totalSeconds < 0) return '00:00';
@@ -18,11 +15,16 @@ function formatTime(totalSeconds: number): string {
   return `${formattedMinutes}:${formattedSeconds}`;
 }
 
-export default function Timer({secondsRemaining, dispatch}: IPropsTimer) {
+export default function Timer() {
+  const {secondsRemaining, dispatch} = useQuestions();
+
+  function timeTofinish() {
+    dispatch({type: 'tick'})
+  }
 
   useEffect(() => {
 
-    const timer = setInterval(() => dispatch({type: 'tick'}), 1000);
+    const timer = setInterval(timeTofinish, 1000);
 
     return () => clearInterval(timer);
   }, [dispatch])

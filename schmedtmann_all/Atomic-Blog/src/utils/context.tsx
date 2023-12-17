@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 
 
 export interface IPost {
@@ -60,14 +60,18 @@ export default function PostProvider({children}: IPropsPostProvider) {
     setPosts([]);
   }
 
-  return (
-    <PostContext.Provider value={{
+  const postContextObj = useMemo(() => {
+    return {
       posts: searchedPosts,
       onClearPosts: handleClearPosts,
       searchQuery,
       setSearchQuery,
       onAddPost: handleAddPost
-    }}>
+  }
+  }, [posts, searchQuery, setSearchQuery])
+
+  return (
+    <PostContext.Provider value={postContextObj}>
       {children}
     </PostContext.Provider>
   );

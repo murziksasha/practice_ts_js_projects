@@ -1,13 +1,8 @@
+import { useQuestions } from "../utils/context"
 
-interface IPropsProgress {
-  index: number;
-  numQuestions: number;
-  points: number;
-  maxPossiblePoints: number;
-  answer: number | null;
-}
 
-export default function Progress({index, numQuestions, points, maxPossiblePoints, answer}: IPropsProgress) {
+export default function Progress() {
+  const {numQuestions, index, answer, points, maxPossiblePoints} = useQuestions();
   return (
     <header className='progress'>
       <progress max={numQuestions} 

@@ -1,29 +1,28 @@
 
 
-import React from 'react'
-import { Action, IDataQuestion } from '../App';
+import { useQuestions } from '../utils/context';
 
-interface PropsVariantsOfAnswers {
-  currentQuestion: IDataQuestion;
-  dispatch: React.Dispatch<Action>;
-  answer: number | null;
-}
 
-export default function VariantsOfAnswers({currentQuestion, answer, dispatch}: PropsVariantsOfAnswers) {
+export default function VariantsOfAnswers() {
+
+  const {answer, currentQuestion, dispatch} = useQuestions();
 
   const hasAnswered = answer !== null;
 
+  function handleClick(index: number) {
+    dispatch({type: 'newAnswer', payload: index})
+  }
+
   return (
     <>
-      {currentQuestion.options.map((option, index) => (
+      {currentQuestion?.options.map((option, index) => (
       <button className={`btn btn-option 
         ${ index === answer ? 'answer': ''}
         ${hasAnswered ? index === currentQuestion.correctOption ? 'correct' : 'wrong' : ''}
       `}
       disabled={hasAnswered}
       key={option}
-      onClick={() => dispatch({type:'newAnswer', payload: index})
-    }
+      onClick={() => handleClick(index)}
       >{option}
       </button>
     ))}

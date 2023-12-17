@@ -1,15 +1,10 @@
+import { useQuestions } from "../utils/context";
 
-import React from 'react'
-import { Action } from '../App';
 
-interface IPropsFinishScreen {
-  points: number;
-  maxPossiblePoints: number;
-  highscore: number;
-  dispatch: React.Dispatch<Action>
-}
 
-export default function FinishScreen({points, maxPossiblePoints, highscore, dispatch}: IPropsFinishScreen) {
+
+export default function FinishScreen() {
+  const {points, maxPossiblePoints, highscore, dispatch} = useQuestions();
   const percentage = (points / maxPossiblePoints) * 100;
 
   let emoji;
@@ -19,6 +14,10 @@ export default function FinishScreen({points, maxPossiblePoints, highscore, disp
   if(percentage < 50 && percentage >= 0) emoji = '🫢';
   if(percentage === 0) emoji = '👎🏾👎🏾👎🏾';
 
+  function handleClick() {
+    dispatch({type: 'restart'})
+  }
+
 
   return (
     <>
@@ -27,7 +26,7 @@ export default function FinishScreen({points, maxPossiblePoints, highscore, disp
       </p>
       <p className='highscore'>{`Highscore: ${highscore} points`}</p>
       <button className='btn btn-ui'
-        onClick={() => dispatch({type: 'restart'})}>
+        onClick={handleClick}>
         Restart
       </button>
     </>

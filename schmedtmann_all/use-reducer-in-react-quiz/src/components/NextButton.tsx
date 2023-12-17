@@ -1,28 +1,32 @@
-import { Action } from "../App";
+import { useQuestions } from "../utils/context";
 
 
-interface PropsNextButton {
-  dispatch: React.Dispatch<Action>;
-  answer: number | null;
-  index: number;
-  numQuestions: number;
-}
 
-export default function NextButton({answer, index, numQuestions, dispatch}: PropsNextButton) {
+
+export default function NextButton() {
+  const {answer, index, numQuestions, dispatch} = useQuestions();
 
   if(answer === null) return null;
+
+  function handleClick() {
+    dispatch({type: 'nextQuestion'})
+  }
+
+  function handleFinish() {
+    dispatch({type: 'finish'})
+  }
 
   if(index < numQuestions -1) return (
     <button
       className="btn btn-ui"
-      onClick={() => dispatch({type: 'nextQuestion'})}
+      onClick={handleClick}
     >nextQuestion</button>
   )
 
   if(index === numQuestions -1) return (
     <button
       className="btn btn-ui"
-      onClick={() => dispatch({type: 'finish'})}
+      onClick={handleFinish}
     >Finish</button>
   )
 };

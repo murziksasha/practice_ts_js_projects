@@ -1,4 +1,5 @@
 import { usePosts } from '../../utils/context';
+import Test, { SlowComponent } from '../Test/Test';
 import styles from './List.module.scss';
 
 type ListProps = {}
@@ -14,6 +15,10 @@ export const List = ({ }: ListProps) => {
           <p>{post.body}</p>
         </li>
       ))}
+
+      {/* <Test>
+        <SlowComponent/>
+      </Test> */}
     </ul>
   );
 }

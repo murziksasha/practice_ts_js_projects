@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import styles from './FormAddPost.module.scss';
 import { usePosts } from '../../utils/context';
 

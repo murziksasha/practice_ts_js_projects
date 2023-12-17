@@ -21,6 +21,7 @@ function App() {
     [isFakeDark]
   );
 
+
   return (
     <section>
       <button
@@ -31,8 +32,8 @@ function App() {
       </button>
 
       <PostProvider>
-        <Header/>
-        <Main/>
+        <Header />
+        <Main />
         <Archive />
         <Footer />
       </PostProvider>

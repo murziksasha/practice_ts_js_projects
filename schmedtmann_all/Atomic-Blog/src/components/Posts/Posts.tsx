@@ -2,12 +2,14 @@ import { useContext } from 'react';
 import { List } from '../List';
 import styles from './Posts.module.scss';
 
-type PostsProps = {};
+type PostsProps = {
+  children: React.ReactNode;
+};
 
-export const Posts = ({  }: PostsProps) => {
+export const Posts = ({ children }: PostsProps) => {
   return (
     <section>
-      <List/>
-    </section>  
+      {children}
+    </section>
   );
 }
