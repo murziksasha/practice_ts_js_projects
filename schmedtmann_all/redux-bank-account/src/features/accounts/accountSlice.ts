@@ -5,12 +5,14 @@ export interface AccountState {
   balance: number;
   loan: number;
   loanPurpose: string;
+  isLoading: boolean;
 }
 
 const initialStateAccount: AccountState = {
   balance: 0,
   loan: 0,
   loanPurpose: '',
+  isLoading: false,
 };
 
 
@@ -36,14 +38,20 @@ interface PayLoanAction {
   type: 'account/payLoan';
 }
 
-type Action = DepositAction | WithdrawAction | RequestLoanAction | PayLoanAction;
+interface ConvertingCurrency {
+  type: 'account/convertingCurrency';
+}
+
+type Action = DepositAction | WithdrawAction | RequestLoanAction | ConvertingCurrency | PayLoanAction;
 
 export const accountReducer: Reducer<AccountState, Action> = (state = initialStateAccount, action) => {
   switch (action.type) {
     case 'account/deposit':
-      return { ...state, balance: state.balance + action.payload };
+      return { ...state, balance: state.balance + action.payload, isLoading: false };
     case 'account/withdraw':
       return { ...state, balance: state.balance - action.payload };
+    case 'account/convertingCurrency':
+      return{...state, }
     case 'account/requestLoan':
       if (state.loan > 0) return state;
       return {
@@ -59,8 +67,22 @@ export const accountReducer: Reducer<AccountState, Action> = (state = initialSta
   }
 };
 
-export function deposit(amount: number): DepositAction {
-  return { type: 'account/deposit', payload: amount }
+
+export function deposit(amount: number, currency: string): DepositAction {
+  if(currency === 'USD') return { type: 'account/deposit', payload: amount };
+
+  //@ts-ignore
+  return async function (dispatch, getState) {
+    dispatch({type: 'account/convertingCurrency'})
+    const host = 'api.frankfurter.app';
+      //API Call
+    const res = await fetch(`https://${host}/latest?amount=${amount}&from=${currency}&to=USD`);
+    const data  = await res.json();
+    const converted = data.rates.USD;
+
+      // return action 
+      dispatch({ type: 'account/deposit', payload: converted });
+  }
 }
 
 export function withdraw(amount: number): WithdrawAction {

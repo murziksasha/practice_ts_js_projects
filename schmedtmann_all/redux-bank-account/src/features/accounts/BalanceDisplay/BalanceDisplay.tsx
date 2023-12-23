@@ -1,3 +1,5 @@
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../components/redux/store';
 import styles from './BalanceDisplay.module.scss';
 
 function formatCurrency(value: number) {
@@ -10,6 +12,10 @@ function formatCurrency(value: number) {
 
 interface BalanceDisplayProps { }
 
-export const BalanceDisplay = ({ }: BalanceDisplayProps) => (
-  <div className="balance">{formatCurrency(123456)}</div>
-);
+export const BalanceDisplay = ({ }: BalanceDisplayProps) => {
+  const balance = useSelector((store: RootState) => store.account.balance);
+
+  return (
+    <div className="balance">{formatCurrency(balance)}</div>
+  );
+} 

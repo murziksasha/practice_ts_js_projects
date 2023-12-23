@@ -1,7 +1,7 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { accountReducer, AccountState } from '../../features/accounts/accountSlice';
 import { customerReducer, CustomerState } from '../../features/customers/customerSlice';
-import thunk from 'react-redux';
+import {thunk} from 'redux-thunk';
 
 export interface RootState { 
   account: AccountState;
