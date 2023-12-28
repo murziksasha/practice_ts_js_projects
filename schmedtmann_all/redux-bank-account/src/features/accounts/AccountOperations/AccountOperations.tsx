@@ -3,12 +3,15 @@ import styles from './AccountOperations.module.scss';
 import { useState } from 'react';
 import {
   deposit,
-  payloan,
+  payLoan,
   requestLoan,
   withdraw,
 } from '../accountSlice';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../components/redux/store';
+import { AnyAction } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { updateName } from '../../customers/customerSlice';
 
 interface AccountOperationsProps {}
 
@@ -32,31 +35,44 @@ export const AccountOperations = ({}: AccountOperationsProps) => {
 
   function handleDeposit() {
     if (!depositAmount) return;
-    //@ts-ignore
-    dispatch(deposit(depositAmount, currency));
+  
+    // Explicitly annotate the type of dispatch
+    const dispatchFn = dispatch as ThunkDispatch<RootState, undefined, AnyAction>;
+
+    const depositNumber = typeof depositAmount === 'string' ? parseFloat(depositAmount) : depositAmount;
+      
+    dispatchFn(deposit(depositNumber, currency));
     setDepositAmount('');
-    setCurrency('');
+    setCurrency('USD');
   }
+  
 
   function handleWithdrawal() {
     if (!withdrawalAmount) return;
-    //@ts-ignore
-    dispatch(withdraw(withdrawalAmount));
+
+    const withdrawalNumber = typeof withdrawalAmount === 'string' ? parseFloat(withdrawalAmount) : withdrawalAmount;
+
+    dispatch(withdraw(withdrawalNumber));
     setWithdrawalAmount('');
   }
 
   function handleRequestLoan() {
     if (!loanAmount || !currentLoanPurpose) return;
-    //@ts-ignore
-    dispatch(requestLoan(loanAmount, currentLoanPurpose));
+
+    const amountNumber = typeof loanAmount === 'string' ? parseFloat(loanAmount) : loanAmount;
+    const purposeString = currentLoanPurpose.toString();
+  
+    dispatch(requestLoan({ amount: amountNumber, purpose: purposeString }));
+    
     setLoanAmount('');
     setLoanPurpose('');
   }
+  
+  
 
   function handlePayLoan() {
     if (!loan || balance < loan) return;
-    //@ts-ignore
-    dispatch(payloan());
+    dispatch(payLoan());
   }
 
   return (

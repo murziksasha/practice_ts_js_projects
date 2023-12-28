@@ -1,4 +1,4 @@
-import { Reducer } from "redux";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface CustomerState {
   fullName: string;
@@ -6,54 +6,30 @@ export interface CustomerState {
   createdAt: string;
 }
 
-export interface CreateCustomerAction {
-  type: 'customer/createCustomer';
-  payload: {
-    fullName: string;
-    nationalID: string;
-    createAd: string;
-  };
-}
-
-interface UpdateNameAction {
-  type: 'customer/updateName';
-  payload: string;
-}
-
-type ActionCustomer = CreateCustomerAction | UpdateNameAction;
-
-const initialStateCustomer: CustomerState = {
+const initialState: CustomerState = {
   fullName: '',
   nationalID: '',
   createdAt: '',
 };
 
-export function createCustomer(fullName: string, nationalID: string): CreateCustomerAction {
-  return {type: 'customer/createCustomer', payload: {
-    fullName, nationalID, createAd: new Date().toLocaleDateString()
-  }};
-}
-
-export function updateName(fullName: string): UpdateNameAction {
-  return {type: 'customer/updateName', payload: fullName};
-}
-
-
-export const customerReducer: Reducer<CustomerState, ActionCustomer> = (state=initialStateCustomer, action) => {
-  switch(action.type) {
-    case 'customer/createCustomer':
-      return{
-        ...state,
-        fullName: action.payload.fullName,
-        nationalID: action.payload.nationalID,
-        createdAt: action.payload.createAd
-      };
-    case 'customer/updateName':
-      return {
-        ...state,
-        fullName: action.payload
-      };
-    default:
-      return state;
+const customerSlice = createSlice({
+  name: 'customer',
+  initialState,
+  reducers: {
+    createCustomer(state, action: PayloadAction<{fullName: string, nationalID: string}>){
+      const {fullName, nationalID} = action.payload;
+      state.fullName = fullName;
+      state.nationalID = nationalID;
+      state.createdAt = new Date().toISOString();
+    },
+    updateName(state, action: PayloadAction<{fullName: string}>){
+      const {fullName} = action.payload;
+      state.fullName = fullName;
+    },
   }
-};
+});
+
+export const {createCustomer, updateName} = customerSlice.actions;
+
+
+export default customerSlice.reducer;

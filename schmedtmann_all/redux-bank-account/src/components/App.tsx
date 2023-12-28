@@ -10,6 +10,8 @@ import { RootState } from "./redux/store";
 
 function App() {
   const fullName = useSelector((state: RootState)=>state.customer.fullName);
+
+
   
   return (
     <div>

@@ -1,19 +1,19 @@
-import { applyMiddleware, combineReducers, createStore } from 'redux';
-import { accountReducer, AccountState } from '../../features/accounts/accountSlice';
-import { customerReducer, CustomerState } from '../../features/customers/customerSlice';
-import {thunk} from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit';
+import accountReducer from '../../features/accounts/accountSlice';
+import customerReducer  from '../../features/customers/customerSlice';
 
-export interface RootState { 
-  account: AccountState;
-  customer: CustomerState;
+export interface RootState {
+  account: ReturnType<typeof accountReducer>;
+  customer: ReturnType<typeof customerReducer>;
 }
 
-const rootReducer = combineReducers({
-  account: accountReducer,
-  customer: customerReducer,
+const store = configureStore({
+  reducer: {
+    account: accountReducer,
+    customer: customerReducer,
+    // Add other slices if needed
+  },
 });
 
-//@ts-ignore
-const store = createStore(rootReducer, applyMiddleware(thunk));
-
 export default store;
+

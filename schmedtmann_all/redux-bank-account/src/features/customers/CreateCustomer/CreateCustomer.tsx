@@ -1,20 +1,19 @@
 import { useState } from 'react';
 import styles from './CreateCustomer.module.scss';
 import { useDispatch } from 'react-redux';
-import { CreateCustomerAction, createCustomer } from '../customerSlice';
+import {createCustomer, updateName } from '../customerSlice';
 
 interface CreateCustomerProps {}
 
 export const CreateCustomer = ({}: CreateCustomerProps) => {
-  const [fullName, setFullName] = useState('');
-  const [nationalId, setNationalId] = useState('');
+  const [fullNameLocal, setFullNameLocal] = useState('');
+  const [nationalIdLocal, setNationalIdLocal] = useState('');
 
   const dispatch = useDispatch();
 
   function handleClick() {
-    if (!fullName || !nationalId) return;
-    //@ts-ignore
-    dispatch(createCustomer(fullName, nationalId));
+    if (!fullNameLocal || !nationalIdLocal) return;
+    dispatch(createCustomer({fullName: fullNameLocal, nationalID: nationalIdLocal}));
   }
 
   return (
@@ -24,15 +23,15 @@ export const CreateCustomer = ({}: CreateCustomerProps) => {
         <div>
           <label>Customer full name</label>
           <input
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
+            value={fullNameLocal}
+            onChange={(e) => setFullNameLocal(e.target.value)}
           />
         </div>
         <div>
           <label>National ID</label>
           <input
-            value={nationalId}
-            onChange={(e) => setNationalId(e.target.value)}
+            value={nationalIdLocal}
+            onChange={(e) => setNationalIdLocal(e.target.value)}
           />
         </div>
         <button onClick={handleClick}>Create new customer</button>
