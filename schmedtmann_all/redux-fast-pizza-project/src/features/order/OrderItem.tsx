@@ -1,29 +1,27 @@
-import { formatCurrency } from "../../utils/helpers";
+import { formatCurrency } from '../../utils/helpers';
 
-
-type Item = {
+export type OrderItemType = {
+  id: string;
   quantity: number;
   name: string;
   totalPrice: number;
-}
+};
 
 interface PropsOrderItem {
-  item: Item, 
-  isLoadingIngredients: boolean;
-  ingredients: string;
+  item: OrderItemType;
+  isLoadingIngredients?: boolean;
 }
 
-
-function OrderItem({ item, isLoadingIngredients, ingredients }: PropsOrderItem) {
+function OrderItem({ item, isLoadingIngredients }: PropsOrderItem) {
   const { quantity, name, totalPrice } = item;
 
   return (
-    <li>
-      <div>
+    <li className="py-3">
+      <div className='flex items-center justify-between gap-4 text-sm'>
         <p>
-          <span>{quantity}&times;</span> {name}
+          <span className='font-bold'>{quantity}&times;</span> {name}
         </p>
-        <p>{formatCurrency(totalPrice)}</p>
+        <p className='font-bold'>{formatCurrency(totalPrice)}</p>
       </div>
     </li>
   );
