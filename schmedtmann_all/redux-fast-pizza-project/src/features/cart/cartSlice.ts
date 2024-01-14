@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../../rootReducer";
 
 interface CartItem {
   pizzaId: number;
@@ -13,16 +14,16 @@ interface AppState {
 }
 
 const initialState: AppState = {
-  // cart: [],
-  cart: [
-    {
-      pizzaId: 12,
-      nama: 'Mediterranean',
-      quantity: 2,
-      unitPrice: 16,
-      totalPrice: 32
-    }
-  ]
+  cart: [],
+  // cart: [
+  //   {
+  //     pizzaId: 12,
+  //     nama: 'Mediterranean',
+  //     quantity: 2,
+  //     unitPrice: 16,
+  //     totalPrice: 32
+  //   }
+  // ]
 };
 
 const cartSlice = createSlice({
@@ -71,4 +72,8 @@ const cartSlice = createSlice({
 export const {addItem, deleteItem, increaseItemQuantity, decreaseItemQuantity, clearCart} = cartSlice.actions;
 
 export default cartSlice.reducer;
+
+export const getTotalCartQuantity= (state: RootState) => state.cart.cart.reduce((sum, item) => sum + item.quantity, 0);
+
+export const getTotalCartPrice = (state: RootState) => state.cart.cart.reduce((sum, item) => sum + item.totalPrice, 0);
 
