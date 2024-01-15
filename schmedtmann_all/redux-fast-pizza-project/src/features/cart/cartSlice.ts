@@ -3,7 +3,7 @@ import { RootState } from "../../rootReducer";
 
 interface CartItem {
   pizzaId: number;
-  nama: string;
+  name: string;
   quantity: number;
   unitPrice: number;
   totalPrice: number;
@@ -15,15 +15,6 @@ interface AppState {
 
 const initialState: AppState = {
   cart: [],
-  // cart: [
-  //   {
-  //     pizzaId: 12,
-  //     nama: 'Mediterranean',
-  //     quantity: 2,
-  //     unitPrice: 16,
-  //     totalPrice: 32
-  //   }
-  // ]
 };
 
 const cartSlice = createSlice({
@@ -55,15 +46,6 @@ const cartSlice = createSlice({
       }
     },
     clearCart(state){
-      // state.cart = [
-      //   {
-      //     pizzaId: 0,
-      //     nama: '',
-      //     quantity: 0,
-      //     unitPrice: 0,
-      //     totalPrice: 0
-      //   }
-      // ];
       state.cart = [];
     }
   }
@@ -73,7 +55,12 @@ export const {addItem, deleteItem, increaseItemQuantity, decreaseItemQuantity, c
 
 export default cartSlice.reducer;
 
+export const getCart = (state: RootState) => state.cart.cart;
+
 export const getTotalCartQuantity= (state: RootState) => state.cart.cart.reduce((sum, item) => sum + item.quantity, 0);
 
 export const getTotalCartPrice = (state: RootState) => state.cart.cart.reduce((sum, item) => sum + item.totalPrice, 0);
+
+export const getCurrentQuantityById = (id: number) => (state: RootState) => state.cart.cart.find(item=>item.pizzaId === id)?.quantity ?? 0;
+
 
