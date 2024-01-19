@@ -7,6 +7,7 @@ interface CartItem {
   quantity: number;
   unitPrice: number;
   totalPrice: number;
+  ingredients?: string[];
 }
 
 interface AppState {
@@ -43,7 +44,9 @@ const cartSlice = createSlice({
       if(currentItem){
         currentItem.quantity--;
         currentItem.totalPrice = currentItem.quantity * currentItem.unitPrice;
+        if(currentItem.quantity === 0) cartSlice.caseReducers.deleteItem(state, action);
       }
+
     },
     clearCart(state){
       state.cart = [];
@@ -62,5 +65,7 @@ export const getTotalCartQuantity= (state: RootState) => state.cart.cart.reduce(
 export const getTotalCartPrice = (state: RootState) => state.cart.cart.reduce((sum, item) => sum + item.totalPrice, 0);
 
 export const getCurrentQuantityById = (id: number) => (state: RootState) => state.cart.cart.find(item=>item.pizzaId === id)?.quantity ?? 0;
+
+
 
 

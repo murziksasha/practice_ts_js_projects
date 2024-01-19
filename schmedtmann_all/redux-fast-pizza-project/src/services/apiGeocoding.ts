@@ -1,7 +1,7 @@
 
 interface IProps {
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
 }
 
 export async function getAddress({ latitude, longitude }: IProps) {

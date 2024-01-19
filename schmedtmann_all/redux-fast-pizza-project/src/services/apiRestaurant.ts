@@ -40,10 +40,15 @@ export async function createOrder(newOrder: IOrder) {
       },
     });
 
-    if (!res.ok) throw Error();
+    if (!res.ok) {
+      const errorMessage = await res.text();
+      throw Error(`Failed creating your order: ${errorMessage}`);
+    }
+
     const { data } = await res.json();
     return data;
-  } catch {
+  } catch(error) {
+    console.error('Error creating order:', error);
     throw Error('Failed creating your order');
   }
 }
