@@ -1,7 +1,7 @@
 import { formatCurrency } from '../../utils/helpers';
 
 export type OrderItemType = {
-  id: string;
+  pizzaId: string;
   quantity: number;
   name: string;
   totalPrice: number;

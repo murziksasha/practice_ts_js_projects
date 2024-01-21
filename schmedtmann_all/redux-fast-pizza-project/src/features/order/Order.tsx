@@ -21,6 +21,7 @@ interface IOrder {
 
 function Order() {
   const order = useLoaderData() as IOrder;
+  console.log(order);
 
   const fetcher = useFetcher();
 
@@ -41,6 +42,7 @@ function Order() {
   } = order;
 
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
+  console.log(deliveryIn);
 
   return (
     <div className="space-y-8 px-6 py-6">
@@ -73,9 +75,9 @@ function Order() {
       <ul className="divide-y divide-stone-200 border-b border-t">
         {cart.map((item: OrderItemType, i: number) => 
           {
-            console.log(item);
            return (<OrderItem item={item} key={i} isLoadingIngredients={fetcher.state === 'loading'} 
-           ingredients={fetcher?.data?.find((el: OrderItemType)=>el.id === item.id)?.ingredients ?? []}
+           //@ts-ignore
+           ingredients={fetcher?.data?.find((el: OrderItemType)=>el.id === item.pizzaId)?.ingredients ?? []}
             />)
           }
         )}
