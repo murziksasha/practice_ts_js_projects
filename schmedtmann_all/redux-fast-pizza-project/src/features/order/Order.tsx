@@ -8,8 +8,9 @@ import {
 } from '../../utils/helpers.js';
 import OrderItem, { OrderItemType } from './OrderItem.js';
 import { useEffect } from 'react';
+import UpdateOrder from './UpdateOrder.js';
 
-interface IOrder {
+export interface MyOrder {
   id: string;
   status: boolean;
   priority: string;
@@ -20,8 +21,7 @@ interface IOrder {
 }
 
 function Order() {
-  const order = useLoaderData() as IOrder;
-  console.log(order);
+  const order = useLoaderData() as MyOrder;
 
   const fetcher = useFetcher();
 
@@ -42,7 +42,6 @@ function Order() {
   } = order;
 
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
-  console.log(deliveryIn);
 
   return (
     <div className="space-y-8 px-6 py-6">
@@ -96,6 +95,7 @@ function Order() {
           To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
         </p>
       </div>
+      {!priority && <UpdateOrder order={order}/>}
     </div>
   );
 }
