@@ -8,8 +8,9 @@ import {
 } from '../../utils/helpers.js';
 import OrderItem, { OrderItemType } from './OrderItem.js';
 import { useEffect } from 'react';
+import UpdateOrder from './UpdateOrder.js';
 
-interface IOrder {
+export interface MyOrder {
   id: string;
   status: boolean;
   priority: string;
@@ -20,7 +21,7 @@ interface IOrder {
 }
 
 function Order() {
-  const order = useLoaderData() as IOrder;
+  const order = useLoaderData() as MyOrder;
 
   const fetcher = useFetcher();
 
@@ -73,9 +74,9 @@ function Order() {
       <ul className="divide-y divide-stone-200 border-b border-t">
         {cart.map((item: OrderItemType, i: number) => 
           {
-            console.log(item);
            return (<OrderItem item={item} key={i} isLoadingIngredients={fetcher.state === 'loading'} 
-           ingredients={fetcher?.data?.find((el: OrderItemType)=>el.id === item.id)?.ingredients ?? []}
+           //@ts-ignore
+           ingredients={fetcher?.data?.find((el: OrderItemType)=>el.id === item.pizzaId)?.ingredients ?? []}
             />)
           }
         )}
@@ -94,6 +95,7 @@ function Order() {
           To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
         </p>
       </div>
+      {!priority && <UpdateOrder order={order}/>}
     </div>
   );
 }
