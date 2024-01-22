@@ -1,6 +1,12 @@
 import { petrech } from "../petrech_course/petrech.js";
+import cleanForPractice from "../cleanForPractice/cleanForPractice.js";
+
+
+
+
 export function app() {
     // mineMy();
-    petrech();
+    // petrech();
+    cleanForPractice();
 }
 //# sourceMappingURL=app.js.map
