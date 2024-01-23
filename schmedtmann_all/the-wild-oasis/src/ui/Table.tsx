@@ -9,7 +9,11 @@ const StyledTable = styled.div`
   overflow: hidden;
 `;
 
-const CommonRow = styled.header`
+interface IPropsCommonRow {
+  columns: `${string}`;
+}
+
+const CommonRow = styled.header<IPropsCommonRow>`
   display: grid;
   grid-template-columns: ${(props) => props.columns};
   column-gap: 2.4rem;

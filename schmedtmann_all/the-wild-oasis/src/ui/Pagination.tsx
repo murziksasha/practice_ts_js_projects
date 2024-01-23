@@ -21,7 +21,11 @@ const Buttons = styled.div`
   gap: 0.6rem;
 `;
 
-const PaginationButton = styled.button`
+interface IPropsPaginationButton {
+  active: boolean;
+}
+
+const PaginationButton = styled.button<IPropsPaginationButton>`
   background-color: ${(props) =>
     props.active ? " var(--color-brand-600)" : "var(--color-grey-50)"};
   color: ${(props) => (props.active ? " var(--color-brand-50)" : "inherit")};

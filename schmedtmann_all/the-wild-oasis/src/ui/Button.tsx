@@ -48,13 +48,19 @@ const variations = {
   `,
 };
 
-const Button = styled.button`
+interface IPropsButton {
+  size?: keyof typeof sizes;
+  variation?: keyof typeof variations;
+  onClick?: () => void;
+}
+
+const Button = styled.button<IPropsButton>`
   border: none;
   border-radius: var(--border-radius-sm);
   box-shadow: var(--shadow-sm);
 
-  ${(props) => sizes[props.size]}
-  ${(props) => variations[props.variation]}
+  ${(props) => props.size && sizes[props.size]}
+  ${(props) => props.variation && variations[props.variation]}
 `;
 
 Button.defaultProps = {
