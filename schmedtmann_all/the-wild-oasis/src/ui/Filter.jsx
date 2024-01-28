@@ -10,11 +10,7 @@ const StyledFilter = styled.div`
   gap: 0.4rem;
 `;
 
-interface IPropsFilterButton {
-  active?: boolean;
-}
-
-const FilterButton = styled.button<IPropsFilterButton>`
+const FilterButton = styled.button`
   background-color: var(--color-grey-0);
   border: none;
 
@@ -37,5 +33,3 @@ const FilterButton = styled.button<IPropsFilterButton>`
     color: var(--color-brand-50);
   }
 `;
-
-export {StyledFilter, FilterButton};

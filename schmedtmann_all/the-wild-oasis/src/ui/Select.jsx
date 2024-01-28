@@ -1,13 +1,6 @@
 import styled from "styled-components";
 
-
-type Type = 'white' | `${string}`;
-
-interface IPropsStyledSelect {
-  type: Type
-}
-
-export const StyledSelect = styled.select<IPropsStyledSelect>`
+const StyledSelect = styled.select`
   font-size: 1.4rem;
   padding: 0.8rem 1.2rem;
   border: 1px solid

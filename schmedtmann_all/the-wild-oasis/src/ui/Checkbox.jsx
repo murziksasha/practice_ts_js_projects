@@ -25,15 +25,7 @@ const StyledCheckbox = styled.div`
   }
 `;
 
-interface IPropsCheckbox {
-  checked: boolean;
-  onChange: () => void;
-  disabled?: boolean;
-  id?: string;
-  children: React.ReactNode;
-}
-
-function Checkbox({ checked, onChange, disabled = false, id, children }: IPropsCheckbox) {
+function Checkbox({ checked, onChange, disabled = false, id, children }) {
   return (
     <StyledCheckbox>
       <input

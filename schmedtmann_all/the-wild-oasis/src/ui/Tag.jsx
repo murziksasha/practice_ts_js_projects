@@ -1,10 +1,6 @@
 import styled from "styled-components";
 
-interface IPropsTag{
-  type: string;
-}
-
-const Tag = styled.span<IPropsTag>`
+const Tag = styled.span`
   width: fit-content;
   text-transform: uppercase;
   font-size: 1.1rem;

@@ -25,14 +25,7 @@ const StyledToggle = styled.button`
   }
 `;
 
-interface IPropsStyledList {
-  position: {
-    x: string;
-    y: string;
-  }
-}
-
-const StyledList = styled.ul<IPropsStyledList>`
+const StyledList = styled.ul`
   position: fixed;
 
   background-color: var(--color-grey-0);
@@ -67,10 +60,3 @@ const StyledButton = styled.button`
     transition: all 0.3s;
   }
 `;
-
-export {
-  StyledMenu,
-  StyledToggle,
-  StyledList,
-  StyledButton,
-};
