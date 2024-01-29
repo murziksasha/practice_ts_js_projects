@@ -1,4 +1,7 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
+import { deleteCabin } from '../../services/apiCabins';
+import toast from 'react-hot-toast';
 // import { HiPencil, HiTrash, HiSquare2Stack } from 'react-icons/hi2';
 
 // import Menus from 'ui/Menus';
@@ -52,18 +55,51 @@ const Discount = styled.div`
   color: var(--color-green-700);
 `;
 
-function CabinRow({cabin}) {
+function CabinRow({ cabin }) {
+  const {
+    id: cabinId,
+    name,
+    maxCapacity,
+    regularPrice,
+    discount,
+    image,
+  } = cabin;
 
-  const {name, maxCapacity, regularPrice, discount, image} = cabin;
+  const queryClient = useQueryClient();
 
-  return <TableRow role='row'>
-    <Img src={image} />
-    <Cabin>{name}</Cabin>
-    <div>Fits up to {maxCapacity}</div>
-    <Price>{regularPrice}</Price>
-    <Discount>{discount}</Discount>
-    <button>Delete</button>
-  </TableRow>
+  const { isLoading: isDeleting, mutate } = useMutation({
+    mutationFn: deleteCabin,
+    onSuccess: () => {
+      toast.success(`Cabin deleted successful!`);
+      queryClient.invalidateQueries({
+        queryKey: ['cabins'],
+      });
+    },
+    onError: (err) =>
+      toast.error(
+        'During deleting, something wrong, try again later...' +
+          '  ' +
+          err.message
+      ),
+  });
+
+  // const handleDeleteClick = mutate.bind(null, cabinId);
+
+  return (
+    <TableRow role='row'>
+      <Img src={image} />
+      <Cabin>{name}</Cabin>
+      <div>Fits up to {maxCapacity}</div>
+      <Price>{regularPrice}</Price>
+      <Discount>{discount}</Discount>
+      <button
+        onClick={() => mutate(cabinId)} //handleDeleteClick
+        disabled={isDeleting}
+      >
+        Delete
+      </button>
+    </TableRow>
+  );
 }
 
 export default CabinRow;
