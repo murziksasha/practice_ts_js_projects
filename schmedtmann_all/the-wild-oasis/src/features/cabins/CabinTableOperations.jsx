@@ -1,6 +1,7 @@
-import SortBy from 'ui/SortBy';
-import Filter from 'ui/Filter';
-import TableOperations from 'ui/TableOperations';
+
+import Filter from '../../ui/Filter';
+import SortBy from '../../ui/SortBy';
+import TableOperations from '../../ui/TableOperations';
 
 function CabinTableOperations() {
   return (
@@ -10,8 +11,8 @@ function CabinTableOperations() {
         filterField='discount'
         options={[
           { value: 'all', label: 'All' },
-          { value: 'no-discount', label: 'No discount' },
-          { value: 'with-discount', label: 'With discount' },
+          { value: 'no-discount', label: 'No Discount' },
+          { value: 'with-discount', label: 'With Discount' },
         ]}
       />
 
