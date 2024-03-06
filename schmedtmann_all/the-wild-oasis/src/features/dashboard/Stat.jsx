@@ -1,8 +1,6 @@
 import styled from 'styled-components';
-import { box } from 'styles/styles';
 
 const StyledStat = styled.div`
-  ${box}
 
   padding: 1.6rem;
   display: grid;
@@ -10,6 +8,8 @@ const StyledStat = styled.div`
   grid-template-rows: auto auto;
   column-gap: 1.6rem;
   row-gap: 0.4rem;
+  align-items: center;
+  align-content: center;
 `;
 
 const Icon = styled.div`
